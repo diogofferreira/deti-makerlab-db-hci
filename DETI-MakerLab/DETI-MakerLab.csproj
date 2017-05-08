@@ -54,6 +54,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class.cs" />
+    <Compile Include="Delivery.cs" />
+    <Compile Include="Project.cs" />
+    <Compile Include="Requisition.cs" />
+    <Compile Include="Staff.cs" />
     <Page Include="CreateProject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -85,6 +90,7 @@
     <Compile Include="CreateProject.xaml.cs">
       <DependentUpon>CreateProject.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DMLUser.cs" />
     <Compile Include="Electronics.xaml.cs">
       <DependentUpon>Electronics.xaml</DependentUpon>
     </Compile>

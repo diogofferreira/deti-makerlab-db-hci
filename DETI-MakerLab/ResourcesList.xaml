@@ -1,0 +1,19 @@
+﻿<Page x:Class="DETI_MakerLab.ResourcesList"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DETI_MakerLab"
+      mc:Ignorable="d" 
+      d:DesignHeight="930" d:DesignWidth="1670"
+      Background="White"
+      Title="ResourcesList">
+
+    <Grid>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="824,4,824,0" />
+        <ListBox x:Name="electronics_list" HorizontalAlignment="Left" Height="666" Margin="98,199,0,0" VerticalAlignment="Top" Width="634"/>
+        <ListBox x:Name="kits_list" HorizontalAlignment="Left" Height="666" Margin="941,199,0,0" VerticalAlignment="Top" Width="634"/>
+        <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="316,84,1146,782" RenderTransformOrigin="0.538,0.406"/>
+        <Label Content="Kits" Style="{StaticResource titleStyle}" Margin="1187,84,39,762" RenderTransformOrigin="0.5,0.5"/>
+    </Grid>
+</Page>

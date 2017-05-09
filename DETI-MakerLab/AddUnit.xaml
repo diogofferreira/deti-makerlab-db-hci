@@ -1,4 +1,4 @@
-﻿<Page x:Class="DETI_MakerLab.MyProjects"
+﻿<Page x:Class="DETI_MakerLab.AddUnit"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,10 +7,11 @@
       mc:Ignorable="d" 
       d:DesignHeight="930" d:DesignWidth="1670"
       Background="White"
-      Title="My Projects">
-
+      Title="AddUnit">
+    
     <Grid>
-        <Label Content="My Projects" Style="{StaticResource bigTitleStyle}"/>
-        <ListBox x:Name="my_projects_listbox" Height="502" Margin="224,311,208,117" Width="1238"/>
+        <Label Content="Add Units" Style="{StaticResource bigTitleStyle}"/>
+        <ListBox x:Name="units_list" Height="502" Margin="226,237,206,191" Width="1238"/>
+        <Button x:Name="add_units_button" Content="Add units" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="380,819,0,0" VerticalAlignment="Top" Width="977" Height="66"/>
     </Grid>
 </Page>

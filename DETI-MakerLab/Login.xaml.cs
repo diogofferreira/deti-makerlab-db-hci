@@ -25,10 +25,6 @@ namespace DETI_MakerLab
                 HomeWindow home = new HomeWindow();
                 home.Show();
                 Window.GetWindow(this).Hide();
-                /*
-                Home home = new Home();
-                NavigationService.Navigate(home);
-                */
             }
             else
                 MessageBox.Show("User or password wrong !");
@@ -72,13 +68,10 @@ namespace DETI_MakerLab
             return cn.State == ConnectionState.Open;
         }
 
-        private void label1_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Ellipse_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            /*
-            HelpWindow help = new HelpWindow();
-            help.Show();
-            Window.GetWindow(this).Hide();
-            */
+            MainWindow window = (MainWindow) Window.GetWindow(this);
+            window.goToFAQ();
         }
     }
 }

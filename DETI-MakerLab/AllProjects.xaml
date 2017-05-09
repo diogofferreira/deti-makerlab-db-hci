@@ -1,15 +1,16 @@
-﻿<Page x:Class="DETI_MakerLab.Projects"
+﻿<Page x:Class="DETI_MakerLab.AllProjects"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Title="Projects">
+      d:DesignHeight="930" d:DesignWidth="1670"
+      Background="White"
+      Title="AllProjects">
 
     <Grid>
-        <Label x:Name="label" Content="PROJECTS" HorizontalAlignment="Left" Margin="19,95,0,0" VerticalAlignment="Top"/>
-
+        <Label Content="Projects List" Style="{StaticResource bigTitleStyle}"/>
+        <ListBox x:Name="all_projects_listbox" Height="502" Margin="224,311,208,117" Width="1238"/>
     </Grid>
 </Page>

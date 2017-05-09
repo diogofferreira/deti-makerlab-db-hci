@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace DETI_MakerLab
+{
+    /// <summary>
+    /// Interaction logic for StaffWindow.xaml
+    /// </summary>
+    public partial class StaffWindow : Window
+    {
+        public StaffWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Home_Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Show home page
+            frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
+
+            // Hide collapsed submenus
+            this.resources_menu.Visibility = Visibility.Collapsed;
+        }
+
+        private void Resources_Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Show/hide collapsed resources submenu
+            this.resources_menu.Visibility = this.resources_menu.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+
+        }
+
+        private void resources_list_button_Click(object sender, RoutedEventArgs e)
+        {
+            // Show resources list page
+            frame.Source = new Uri("ResourcesList.xaml", UriKind.RelativeOrAbsolute);
+        }
+
+        private void add_equipment_button_Click(object sender, RoutedEventArgs e)
+        {
+            // Show create equipment page
+            frame.Source = new Uri("CreateEquipment.xaml", UriKind.RelativeOrAbsolute);
+        }
+
+        private void add_unit_button_Click(object sender, RoutedEventArgs e)
+        {
+            // Show add unit page
+            frame.Source = new Uri("AddUnit.xaml", UriKind.RelativeOrAbsolute);
+        }
+
+        private void add_kit_button_Click(object sender, RoutedEventArgs e)
+        {
+            // Show add kit page
+            frame.Source = new Uri("CreateKit.xaml", UriKind.RelativeOrAbsolute);
+        }
+
+        private void Projects_Buttons_Click(object sender, RoutedEventArgs e)
+        {
+            // Show projects page
+            frame.Source = new Uri("AllProjects.xaml", UriKind.RelativeOrAbsolute);
+
+            // Hide collapsed submenus
+            this.resources_menu.Visibility = Visibility.Collapsed;
+        }
+    }
+}

@@ -5,11 +5,20 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="930" d:DesignWidth="1670"
+      Background="White"
       Title="Electronics">
 
     <Grid>
-        <Label x:Name="label" Content="Electronics" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="824,4,824,0" />
+        <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="260" Margin="98,199,0,0" VerticalAlignment="Top" Width="634"/>
+        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="601" Margin="919,199,0,0" VerticalAlignment="Top" Width="634"/>
+        <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="340,84,1122,782"/>
+        <Label Content="Active electronic's requisitions" Style="{StaticResource titleStyle}" Margin="1015,84,211,762" RenderTransformOrigin="0.5,0.5"/>
+        <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="260" Margin="98,540,0,0" VerticalAlignment="Top" Width="634"/>
+        <Label Content="Project (to associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="98,161,0,0" VerticalAlignment="Top"/>
+        <Label Content="Equipment" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="98,501,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="98,854,0,0" VerticalAlignment="Top" Width="634" Height="48"/>
+        <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="919,854,0,0" VerticalAlignment="Top" Width="634" Height="48"/>
     </Grid>
 </Page>

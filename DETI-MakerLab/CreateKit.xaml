@@ -1,0 +1,20 @@
+﻿<Page x:Class="DETI_MakerLab.CreateKit"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DETI_MakerLab"
+      mc:Ignorable="d" 
+      d:DesignHeight="930" d:DesignWidth="1670"
+      Background="White"
+      Title="CreateKit">
+
+    <Grid>
+        <Label Content="Add Kit" Style="{StaticResource bigTitleStyle}"/>
+        <Label Content="Kit Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="416,247,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146"/>
+        <Label Content="Units" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="436,329,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="126"/>
+        <TextBox x:Name="kit_name" HorizontalAlignment="Left" Height="39" Margin="629,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="604" FontSize="20"/>
+        <ListBox x:Name="units_list" HorizontalAlignment="Left" Height="405" Margin="629,329,0,0" VerticalAlignment="Top" Width="604" FontSize="18"/>
+        <Button x:Name="create_kit_button" Content="Create Kit" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="384,813,0,0" VerticalAlignment="Top" Width="977" Height="60"/>
+    </Grid>
+</Page>

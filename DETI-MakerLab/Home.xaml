@@ -5,10 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="930" d:DesignWidth="1670"
+      Background="White"
       Title="Home">
 
     <Grid>
-        <Label x:Name="label" Content="HOME PAGE" HorizontalAlignment="Left" Margin="81,123,0,0" VerticalAlignment="Top"/>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="824,4,824,0" />
+        <ListBox x:Name="last_project_list" HorizontalAlignment="Left" Height="636" Margin="98,238,0,0" VerticalAlignment="Top" Width="634"/>
+        <ListBox x:Name="last_requisitions_list" HorizontalAlignment="Left" Height="636" Margin="919,238,0,0" VerticalAlignment="Top" Width="634"/>
+        <Label Content="Last Projects" Style="{StaticResource titleStyle}" Margin="294,106,1168,760"/>
+        <Label Content="Last Requisitions" Style="{StaticResource titleStyle}" Margin="1109,103,307,743" RenderTransformOrigin="0.5,0.5"/>
     </Grid>
 </Page>

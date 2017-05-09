@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,11 +55,60 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddUnit.xaml.cs">
+      <DependentUpon>AddUnit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AllProjects.xaml.cs">
+      <DependentUpon>AllProjects.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Class.cs" />
+    <Compile Include="CreateEquipment.xaml.cs">
+      <DependentUpon>CreateEquipment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CreateKit.xaml.cs">
+      <DependentUpon>CreateKit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Delivery.cs" />
+    <Compile Include="EquipmentPage.xaml.cs">
+      <DependentUpon>EquipmentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FAQ.xaml.cs">
+      <DependentUpon>FAQ.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Project.cs" />
+    <Compile Include="ProjectChanges.xaml.cs">
+      <DependentUpon>ProjectChanges.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectPage.xaml.cs">
+      <DependentUpon>ProjectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Requisition.cs" />
+    <Compile Include="ResourcesList.xaml.cs">
+      <DependentUpon>ResourcesList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Staff.cs" />
+    <Compile Include="StaffWindow.xaml.cs">
+      <DependentUpon>StaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddUnit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AllProjects.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateEquipment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateKit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateProject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -67,11 +117,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EquipmentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FAQ.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HomeWindow.xaml">
+    <Page Include="StaffWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -97,8 +159,8 @@
     <Compile Include="Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HomeWindow.xaml.cs">
-      <DependentUpon>HomeWindow.xaml</DependentUpon>
+    <Compile Include="UserWindow.xaml.cs">
+      <DependentUpon>UserWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -115,7 +177,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Projects.xaml">
+    <Page Include="ProjectChanges.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -126,9 +200,6 @@
     </Compile>
     <Compile Include="Network.xaml.cs">
       <DependentUpon>Network.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Projects.xaml.cs">
-      <DependentUpon>Projects.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -146,6 +217,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -156,15 +228,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="dml_logo.png" />
+    <Resource Include="images\dml_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="dml_logo_white.png" />
+    <Resource Include="images\dml_logo_white.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="home.png" />
-    <Resource Include="projects.png" />
-    <Resource Include="resources.png" />
+    <Resource Include="images\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\projects.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\resources.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

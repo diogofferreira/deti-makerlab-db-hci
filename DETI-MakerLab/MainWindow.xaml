@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DETI_MakerLab"
         mc:Ignorable="d"
-        Title="DETI-MakerLab - Login"
+        Title="DETI-MakerLab - Login" Height="1080" Width="1920"
         WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="#FF4DB6AC">
 
     <DockPanel>

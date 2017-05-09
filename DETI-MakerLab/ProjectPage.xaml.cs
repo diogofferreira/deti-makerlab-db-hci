@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DETI_MakerLab
 {
     /// <summary>
-    /// Interaction logic for Projects.xaml
+    /// Interaction logic for ProjectPage.xaml
     /// </summary>
-    public partial class Projects : Page
+    public partial class ProjectPage : Page
     {
-        public Projects()
+        public ProjectPage()
         {
             InitializeComponent();
         }

@@ -5,11 +5,31 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="930" d:DesignWidth="1670"
+      Background="White"
       Title="CreateProject">
 
     <Grid>
-        <Label x:Name="label" Content="Create Project" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-
+        <Label Content="New Project" Style="{StaticResource bigTitleStyle}"/>
+        <Label Content="Project Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="416,247,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146"/>
+        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="436,329,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="126"/>
+        <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="453,454,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="109"/>
+        <Label Content="Class" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="497,662,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="65"/>
+        <Label Content="Tags" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="497,734,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="65"/>
+        <TextBox x:Name="project_name" HorizontalAlignment="Left" Height="39" Margin="711,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
+        <TextBox x:Name="project_description" HorizontalAlignment="Left" Height="104" Margin="711,329,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
+        <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="175" Margin="711,454,0,0" VerticalAlignment="Top" Width="480" FontSize="18"/>
+        <TextBox x:Name="project_class" HorizontalAlignment="Left" Height="39" Margin="711,662,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20">
+            <TextBox.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Project Class</TextBlock>
+                        <TextBlock>If it's a standalone project, please leave it blank!</TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </TextBox.ToolTip>
+        </TextBox>
+        <TextBox x:Name="project_tags" HorizontalAlignment="Left" Height="39" Margin="711,734,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
+        <Button x:Name="create_project_button" Content="Create Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="382,853,0,0" VerticalAlignment="Top" Width="977" Height="48"/>
     </Grid>
 </Page>

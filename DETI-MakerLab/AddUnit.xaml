@@ -5,13 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="930" d:DesignWidth="1670"
+      d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="AddUnit">
-    
+
     <Grid>
-        <Label Content="Add Units" Style="{StaticResource bigTitleStyle}"/>
-        <ListBox x:Name="units_list" Height="502" Margin="226,237,206,191" Width="1238"/>
+        <Label Content="Add Units" Style="{StaticResource bigTitleStyle}" Margin="466,45,488,0"/>
+        <ListBox x:Name="units_list" Margin="152,207,156,72"/>
         <Button x:Name="add_units_button" Content="Add units" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="380,819,0,0" VerticalAlignment="Top" Width="977" Height="66"/>
     </Grid>
 </Page>

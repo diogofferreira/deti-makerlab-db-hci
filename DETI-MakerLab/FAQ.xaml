@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="1080" d:DesignWidth="1920"
+      d:DesignHeight="704" d:DesignWidth="1358"
       Title="FAQ">
 
     <Grid>
-        <Image Source="/DETI-MakerLab;component/images/question.png" HorizontalAlignment="Left" Height="271" Margin="783,162,0,0" VerticalAlignment="Top" Width="340"/>
-        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1649,939,0,0" VerticalAlignment="Top" Width="187" Height="89"/>
+        <Image Source="/DETI-MakerLab;component/images/question.png" HorizontalAlignment="Left" Height="199" Margin="501,59,0,0" VerticalAlignment="Top" Width="263"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1172,629,0,0" VerticalAlignment="Top" Width="145" Height="65"/>
     </Grid>
 </Page>

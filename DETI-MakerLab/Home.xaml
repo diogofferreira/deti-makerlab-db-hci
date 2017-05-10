@@ -5,15 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="930" d:DesignWidth="1670"
+      d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="Home">
 
     <Grid>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="824,4,824,0" />
-        <ListBox x:Name="last_project_list" HorizontalAlignment="Left" Height="636" Margin="98,238,0,0" VerticalAlignment="Top" Width="634"/>
-        <ListBox x:Name="last_requisitions_list" HorizontalAlignment="Left" Height="636" Margin="919,238,0,0" VerticalAlignment="Top" Width="634"/>
-        <Label Content="Last Projects" Style="{StaticResource titleStyle}" Margin="294,106,1168,760"/>
-        <Label Content="Last Requisitions" Style="{StaticResource titleStyle}" Margin="1109,103,307,743" RenderTransformOrigin="0.5,0.5"/>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,4,593,0" />
+        <ListBox x:Name="last_project_list" HorizontalAlignment="Left" Height="500" Margin="78,87,0,0" VerticalAlignment="Top" Width="380"/>
+        <ListBox x:Name="last_requisitions_list" HorizontalAlignment="Left" Height="500" Margin="732,87,0,0" VerticalAlignment="Top" Width="380"/>
+        <Label Content="Last Projects" Style="{StaticResource titleStyle}" Margin="176,10,830,554" />
+        <Label Content="Last Requisitions" Style="{StaticResource titleStyle}" Margin="796,10,144,564" />
     </Grid>
 </Page>

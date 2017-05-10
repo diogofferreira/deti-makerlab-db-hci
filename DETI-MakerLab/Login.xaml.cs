@@ -22,7 +22,7 @@ namespace DETI_MakerLab
 
             bool logged = true;
             if (logged) {
-                HomeWindow home = new HomeWindow();
+                StaffWindow home = new StaffWindow();
                 home.Show();
                 Window.GetWindow(this).Hide();
             }

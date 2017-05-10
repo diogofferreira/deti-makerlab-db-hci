@@ -5,32 +5,32 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="930" d:DesignWidth="1670"
+      d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="EquipmentPage">
 
     <Grid>
-        <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="293,97,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146"/>
-        <Label Content="Model"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="293,197,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146"/>
-        <Label Content="Manufacturer" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="226,279,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="149"/>
-        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="234,364,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="141"/>
-        <TextBlock x:Name="equipment_name" HorizontalAlignment="Left" Height="39" Margin="501,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <TextBlock x:Name="equipment_model" HorizontalAlignment="Left" Height="39" Margin="501,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <TextBlock x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="39" Margin="501,279,0,0" VerticalAlignment="Top" Width="480" FontSize="18"/>
-        <TextBlock x:Name="equipment_description" HorizontalAlignment="Left" Height="39" Margin="501,364,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <Image x:Name="equipment_image" HorizontalAlignment="Left" Height="306" Margin="1172,97,0,0" VerticalAlignment="Top" Width="348"/>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="837,14,829,-10" Width="4" >
+        <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="45"/>
+        <Label Content="Model"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="36"/>
+        <Label Content="Manufacturer" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="59,172,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="156" Height="40"/>
+        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="65,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146" Height="36"/>
+        <TextBlock x:Name="equipment_name" HorizontalAlignment="Left" Height="31" Margin="273,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="498" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="equipment_model" HorizontalAlignment="Left" Height="29" Margin="273,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="30" Margin="273,171,0,0" VerticalAlignment="Top" Width="518" FontSize="18" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="equipment_description" HorizontalAlignment="Left" Height="30" Margin="273,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <Image x:Name="equipment_image" HorizontalAlignment="Left" Height="235" Margin="796,30,0,0" VerticalAlignment="Top" Width="271" RenderTransformOrigin="0.5,0.5"/>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="578,-87,615,-65" Width="3" >
             <Separator.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform Angle="90.286"/>
+                    <RotateTransform Angle="89.813"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
-        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="641,503,625,0" Width="404" />
-        <ListBox x:Name="equipment_last_requisitions_list" HorizontalAlignment="Left" Height="268" Margin="436,608,0,0" VerticalAlignment="Top" Width="832"/>
-        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1448,834,0,0" VerticalAlignment="Top" Width="163" Height="74"/>
+        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="363,315,425,0" Width="408" RenderTransformOrigin="0.5,0.5" Height="71" />
+        <ListBox x:Name="equipment_last_requisitions_list" HorizontalAlignment="Left" Height="206" Margin="185,393,0,0" VerticalAlignment="Top" Width="778" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1029,561,0,0" VerticalAlignment="Top" Width="127" Height="57"/>
     </Grid>
 </Page>

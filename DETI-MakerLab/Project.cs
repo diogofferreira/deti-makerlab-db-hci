@@ -51,13 +51,13 @@ namespace DETI_MakerLab
 
         public void addWorker(int UserID, int RoleID)
         {
-            int[] worker = [UserID, RoleID];
+            int[] worker = { UserID, RoleID };
             _workers.Add(worker);
         }
 
         public bool removeWorker(int UserID, int RoleID)
         {
-            int[] worker = [UserID, RoleID];
+            int[] worker = { UserID, RoleID };
             if (_workers.Contains(worker))
             {
                 _workers.Remove(worker);

@@ -5,15 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="930" d:DesignWidth="1670"
+      d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="ResourcesList">
 
     <Grid>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="824,4,824,0" />
-        <ListBox x:Name="electronics_list" HorizontalAlignment="Left" Height="666" Margin="98,199,0,0" VerticalAlignment="Top" Width="634"/>
-        <ListBox x:Name="kits_list" HorizontalAlignment="Left" Height="666" Margin="941,199,0,0" VerticalAlignment="Top" Width="634"/>
-        <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="316,84,1146,782" RenderTransformOrigin="0.538,0.406"/>
-        <Label Content="Kits" Style="{StaticResource titleStyle}" Margin="1187,84,39,762" RenderTransformOrigin="0.5,0.5"/>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,4,593,0" />
+        <ListBox x:Name="electronics_list" HorizontalAlignment="Left" Height="510" Margin="60,102,0,0" VerticalAlignment="Top" Width="448"/>
+        <ListBox x:Name="kits_list" HorizontalAlignment="Left" Height="528" Margin="693,84,0,0" VerticalAlignment="Top" Width="448"/>
+        <Label Content="Electronics" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.538,0.406" Margin="198,24,750,554"/>
+        <Label Content="Kits" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="888,24,158,554"/>
     </Grid>
 </Page>

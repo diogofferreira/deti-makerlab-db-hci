@@ -4,35 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DETI_MakerLab"
-        mc:Ignorable="d" Height="1080" Width="1920" Title="DETI-MakerLab"
+        mc:Ignorable="d" Height="735" Width="1366" Title="DETI-MakerLab"
         WindowStartupLocation="CenterScreen" WindowState="Maximized">
 
-    <Grid HorizontalAlignment="Left" Height="1080" VerticalAlignment="Top" Width="1920">
+    <Grid HorizontalAlignment="Left" Height="735" VerticalAlignment="Top" Width="1366">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="250"/>
+            <ColumnDefinition MaxWidth="160"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="0" Fill="#FF00796B"/>
+        <Rectangle Grid.Column="0" Fill="#FF00796B" Margin="0,0,0,28"/>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="350"/>
+                <RowDefinition Height="300"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" x:Name="image" Source="/DETI-MakerLab;component/images/dml_logo_white.png" Margin="10,0,22,42"/>
+            <Image Grid.Row="0" x:Name="image" Source="/DETI-MakerLab;component/images/dml_logo_white.png" Margin="14,-46,12,84"/>
             <StackPanel Grid.Row="1">
-                <Button x:Name="home_button" Height="74" Background="#FF00796B" BorderBrush="Transparent" VerticalContentAlignment="Center" Margin="-56,0,0,0" Click="Home_Button_Click" >
+                <Button x:Name="home_button" Height="98" Background="#FF00796B" BorderBrush="Transparent" VerticalContentAlignment="Center" Margin="-14,0,0,0" Click="Home_Button_Click" >
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/DETI-MakerLab;component/images/home.png" Height="50" Width="50" HorizontalAlignment="Center"/>
-                        <Label Margin="5,0,0,0" FontSize="32" Foreground="White" FontFamily="Roboto" Content="Home"/>
+                        <Image Source="/DETI-MakerLab;component/images/home.png" Height="50" Width="48" HorizontalAlignment="Center"/>
+                        <Label Style="{StaticResource menuLabelStyle}" Content="Home" />
                     </StackPanel>
                 </Button>
                 <Button x:Name="resources_button" Height="100" Background="#FF00796B" BorderBrush="Transparent" Margin="-1,0,1,0" Click="Resources_Button_Click" >
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/DETI-MakerLab;component/images/resources.png" Height="50" Width="53"/>
-                        <Label Margin="5,0,0,0" FontSize="32" Foreground="White" FontFamily="Roboto" Content="Resources" Width="152"/>
+                        <Image Source="/DETI-MakerLab;component/images/resources.png" Height="40" Width="37"/>
+                        <Label Style="{StaticResource menuLabelStyle}" Content="Resources"/>
                     </StackPanel>
                 </Button>
                 <Grid>
@@ -40,14 +40,14 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <StackPanel x:Name="resources_menu" Visibility="Collapsed">
-                        <Button x:Name="electronics_button" Height="43" Foreground="White" Background="#FF00796B" BorderBrush="Transparent" Click="Electronics_Button_Click">Electronics</Button>
-                        <Button x:Name="network_button" Height="43" Foreground="White" Background="#FF00796B" BorderBrush="Transparent" Click="Network_Button_Click">Network</Button>
+                        <Button x:Name="electronics_button" Height="43" Foreground="White" Background="#FF00796B" BorderBrush="Transparent" Click="Electronics_Button_Click" Content="Electronics"/>
+                        <Button x:Name="network_button" Height="43" Foreground="White" Background="#FF00796B" BorderBrush="Transparent" Click="Network_Button_Click" Content="Network"/>
                     </StackPanel>
                 </Grid>
                 <Button x:Name="projects_buttons" Height="86" Background="#FF00796B" BorderBrush="Transparent" Margin="-14,0,0,0" Click="Projects_Buttons_Click" >
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Image Source="/DETI-MakerLab;component/images/projects.png" Height="50" Width="52" HorizontalAlignment="Left"/>
-                        <Label Margin="5,0,0,0" FontSize="32" Foreground="White" FontFamily="Roboto" Content="Projects" Width="136"/>
+                        <Image Source="/DETI-MakerLab;component/images/projects.png" Height="38" Width="38" HorizontalAlignment="Left"/>
+                        <Label Style="{StaticResource menuLabelStyle}" Content="Projects"/>
                     </StackPanel>
                 </Button>
                 <Grid>
@@ -55,23 +55,23 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <StackPanel x:Name="projects_menu" Visibility="Collapsed">
-                        <Button x:Name="create_project_button" Height="43" Foreground="White" Background="#FF00796B" BorderBrush="Transparent" Click="Create_Project_Button_Click">Create Project</Button>
-                        <Button x:Name="my_projects_button" Height="43" Foreground="White" Background="#FF00796B" BorderBrush="Transparent" Click="My_Projects_Button_Click">My Projects</Button>
+                        <Button x:Name="create_project_button" Height="43" Foreground="White" Background="#FF00796B" BorderBrush="Transparent" Click="Create_Project_Button_Click" Content="Create Project"/>
+                        <Button x:Name="my_projects_button" Height="43" Foreground="White" Background="#FF00796B" BorderBrush="Transparent" Click="My_Projects_Button_Click" Content="My Projects"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
-            <Label Content="MakerLab" HorizontalAlignment="Left" Margin="36,267,0,0" VerticalAlignment="Top" RenderTransformOrigin="-10.947,-1.769" Foreground="White" Height="48" Width="178" FontSize="36" FontFamily="Ruda"/>
+            <Label Content="MakerLab" HorizontalAlignment="Left" Margin="20,164,0,0" VerticalAlignment="Top" RenderTransformOrigin="-10.947,-1.769" Foreground="White" Height="52" Width="126" FontSize="25" FontFamily="Ruda"/>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Rectangle Grid.Row="0" Fill="#FF00796B"/>
-            <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" Foreground="White"/>
-            <Image x:Name="profile_image" HorizontalAlignment="Left" Height="100" Margin="1114,22,0,0" VerticalAlignment="Top" Width="100" Source="/DETI-MakerLab;component/images/dml_logo_white.png"/>
-            <Label Content="USERNAME" HorizontalAlignment="Center" Margin="1237,55,285,0" VerticalAlignment="Top" Width="148" Foreground="White" FontSize="25"/>
-            <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1460,50,0,0" VerticalAlignment="Top" Width="113" Height="57" Background="Transparent" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="#FF004D40"/>
+            <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" Foreground="White" Margin="0,0,10,32"/>
+            <Image x:Name="profile_image" HorizontalAlignment="Left" Height="90" Margin="792,10,0,0" VerticalAlignment="Top" Width="60" Source="/DETI-MakerLab;component/images/dml_logo_white.png" Grid.RowSpan="2"/>
+            <Label Content="USERNAME" HorizontalAlignment="Center" Margin="875,29,147,0" VerticalAlignment="Top" Width="94" Foreground="White" FontSize="15" Height="44"/>
+            <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1009,21,0,0" VerticalAlignment="Top" Width="75" Height="44" Background="Transparent" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="#FF004D40"/>
         </Grid>
     </Grid>
 </Window>

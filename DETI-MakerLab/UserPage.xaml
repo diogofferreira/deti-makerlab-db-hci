@@ -5,32 +5,36 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="930" d:DesignWidth="1670"
+      d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="UserPage">
 
     <Grid>
-        <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="293,97,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146"/>
-        <Label Content="Email"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="293,197,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146"/>
-        <Label Content="Mec. Num" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="250,279,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="149"/>
-        <Label Content="Course / Scientific Area" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="120,364,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="245"/>
-        <TextBlock x:Name="user_name" HorizontalAlignment="Left" Height="39" Margin="501,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <TextBlock x:Name="user_email" HorizontalAlignment="Left" Height="39" Margin="501,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <TextBlock x:Name="user_nmec" HorizontalAlignment="Left" Height="39" Margin="501,279,0,0" VerticalAlignment="Top" Width="480" FontSize="18"/>
-        <TextBlock x:Name="user_course_area" HorizontalAlignment="Left" Height="39" Margin="501,364,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <Image x:Name="user_image" HorizontalAlignment="Left" Height="306" Margin="1172,97,0,0" VerticalAlignment="Top" Width="348"/>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="837,14,829,-10" Width="4" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="104*"/>
+            <RowDefinition Height="53*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="156,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="107" Height="34"/>
+        <Label Content="Email"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="156,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="107" Height="34"/>
+        <Label Content="Mec. Num" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="125,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="109" Height="34"/>
+        <Label Content="Course / Scientific Area" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="12,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="251" Height="34"/>
+        <TextBlock x:Name="user_name" HorizontalAlignment="Left" Height="34" Margin="335,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424" FontSize="20"/>
+        <TextBlock x:Name="user_email" HorizontalAlignment="Left" Height="34" Margin="335,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424" FontSize="20"/>
+        <TextBlock x:Name="user_nmec" HorizontalAlignment="Left" Height="34" Margin="335,178,0,0" VerticalAlignment="Top" Width="424" FontSize="18"/>
+        <TextBlock x:Name="user_course_area" HorizontalAlignment="Left" Height="34" Margin="335,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424" FontSize="20"/>
+        <Image x:Name="user_image" HorizontalAlignment="Left" Height="263" Margin="825,22,0,0" VerticalAlignment="Top" Width="255"/>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="612,-11,581,-13" Width="3" Grid.RowSpan="2" >
             <Separator.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90.286"/>
+                    <ScaleTransform ScaleY="1.073" ScaleX="0.932"/>
+                    <SkewTransform AngleY="0.041"/>
+                    <RotateTransform Angle="89.945"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
-        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="641,503,625,0" Width="404" />
-        <ListBox x:Name="user_last_requisitions_list" HorizontalAlignment="Left" Height="268" Margin="436,608,0,0" VerticalAlignment="Top" Width="832"/>
-        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1448,834,0,0" VerticalAlignment="Top" Width="163" Height="74"/>
+        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="383,322,389,0" Width="424" Height="84" />
+        <ListBox x:Name="user_last_requisitions_list" HorizontalAlignment="Left" Height="207" Margin="211,411,0,0" VerticalAlignment="Top" Width="774" Grid.RowSpan="2"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1067,160,0,0" VerticalAlignment="Top" Width="119" Height="50" Grid.Row="1"/>
     </Grid>
 </Page>

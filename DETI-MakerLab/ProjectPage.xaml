@@ -5,31 +5,31 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="930" d:DesignWidth="1670"
+      d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="ProjectPage">
 
     <Grid>
-        <Label Content="Project Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="420,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146"/>
-        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="440,135,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="126"/>
-        <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="457,260,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="109"/>
-        <Label Content="Tags" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="501,468,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="65"/>
-        <TextBlock x:Name="project_name" HorizontalAlignment="Left" Height="39" Margin="715,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <TextBlock x:Name="project_description" HorizontalAlignment="Left" Height="104" Margin="715,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="175" Margin="715,260,0,0" VerticalAlignment="Top" Width="480" FontSize="18"/>
-        <TextBlock x:Name="project_tags" HorizontalAlignment="Left" Height="39" Margin="715,468,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <Button x:Name="manage_project_button" Content="Manage Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1404,827,0,0" VerticalAlignment="Top" Width="209" Height="64"/>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="847,96,819,-92" Width="4" >
+        <Label Content="Project Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="72,11,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="152" Height="58"/>
+        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="89,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="135" Height="45"/>
+        <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="104,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="120" Height="46"/>
+        <Label Content="Tags" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="142,328,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="82" Height="48"/>
+        <TextBlock x:Name="project_name" HorizontalAlignment="Left" Height="30" Margin="326,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
+        <TextBlock x:Name="project_description" HorizontalAlignment="Left" Height="79" Margin="326,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
+        <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="134" Margin="326,169,0,0" VerticalAlignment="Top" Width="624" FontSize="18"/>
+        <TextBlock x:Name="project_tags" HorizontalAlignment="Left" Height="48" Margin="326,328,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
+        <Button x:Name="manage_project_button" Content="Manage Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="989,569,0,0" VerticalAlignment="Top" Width="180" Height="49"/>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="595,152,597,7" Width="4" >
             <Separator.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90.286"/>
+                    <ScaleTransform ScaleY="1.13" ScaleX="0.885"/>
+                    <SkewTransform AngleY="0.07"/>
+                    <RotateTransform Angle="90.253"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
-        <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="555,575,525,0" Width="590" />
-        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="216" Margin="420,675,0,0" VerticalAlignment="Top" Width="832"/>
+        <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="326,392,269,0" Width="601" Height="79" />
+        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="142" Margin="142,476,0,0" VerticalAlignment="Top" Width="788"/>
     </Grid>
 </Page>

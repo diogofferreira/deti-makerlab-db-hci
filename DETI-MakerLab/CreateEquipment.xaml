@@ -5,23 +5,23 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="930" d:DesignWidth="1670"
+      d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="CreateEquipment">
 
     <Grid>
-        <Label Content="New Equipment" Style="{StaticResource bigTitleStyle}" Margin="692,77,578,0" Width="400"/>
-        <Label Content="Equipment Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="382,247,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="200"/>
-        <Label Content="Model" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="497,329,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="126"/>
-        <Label Content="Manufacturer" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="415,422,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="147"/>
-        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="435,508,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="147"/>
-        <Label Content="Image" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="487,722,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="75"/>
-        <TextBox x:Name="equipment_name" HorizontalAlignment="Left" Height="39" Margin="711,247,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <TextBox x:Name="equipment_model" HorizontalAlignment="Left" Height="39" Margin="711,329,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <ListBox x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="39" Margin="711,412,0,0" VerticalAlignment="Top" Width="480" FontSize="18"/>
-        <TextBox x:Name="equipment_description" HorizontalAlignment="Left" Height="157" Margin="711,528,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" FontSize="20"/>
-        <Button x:Name="create_equipment_button" Content="Add Equipment" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="382,837,0,0" VerticalAlignment="Top" Width="977" Height="58"/>
-        <ListBox x:Name="equipment_image" HorizontalAlignment="Left" Height="61" Margin="711,722,0,0" VerticalAlignment="Top" Width="480" FontSize="18">
+        <Label Content="New Equipment" Style="{StaticResource bigTitleStyle}" Width="387" Margin="410,10,399,0"/>
+        <Label Content="Equipment Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="176,107,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="200"/>
+        <Label Content="Model" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="287,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="126"/>
+        <Label Content="Manufacturer" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="215,234,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="147"/>
+        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="229,308,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="147"/>
+        <Label Content="Image" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="75" Margin="287,485,0,0"/>
+        <TextBox x:Name="equipment_name" HorizontalAlignment="Left" Height="39" Margin="451,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
+        <TextBox x:Name="equipment_model" HorizontalAlignment="Left" Height="39" Margin="451,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
+        <ListBox x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="39" Margin="451,223,0,0" VerticalAlignment="Top" Width="552" FontSize="18"/>
+        <TextBox x:Name="equipment_description" HorizontalAlignment="Left" Height="157" Margin="451,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
+        <Button x:Name="create_equipment_button" Content="Add Equipment" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="102,578,0,0" VerticalAlignment="Top" Width="977" Height="40"/>
+        <ListBox x:Name="equipment_image" HorizontalAlignment="Left" Height="43" Margin="451,488,0,0" VerticalAlignment="Top" Width="552" FontSize="18">
             <Button x:Name="upload_image_button" Content="Choose File" Width="109" Height="27"/>
         </ListBox>
     </Grid>

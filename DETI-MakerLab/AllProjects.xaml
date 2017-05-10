@@ -5,12 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="930" d:DesignWidth="1670"
+      d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="AllProjects">
 
     <Grid>
-        <Label Content="Projects List" Style="{StaticResource bigTitleStyle}"/>
-        <ListBox x:Name="all_projects_listbox" Height="502" Margin="224,311,208,117" Width="1238"/>
+        <Label Content="Projects List" Style="{StaticResource bigTitleStyle}" Margin="459,43,439,0" Width="298"/>
+        <ListBox x:Name="all_projects_listbox" Margin="150,185,148,72"/>
     </Grid>
 </Page>

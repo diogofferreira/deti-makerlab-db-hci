@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DETI_MakerLab"
         mc:Ignorable="d"
-        Title="DETI-MakerLab - Login" Height="1080" Width="1920"
+        Title="DETI-MakerLab - Login" Height="735" Width="1366"
         WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="#FF4DB6AC">
 
     <DockPanel>
-        <Frame x:Name="frame" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Center" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="frame" NavigationUIVisibility="Hidden"/>
     </DockPanel>
 </Window>

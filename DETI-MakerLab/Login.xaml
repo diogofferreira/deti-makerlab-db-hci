@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
-      d:DesignHeight="1080" d:DesignWidth="1920"
+      d:DesignHeight="704" d:DesignWidth="1358"
       Title="Login">
 
     <Grid Margin="10,10,10,0">
@@ -13,13 +13,13 @@
             <RowDefinition Height="623*"/>
             <RowDefinition Height="447*"/>
         </Grid.RowDefinitions>
-        <Label x:Name="label" Content="Email" HorizontalAlignment="Left" Margin="642,500,0,0" VerticalAlignment="Top" Width="105" FontFamily="HP Simplified Light" FontSize="32" Foreground="#FF00796B" FontWeight="Bold" RenderTransformOrigin="0.362,0.83" Height="47"/>
-        <Label x:Name="label_Copy" Content="Password" HorizontalAlignment="Left" Margin="615,9,0,0" VerticalAlignment="Top" Width="168" FontFamily="HP Simplified Light" FontSize="32" Foreground="#FF00796B" FontWeight="Bold" Height="47" Grid.Row="1"/>
-        <TextBox x:Name="email_box" HorizontalAlignment="Left" Height="62" Margin="860,500,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="529" FontFamily="HP Simplified" FontSize="24"/>
-        <PasswordBox x:Name="password_box" HorizontalAlignment="Left" Margin="860,9,0,0" VerticalAlignment="Top" Width="529" Height="69" FontSize="24" FontFamily="HP Simplified" Grid.Row="1"/>
-        <Button x:Name="button" Content="Login" HorizontalAlignment="Left" Height="105" Margin="492,213,0,0" VerticalAlignment="Top" Width="992" Click="button_Click" Foreground="#FF00796B" FontFamily="HP Simplified" FontSize="24" Grid.Row="1"/>
-        <Image x:Name="image" Source="/DETI-MakerLab;component/images/dml_logo.png" HorizontalAlignment="Left" Height="251" Margin="857,69,0,0" VerticalAlignment="Top" Width="297"/>
-        <Ellipse Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="104" Margin="1668,213,0,0" Stroke="Black" VerticalAlignment="Top" Width="105" Grid.Row="1" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown"/>
-        <Label x:Name="label1" Content="Help" HorizontalAlignment="Left" Margin="1701,256,0,0" VerticalAlignment="Top" Foreground="#FF00796B" Grid.Row="1" Height="44" Width="47"/>
+        <Label x:Name="label" Content="Email" HorizontalAlignment="Left" Margin="269,8,0,0" VerticalAlignment="Top" Width="105" FontFamily="HP Simplified Light" FontSize="32" Foreground="#FF00796B" FontWeight="Bold" RenderTransformOrigin="0.362,0.83" Height="47" Grid.Row="1"/>
+        <Label x:Name="label_Copy" Content="Password" HorizontalAlignment="Left" Margin="242,325,0,0" VerticalAlignment="Top" Width="168" FontFamily="HP Simplified Light" FontSize="32" Foreground="#FF00796B" FontWeight="Bold" Height="47"/>
+        <TextBox x:Name="email_box" HorizontalAlignment="Left" Height="62" Margin="487,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="529" FontFamily="HP Simplified" FontSize="24" Grid.Row="1"/>
+        <PasswordBox x:Name="password_box" HorizontalAlignment="Left" Margin="487,325,0,0" VerticalAlignment="Top" Width="529" Height="69" FontSize="24" FontFamily="HP Simplified"/>
+        <Button x:Name="button" Content="Login" HorizontalAlignment="Left" Height="105" Margin="168,155,0,0" VerticalAlignment="Top" Width="992" Click="button_Click" Foreground="#FF00796B" FontFamily="HP Simplified" FontSize="24" Grid.Row="1"/>
+        <Image x:Name="image" Source="/DETI-MakerLab;component/images/dml_logo.png" HorizontalAlignment="Left" Height="251" Margin="536,10,0,0" VerticalAlignment="Top" Width="297"/>
+        <Ellipse Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="68" Margin="1229,192,0,0" Stroke="Black" VerticalAlignment="Top" Width="77" Grid.Row="1" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown"/>
+        <Label x:Name="label1" Content="Help" HorizontalAlignment="Left" Margin="1251,198,0,0" VerticalAlignment="Top" Foreground="#FF00796B" Grid.Row="1" Height="35" Width="77"/>
     </Grid>
 </Page>

@@ -19,9 +19,28 @@ namespace DETI_MakerLab
     /// </summary>
     public partial class StaffWindow : Window
     {
+        private Staff _user;
+
+        internal Staff StaffUser
+        {
+            get { return _user; }
+            set
+            {
+                if (value == null)
+                    throw new Exception("Invalid User");
+                _user = value;
+            }
+        }
+
         public StaffWindow()
         {
             InitializeComponent();
+        }
+
+        public StaffWindow(Staff User)
+        {
+            InitializeComponent();
+            this.StaffUser = User;
         }
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)

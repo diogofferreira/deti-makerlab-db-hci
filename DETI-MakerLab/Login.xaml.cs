@@ -46,10 +46,10 @@ namespace DETI_MakerLab
             if (logged) {
                 if (user != null)
                 {
-                    HomeWindow home = new HomeWindow();
+                    HomeWindow home = new HomeWindow(user);
                     home.Show();
                 } else if (staff != null) {
-                    StaffWindow staffHome = new StaffWindow();
+                    StaffWindow staffHome = new StaffWindow(staff);
                     staffHome.Show();
                 }
                 Window.GetWindow(this).Hide();

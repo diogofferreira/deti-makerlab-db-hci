@@ -5,9 +5,23 @@ namespace DETI_MakerLab
 {
     public partial class HomeWindow : Window
     {
-        public HomeWindow()
+        private DMLUser _user;
+
+        public DMLUser User
+        {
+            get { return _user; }
+            set
+            {
+                if (value == null)
+                    throw new Exception("Invalid User");
+                _user = value;
+            }
+        }
+
+        public HomeWindow(DMLUser user)
         {
             InitializeComponent();
+            this.User = user;
 
             // Show home page
             frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);

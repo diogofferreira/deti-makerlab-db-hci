@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace DETI_MakerLab
 {
@@ -22,7 +25,7 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             this.User = user;
-
+            
             // Show home page
             frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
         }

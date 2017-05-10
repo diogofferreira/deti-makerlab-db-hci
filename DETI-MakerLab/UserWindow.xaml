@@ -15,9 +15,6 @@
             <ColumnDefinition MaxWidth="250"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid.Resources>
-            <local:DMLUser x:Key="User"/>
-        </Grid.Resources>
         <Rectangle Grid.Column="0" Fill="#FF00796B"/>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -73,7 +70,7 @@
             <Rectangle Grid.Row="0" Fill="#FF00796B"/>
             <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" Foreground="White"/>
             <Image x:Name="profile_image" HorizontalAlignment="Left" Height="100" Margin="1114,22,0,0" VerticalAlignment="Top" Width="100" Source="/DETI-MakerLab;component/images/dml_logo_white.png"/>
-            <Label x:Name="username" Content="{Binding Path=Email}" HorizontalAlignment="Center" Margin="1237,55,285,0" VerticalAlignment="Top" Width="148" Foreground="White" FontSize="25"/>
+            <Label x:Name="username" Content="USERNAME" HorizontalAlignment="Center" Margin="1237,55,285,0" VerticalAlignment="Top" Width="148" Foreground="White" FontSize="25"/>
             <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1460,50,0,0" VerticalAlignment="Top" Width="113" Height="57" Background="Transparent" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="#FF004D40"/>
         </Grid>
     </Grid>

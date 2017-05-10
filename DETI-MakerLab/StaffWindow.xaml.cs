@@ -37,11 +37,11 @@ namespace DETI_MakerLab
             InitializeComponent();
         }
 
-        public StaffWindow(Staff User)
+        /*public StaffWindow(Staff User)
         {
             InitializeComponent();
             this.StaffUser = User;
-        }
+        }*/
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)
         {

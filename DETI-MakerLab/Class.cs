@@ -11,7 +11,7 @@ namespace DETI_MakerLab
     {
         private int _classID;
         private String _className;
-        private List<Professor> _managers;
+        private List<Professor> _managers = new List<Professor>();
 
         public int ClassID
         {

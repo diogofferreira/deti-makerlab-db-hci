@@ -49,7 +49,7 @@ namespace DETI_MakerLab
                     HomeWindow home = new HomeWindow(user);
                     home.Show();
                 } else if (staff != null) {
-                    StaffWindow staffHome = new StaffWindow(staff);
+                    StaffWindow staffHome = new StaffWindow();
                     staffHome.Show();
                 }
                 Window.GetWindow(this).Hide();
@@ -61,84 +61,123 @@ namespace DETI_MakerLab
         private bool checkLogin()
         {
             bool result = false;
-
-            if (!verifySGBDConnection())
-                return false;
+            SqlCommand cmd;
+            SqlDataReader userData;
 
             try {
-                SqlCommand cmd = new SqlCommand("SELECT * FROM DMLUser WHERE Email=@email");
+                if (!verifySGBDConnection())
+                    return false;
+                cmd = new SqlCommand("SELECT * FROM DMLUser WHERE Email=@email");
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@email", email_box.Text);
                 cmd.Connection = cn;
-                SqlDataReader userData = cmd.ExecuteReader();
+                userData = cmd.ExecuteReader();
                 if (userData.HasRows)
                 {
                     userData.Read();
                     // Check if password matches
                     verifyPassword(password_box.Password, userData["PasswordHash"].ToString());
+                    cn.Close();
 
-                    // Check if it's student or professor
-                    SqlCommand cmdType = new SqlCommand("SELECT * FROM Professor WHERE NumMec=@nummec");
-                    cmdType.Parameters.Clear();
-                    cmdType.Parameters.AddWithValue("@nummec", int.Parse(userData["NumMec"].ToString()));
-                    cmdType.Connection = cn;
-                    SqlDataReader typeData = cmd.ExecuteReader();
-                    if (!typeData.HasRows)
-                    {
-                        cmd.CommandText = "SELECT * FROM Student WHERE NumMec=@nummec";
-                        typeData = cmd.ExecuteReader();
-                        user = new Student(
-                            int.Parse(userData["NumMec"].ToString()),
-                            userData["FirstName"].ToString(),
-                            userData["LastName"].ToString(),
-                            userData["Email"].ToString(),
-                            userData["PasswordHash"].ToString(),
-                            userData["PathToImage"].ToString(),
-                            typeData["Course"].ToString()
-                            );
-                    }
-                    else
-                    {
-                        user = new Professor(
-                            int.Parse(userData["NumMec"].ToString()),
-                            userData["FirstName"].ToString(),
-                            userData["LastName"].ToString(),
-                            userData["Email"].ToString(),
-                            userData["PasswordHash"].ToString(),
-                            userData["PathToImage"].ToString(),
-                            typeData["ScientificArea"].ToString()
-                            );
-                    }
-                    result = true;  
+                    // Check if it is professor or student
+                    if (checkProfessor(userData)) { result = true; }
+                    if (!result && checkStudent(userData)) { result = true; }
                 }
                 else
                 {
-                    cmd.CommandText = "SELECT * FROM Staff WHERE Email=@email";
-                    userData = cmd.ExecuteReader();
-                    if (userData.HasRows)
-                    {
-                        userData.Read();
-                        // Check if password matches
-                        verifyPassword(password_box.Password, userData["PasswordHash"].ToString());
-
-                        staff = new Staff(
-                            int.Parse(userData["EmployeeNum"].ToString()),
-                            userData["FirstName"].ToString(),
-                            userData["LastName"].ToString(),
-                            userData["Email"].ToString(),
-                            userData["PasswordHash"].ToString(),
-                            userData["PathToImage"].ToString()
-                            );
-                        result = true;
-                    }
-                }
-                cn.Close();
+                    cn.Close();
+                    if (checkStaff()) { result = true; }
+                }   
             } catch (SqlException e) {
                 throw new Exception(e.Message);
             } finally {
                 cn.Close();
             } 
 
+            return result;
+        }
+
+        private bool checkProfessor(SqlDataReader userData)
+        {
+            if (!verifySGBDConnection())
+                return false;
+            bool result = false;
+            SqlCommand cmdType = new SqlCommand("SELECT * FROM Professor WHERE NumMec=@nummec");
+            cmdType.Parameters.Clear();
+            cmdType.Parameters.AddWithValue("@nummec", int.Parse(userData["NumMec"].ToString()));
+            cmdType.Connection = cn;
+            SqlDataReader typeData = cmdType.ExecuteReader();
+            if (typeData.HasRows)
+            {
+                user = new Student(
+                    int.Parse(userData["NumMec"].ToString()),
+                    userData["FirstName"].ToString(),
+                    userData["LastName"].ToString(),
+                    userData["Email"].ToString(),
+                    userData["PasswordHash"].ToString(),
+                    userData["PathToImage"].ToString(),
+                    typeData["Course"].ToString()
+                    );
+                result = true;
+            }
+            cn.Close();
+            return result;
+        }
+
+        private bool checkStudent(SqlDataReader userData)
+        {
+            if (!verifySGBDConnection())
+                return false;
+            bool result = false;
+            SqlCommand cmdType = new SqlCommand("SELECT * FROM Student WHERE NumMec=@nummec");
+            cmdType.Parameters.Clear();
+            cmdType.Parameters.AddWithValue("@nummec", int.Parse(userData["NumMec"].ToString()));
+            cmdType.Connection = cn;
+            SqlDataReader typeData = cmdType.ExecuteReader();
+            if (typeData.HasRows)
+            {
+                user = new Professor(
+                    int.Parse(userData["NumMec"].ToString()),
+                    userData["FirstName"].ToString(),
+                    userData["LastName"].ToString(),
+                    userData["Email"].ToString(),
+                    userData["PasswordHash"].ToString(),
+                    userData["PathToImage"].ToString(),
+                    typeData["ScientificArea"].ToString()
+                    );
+                result = true;
+            }
+            cn.Close();
+            return result;
+        }
+
+        private bool checkStaff()
+        {
+            if (!verifySGBDConnection())
+                return false;
+            bool result = false;
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Staff WHERE Email=@email");
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@email", email_box.Text);
+            cmd.Connection = cn;
+            SqlDataReader userData = cmd.ExecuteReader();
+            if (userData.HasRows)
+            {
+                userData.Read();
+                // Check if password matches
+                verifyPassword(password_box.Password, userData["PasswordHash"].ToString());
+
+                staff = new Staff(
+                    int.Parse(userData["EmployeeNum"].ToString()),
+                    userData["FirstName"].ToString(),
+                    userData["LastName"].ToString(),
+                    userData["Email"].ToString(),
+                    userData["PasswordHash"].ToString(),
+                    userData["PathToImage"].ToString()
+                    );
+                result = true;
+            }
+            cn.Close();
             return result;
         }
 

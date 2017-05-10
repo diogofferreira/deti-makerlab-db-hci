@@ -75,6 +75,7 @@
     <Compile Include="FAQ.xaml.cs">
       <DependentUpon>FAQ.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NetworkResources.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectChanges.xaml.cs">
       <DependentUpon>ProjectChanges.xaml</DependentUpon>
@@ -83,6 +84,7 @@
       <DependentUpon>ProjectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Requisition.cs" />
+    <Compile Include="Resources.cs" />
     <Compile Include="ResourcesList.xaml.cs">
       <DependentUpon>ResourcesList.xaml</DependentUpon>
     </Compile>

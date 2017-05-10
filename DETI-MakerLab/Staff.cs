@@ -64,7 +64,7 @@ namespace DETI_MakerLab
             get { return _passwordHash; }
             set
             {
-                if (value == null)
+                if (value == null | String.IsNullOrEmpty(value))
                     throw new Exception("Invalid password");
                 byte[] salt;
                 new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);

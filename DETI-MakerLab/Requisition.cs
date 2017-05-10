@@ -10,8 +10,8 @@ namespace DETI_MakerLab
     class Requisition
     {
         private int _requisitionID;
-        private int _projectID;
-        private int _userID;
+        private Project _reqProject;
+        private DMLUser _user;
         private DateTime _reqDate;
         private List<int> _resources = new List<int>();
 
@@ -21,20 +21,25 @@ namespace DETI_MakerLab
             set { _requisitionID = value; }
         }
 
-        public int ProjectID
+        public Project ReqProject
         {
-            get { return _projectID; }
-            set { _projectID = value; }
-        }
-
-        public int UserID
-        {
-            get { return _userID; }
+            get { return _reqProject; }
             set
             {
-                if (value > 100000)
-                    throw new Exception("Invalid NumMec");
-                _userID = value;
+                if (value == null)
+                    throw new Exception("Invalid Project");
+                _reqProject = value;
+            }
+        }
+
+        public DMLUser User
+        {
+            get { return _user; }
+            set
+            {
+                if (value == null)
+                    throw new Exception("Invalid User");
+                _user = value;
             }
         }
 
@@ -64,11 +69,11 @@ namespace DETI_MakerLab
             return "Requisition " + RequisitionID.ToString();
         }
 
-        public Requisition(int RequisitionID, int ProjectID, int UserID, DateTime ReqDate)
+        public Requisition(int RequisitionID, Project ReqProject, DMLUser User, DateTime ReqDate)
         {
             this.RequisitionID = RequisitionID;
-            this.ProjectID = ProjectID;
-            this.UserID = UserID;
+            this.ReqProject = ReqProject;
+            this.User = User;
             this.ReqDate = ReqDate;
         }
     }

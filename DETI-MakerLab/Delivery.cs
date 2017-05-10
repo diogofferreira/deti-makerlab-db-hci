@@ -10,8 +10,8 @@ namespace DETI_MakerLab
     class Delivery
     {
         private int _deliveryID;
-        private int _projectID;
-        private int _userID;
+        private Project _delProject;
+        private DMLUser _user;
         private DateTime _delDate;
         private List<int> _resources = new List<int>();
 
@@ -21,20 +21,25 @@ namespace DETI_MakerLab
             set { _deliveryID = value; }
         }
 
-        public int ProjectID
+        public Project DelProject
         {
-            get { return _projectID; }
-            set { _projectID = value; }
-        }
-
-        public int UserID
-        {
-            get { return _userID; }
+            get { return _delProject; }
             set
             {
-                if (value > 100000)
-                    throw new Exception("Invalid NumMec");
-                _userID = value;
+                if (value == null)
+                    throw new Exception("Invalid Project");
+                _delProject = value;
+            }
+        }
+
+        public DMLUser User
+        {
+            get { return _user; }
+            set
+            {
+                if (value == null)
+                    throw new Exception("Invalid User");
+                _user = value;
             }
         }
 
@@ -64,11 +69,11 @@ namespace DETI_MakerLab
             return "Requisition " + DeliveryID.ToString();
         }
 
-        public Delivery(int DeliveryID, int ProjectID, int UserID, DateTime DelDate)
+        public Delivery(int DeliveryID, Project DelProject, DMLUser User, DateTime DelDate)
         {
             this.DeliveryID = DeliveryID;
-            this.ProjectID = ProjectID;
-            this.UserID = UserID;
+            this.DelProject = DelProject;
+            this.User = User;
             this.DelDate = DelDate;
         }
     }

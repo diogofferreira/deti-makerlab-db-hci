@@ -13,6 +13,7 @@ namespace DETI_MakerLab
         private String _projectName;
         private String _projectDescription;
         private int _classID;
+        private List<int[]> _workers = new List<int[]>();
 
         public int ProjectID
         {
@@ -41,6 +42,28 @@ namespace DETI_MakerLab
         {
             get { return _classID; }
             set { _classID = value; }
+        }
+
+        public List<int[]> Workers
+        {
+            get { return _workers; }
+        }
+
+        public void addWorker(int UserID, int RoleID)
+        {
+            int[] worker = [UserID, RoleID];
+            _workers.Add(worker);
+        }
+
+        public bool removeWorker(int UserID, int RoleID)
+        {
+            int[] worker = [UserID, RoleID];
+            if (_workers.Contains(worker))
+            {
+                _workers.Remove(worker);
+                return true;
+            }
+            return false;
         }
 
         public override string ToString()
@@ -98,11 +121,5 @@ namespace DETI_MakerLab
             this.RoleID = RoleID;
             this.RoleDescription = RoleDescription;
         }
-    }
-
-    [Serializable()]
-    class WorksOn
-    {
-
     }
 }

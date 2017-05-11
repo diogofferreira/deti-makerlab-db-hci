@@ -77,4 +77,77 @@ namespace DETI_MakerLab
             this.ReqDate = ReqDate;
         }
     }
+
+    [Serializable()]
+    public class RequisitionInfo
+    {
+        private int _reqID;
+        private String _projectName;
+        private int _userID;
+        private String _productDescription;
+        private int _units;
+        private DateTime _reqDate;
+
+        public int ReqID
+        {
+            get { return _reqID; }
+            set { _reqID = value; }
+        }
+
+        public String ProjectName
+        {
+            get { return _projectName; }
+            set
+            {
+                if (value == null | String.IsNullOrEmpty(value))
+                    throw new Exception("Invalid Project Name");
+                _projectName = value;
+            }
+        }
+
+        public int UserID
+        {
+            get { return _userID; }
+            set { _userID = value; }
+        }
+
+        public String ProductDescription
+        {
+            get { return _productDescription; }
+            set
+            {
+                if (value == null | String.IsNullOrEmpty(value))
+                    throw new Exception("Invalid Product Description");
+                _productDescription = value;
+            }
+        }
+
+        public int Units
+        {
+            get { return _units; }
+            set { _units = value; }
+        }
+
+        public DateTime ReqDate
+        {
+            get { return _reqDate; }
+            set
+            {
+                if (value == null)
+                    throw new Exception("Invalid Date");
+                _reqDate = value;
+            }
+        }
+
+        public RequisitionInfo(int ReqID, String ProjectName, int UserID,
+            String ProductDescription, int Units, DateTime ReqDate)
+        {
+            this.ReqID = ReqID;
+            this.ProjectName = ProjectName;
+            this.UserID = UserID;
+            this.ProductDescription = ProductDescription;
+            this.Units = Units;
+            this.ReqDate = ReqDate;
+        }
+    }
 }

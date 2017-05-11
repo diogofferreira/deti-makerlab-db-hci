@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DETI_MakerLab
 {
     [Serializable()]
-    class Staff
+    public class Staff
     {
         private int _employeeNum;
         private String _firstName;
@@ -119,6 +119,7 @@ namespace DETI_MakerLab
         {
             this.EmployeeNum = EmployeeNum;
             this.FirstName = FirstName;
+            this.LastName = LastName;
             this.Email = Email;
             this.PasswordHash = PasswordHash;
             this.PathToImage = PathToImage;

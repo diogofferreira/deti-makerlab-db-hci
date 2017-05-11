@@ -37,7 +37,7 @@ namespace DETI_MakerLab
             InitializeComponent();
         }
 
-        /*public StaffWindow(Staff User)
+        public StaffWindow(Staff User)
         {
             InitializeComponent();
             this.StaffUser = User;
@@ -45,7 +45,7 @@ namespace DETI_MakerLab
             // Set user name label and image
             user_name.Content = _user.FirstName + " " + _user.LastName;
             //profile_image.Source = ;
-        }*/
+        }
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)
         {

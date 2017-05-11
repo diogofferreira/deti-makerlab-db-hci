@@ -10,9 +10,32 @@
       Title="Home">
 
     <Grid>
+        <Grid.Resources>
+            <local:LastProjects x:Key="RecentProjects"/>
+            <local:LastRequisitions x:Key="RecentRequisitions"/>
+        </Grid.Resources>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,0" />
-        <ListBox x:Name="last_project_list" HorizontalAlignment="Left" Height="500" Margin="78,87,0,0" VerticalAlignment="Top" Width="380"/>
-        <ListBox x:Name="last_requisitions_list" HorizontalAlignment="Left" Height="500" Margin="732,87,0,0" VerticalAlignment="Top" Width="380"/>
+        <ListBox x:Name="last_project_list" HorizontalAlignment="Left" Height="500" Margin="78,87,0,0" VerticalAlignment="Top" Width="380" ItemsSource="{Binding Source={StaticResource LastProjects}}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path=ProjectName}"></Label>
+                    <Label Content="{Binding Path=ProjectDescription}"></Label>
+                    <Label Content="{Binding Path=ClassID}"></Label>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox x:Name="last_requisitions_list" HorizontalAlignment="Left" Height="500" Margin="732,87,0,0" VerticalAlignment="Top" Width="380" ItemsSource="{Binding Source={StaticResource LastRequisitions}}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path=ReqID}"></Label>
+                    <Label Content="{Binding Path=ProjectName}"></Label>
+                    <Label Content="{Binding Path=UsedID}"></Label>
+                    <Label Content="{Binding Path=ProductDescription}"></Label>
+                    <Label Content="{Binding Path=Units}"></Label>
+                    <Label Content="{Binding Path=ReqDate}"></Label>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Label Content="Last Projects" Style="{StaticResource titleStyle}" Margin="176,10,830,554" />
         <Label Content="Last Requisitions" Style="{StaticResource titleStyle}" Margin="796,10,144,564" />
     </Grid>

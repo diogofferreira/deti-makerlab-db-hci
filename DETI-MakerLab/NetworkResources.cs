@@ -128,14 +128,21 @@ namespace DETI_MakerLab
             }
         }
 
+        public OS UsedOS
+        {
+            get { return _usedOS; }
+            set { _usedOS = value; }
+        }
+
         public VirtualMachine(int ResourceID, Project ReqProject, String IP, 
-            String PasswordHash, String DockerID)
+            String PasswordHash, String DockerID, OS UsedOS)
         {
             this.ResourceID = ResourceID;
             this.ReqProject = ReqProject;
             this.IP = IP;
             this.PasswordHash = PasswordHash;
             this.DockerID = DockerID;
+            this.UsedOS = UsedOS;
         }
     }
 

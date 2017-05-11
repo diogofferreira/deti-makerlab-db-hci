@@ -1,13 +1,35 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace DETI_MakerLab
 {
     public partial class HomeWindow : Window
     {
-        public HomeWindow()
+        private DMLUser _user;
+
+        public DMLUser User
+        {
+            get { return _user; }
+            set
+            {
+                if (value == null)
+                    throw new Exception("Invalid User");
+                _user = value;
+            }
+
+        }
+
+        public HomeWindow(DMLUser user)
         {
             InitializeComponent();
+            this.User = user;
+
+            // Set user name label and image
+            user_name.Content = _user.FirstName + " " + _user.LastName;
+            //profile_image.Source = ;
 
             // Show home page
             frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);

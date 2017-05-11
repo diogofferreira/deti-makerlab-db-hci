@@ -21,7 +21,7 @@
                 <RowDefinition Height="250"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Image Grid.Row="0" x:Name="image" Source="/DETI-MakerLab;component/images/dml_logo_white.png" Margin="10,-3,16,41"/>
+            <Image Grid.Row="0" x:Name="image" Source="/DETI-MakerLab;component/images/dml_logo_white.png" Margin="10,-18,16,56"/>
             <StackPanel Grid.Row="1">
                 <Button x:Name="home_button" Height="98" Background="#FF00796B" BorderBrush="Transparent" VerticalContentAlignment="Center" Margin="-14,0,0,0" Click="Home_Button_Click" >
                     <StackPanel Orientation="Horizontal">
@@ -55,16 +55,16 @@
             </StackPanel>
             <Label Content="MakerLab" HorizontalAlignment="Left" Margin="20,164,0,0" VerticalAlignment="Top" RenderTransformOrigin="-10.947,-1.769" Foreground="White" Height="52" Width="126" FontSize="25" FontFamily="Ruda"/>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="0,0,10,32">
             <Grid.RowDefinitions>
                 <RowDefinition Height="75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Rectangle Grid.Row="0" Fill="#FF00796B"/>
-            <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" Foreground="White" Margin="0,0,10,32"/>
-            <Image x:Name="profile_image" HorizontalAlignment="Left" Height="90" Margin="792,10,0,0" VerticalAlignment="Top" Width="60" Source="/DETI-MakerLab;component/images/dml_logo_white.png" Grid.RowSpan="2"/>
-            <Label Content="USERNAME" HorizontalAlignment="Center" Margin="875,29,147,0" VerticalAlignment="Top" Width="94" Foreground="White" FontSize="15" Height="44"/>
-            <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1009,21,0,0" VerticalAlignment="Top" Width="75" Height="44" Background="Transparent" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="#FF004D40"/>
+            <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" Foreground="White"/>
+            <Image x:Name="profile_image" HorizontalAlignment="Left" Height="90" Margin="883,10,0,0" VerticalAlignment="Top" Width="60" Source="/DETI-MakerLab;component/images/dml_logo_white.png" Grid.RowSpan="2"/>
+            <Label x:Name="user_name" HorizontalAlignment="Center" Margin="948,26,110,0" VerticalAlignment="Top" Width="148" Foreground="White" FontSize="15" Height="44"/>
+            <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1101,21,0,0" VerticalAlignment="Top" Width="75" Height="44" Background="Transparent" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="#FF004D40"/>
         </Grid>
     </Grid>
 </Window>

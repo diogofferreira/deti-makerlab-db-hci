@@ -86,6 +86,12 @@ namespace DETI_MakerLab
             }
         }
 
+        public String Description
+        {
+            get { return _description; }
+            set { _description = value; }
+        }
+
         public Staff Creator
         {
             get { return _creator; }
@@ -109,7 +115,7 @@ namespace DETI_MakerLab
         }
 
         public ElectronicResources(String ProductName, String Manufactor, String Model,
-            Staff Creator, String PathToImage)
+            String Description, Staff Creator, String PathToImage)
         {
             this.ProductName = ProductName;
             this.Manufactor = Manufactor;

@@ -19,10 +19,33 @@ namespace DETI_MakerLab
     /// </summary>
     public partial class StaffWindow : Window
     {
+        private Staff _user;
+
+        internal Staff StaffUser
+        {
+            get { return _user; }
+            set
+            {
+                if (value == null)
+                    throw new Exception("Invalid User");
+                _user = value;
+            }
+        }
+
         public StaffWindow()
         {
             InitializeComponent();
         }
+
+        /*public StaffWindow(Staff User)
+        {
+            InitializeComponent();
+            this.StaffUser = User;
+            
+            // Set user name label and image
+            user_name.Content = _user.FirstName + " " + _user.LastName;
+            //profile_image.Source = ;
+        }*/
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)
         {

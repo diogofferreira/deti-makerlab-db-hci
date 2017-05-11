@@ -10,7 +10,7 @@
       Title="Electronics">
 
     <Grid>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="582,0,596,10" />
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,0" />
         <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="183" Margin="54,142,0,0" VerticalAlignment="Top" Width="455"/>
         <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="424" Margin="663,142,0,0" VerticalAlignment="Top" Width="459"/>
         <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="196,27,752,553"/>

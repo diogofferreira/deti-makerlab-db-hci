@@ -10,7 +10,7 @@
       Title="CreateProject">
 
     <Grid>
-        <Label Content="New Project" Style="{StaticResource bigTitleStyle}" Margin="455,10,443,0" Width="298"/>
+        <Label Content="New Project" Style="{StaticResource bigTitleStyle}" Margin="455,10,443,0" Width="298" HorizontalAlignment="Left"/>
         <Label Content="Project Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="167,115,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="160" Height="40"/>
         <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="183,189,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="126" Height="41"/>
         <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="200,303,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="127" Height="40"/>
@@ -30,6 +30,6 @@
             </TextBox.ToolTip>
         </TextBox>
         <TextBox x:Name="project_tags" HorizontalAlignment="Left" Height="31" Margin="410,519,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="20"/>
-        <Button x:Name="create_project_button" Content="Create Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="142,580,0,0" VerticalAlignment="Top" Width="851" Height="38"/>
+        <Button x:Name="create_project_button" Content="Create Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="183,580,0,0" VerticalAlignment="Top" Width="851" Height="38"/>
     </Grid>
 </Page>

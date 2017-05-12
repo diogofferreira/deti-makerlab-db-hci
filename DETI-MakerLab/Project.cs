@@ -13,6 +13,7 @@ namespace DETI_MakerLab
         private String _projectName;
         private String _projectDescription;
         private int _classID;
+        private String _className;
         private List<int[]> _workers = new List<int[]>();
 
         public int ProjectID
@@ -42,6 +43,12 @@ namespace DETI_MakerLab
         {
             get { return _classID; }
             set { _classID = value; }
+        }
+
+        public String ClassName
+        {
+            get { return _className; }
+            set { _className = value; }
         }
 
         public List<int[]> Workers
@@ -85,6 +92,14 @@ namespace DETI_MakerLab
             this.ProjectName = ProjectName;
             this.ProjectDescription = ProjectDescription;
             this.ClassID = ClassID;
+        }
+
+        public Project(int ProjectID, String ProjectName, String ProjectDescription, String ClassName)
+        {
+            this.ProjectID = ProjectID;
+            this.ProjectName = ProjectName;
+            this.ProjectDescription = ProjectDescription;
+            this.ClassName = ClassName;
         }
     }
 

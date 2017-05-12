@@ -18,7 +18,7 @@
         <Label Content="Image" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="75" Margin="287,485,0,0"/>
         <TextBox x:Name="equipment_name" HorizontalAlignment="Left" Height="39" Margin="451,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
         <TextBox x:Name="equipment_model" HorizontalAlignment="Left" Height="39" Margin="451,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
-        <ListBox x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="39" Margin="451,223,0,0" VerticalAlignment="Top" Width="552" FontSize="18"/>
+        <TextBox x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="39" Margin="451,223,0,0" VerticalAlignment="Top" Width="552" FontSize="18"/>
         <TextBox x:Name="equipment_description" HorizontalAlignment="Left" Height="157" Margin="451,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
         <Button x:Name="create_equipment_button" Content="Add Equipment" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="104,558,0,0" VerticalAlignment="Top" Width="977" Height="40" HorizontalContentAlignment="Center"/>
         <ListBox x:Name="equipment_image" HorizontalAlignment="Left" Height="36" Margin="451,488,0,0" VerticalAlignment="Top" Width="552" FontSize="18">

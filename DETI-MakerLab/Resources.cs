@@ -95,12 +95,7 @@ namespace DETI_MakerLab
         public Staff Creator
         {
             get { return _creator; }
-            set
-            {
-                if (value == null)
-                    throw new Exception("Invalid Staff");
-                _creator = value;
-            }
+            set { _creator = value; }
         }
 
         public String PathToImage

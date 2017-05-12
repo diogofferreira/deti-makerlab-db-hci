@@ -25,6 +25,7 @@ namespace DETI_MakerLab
     public partial class UserPage : Page
     {
         private DMLUser _user;
+        private SqlConnection cn;
 
         public DMLUser User
         {
@@ -54,54 +55,51 @@ namespace DETI_MakerLab
                 //this.course_area.Content = 'Course';
                 this.user_course_area.Text = ((Student)this.User).Course;
             }
+            LastRequisitions(int.Parse(this.user_nmec.ToString()));
         }
 
-        internal class LastRequisitions : ObservableCollection<RequisitionInfo>
+        private void LastRequisitions(int userID)
         {
-            private SqlConnection cn;
+            cn = getSGBDConnection();
+            if (!verifySGBDConnection())
+                throw new Exception("Could not connect to database");
 
-            public LastRequisitions(int userID)
+            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_REQUISITIONS_INFO WHERE UserID=@userid", cn);
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@userid", userID);
+            SqlDataReader reader = cmd.ExecuteReader();
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            user_last_requisitions_list.Items.Clear();
+
+            while (reader.Read())
             {
+                user_last_requisitions_list.Items.Add(new RequisitionInfo(
+                    int.Parse(reader["RequisitionID"].ToString()),
+                    reader["PrjName"].ToString(),
+                    int.Parse(reader["UserID"].ToString()),
+                    reader["ProductDescription"].ToString(),
+                    int.Parse(reader["Units"].ToString()),
+                    DateTime.ParseExact(reader["ReqDate"].ToString(), "yyMMddHHmm", provider)
+                    ));
+            }
+            cn.Close();
+        }
+
+        private SqlConnection getSGBDConnection()
+        {
+            //TODO: fix data source
+            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
+        }
+
+        private bool verifySGBDConnection()
+        {
+            if (cn == null)
                 cn = getSGBDConnection();
-                if (!verifySGBDConnection())
-                    throw new Exception("Could not connect to database");
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_REQUISITIONS_INFO WHERE UserID=@userid", cn);
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@userid", userID);
-                SqlDataReader reader = cmd.ExecuteReader();
-                CultureInfo provider = CultureInfo.InvariantCulture;
+            if (cn.State != ConnectionState.Open)
+                cn.Open();
 
-                while (reader.Read())
-                {
-                    Add(new RequisitionInfo(
-                        int.Parse(reader["RequisitionID"].ToString()),
-                        reader["PrjName"].ToString(),
-                        int.Parse(reader["UserID"].ToString()),
-                        reader["ProductDescription"].ToString(),
-                        int.Parse(reader["Units"].ToString()),
-                        DateTime.ParseExact(reader["ReqDate"].ToString(), "yyMMddHHmm", provider)
-                        ));
-                }
-                cn.Close();
-            }
-
-            private SqlConnection getSGBDConnection()
-            {
-                //TODO: fix data source
-                return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
-            }
-
-            private bool verifySGBDConnection()
-            {
-                if (cn == null)
-                    cn = getSGBDConnection();
-
-                if (cn.State != ConnectionState.Open)
-                    cn.Open();
-
-                return cn.State == ConnectionState.Open;
-            }
+            return cn.State == ConnectionState.Open;
         }
     }
 }

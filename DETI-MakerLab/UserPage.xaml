@@ -14,9 +14,6 @@
             <RowDefinition Height="104*"/>
             <RowDefinition Height="53*"/>
         </Grid.RowDefinitions>
-        <Grid.Resources>
-            <local:LastRequisitions x:Key="RecentRequisitions"/>
-        </Grid.Resources>
         <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="156,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="107" Height="34"/>
         <Label Content="Email"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="156,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="107" Height="34"/>
         <Label Content="Mec. Num" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="125,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="109" Height="34"/>

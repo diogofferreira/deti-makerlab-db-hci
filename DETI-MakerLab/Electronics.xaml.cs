@@ -71,6 +71,28 @@ namespace DETI_MakerLab
             cn.Close();
         }
 
+        private void LoadAvailableResources()
+        {
+            cn = getSGBDConnection();
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM RESOURCES_TO_REQUEST", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            equipment_list.Items.Clear();
+
+            while (reader.Read())
+            {
+                ResourceInfo res = new ResourceInfo(
+                    reader["ProductDescription"].ToString(),
+                    int.Parse(reader["AvailableUnits"].ToString())
+                    );
+                equipment_list.Items.Add(res);
+            }
+
+            cn.Close();
+        }
+
         private void LoadProjectActiveRequisitons()
         {
             if (SelectedProject == null)
@@ -112,5 +134,31 @@ namespace DETI_MakerLab
 
             return cn.State == ConnectionState.Open;
         }
+    }
+
+    [Serializable()]
+    internal class ResourceInfo
+    {
+        private String _productDescription;
+        private int _units;
+
+        internal String ProductDescription
+        {
+            get { return _productDescription; }
+            set { _productDescription = value; }
+        }
+
+        internal int Units
+        {
+            get { return _units; }
+            set { _units = value; }
+        }
+
+        public ResourceInfo(String ProductDescription, int Units)
+        {
+            this.ProductDescription = ProductDescription;
+            this.Units = Units;
+        }
+
     }
 }

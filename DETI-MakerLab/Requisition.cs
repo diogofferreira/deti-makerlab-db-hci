@@ -97,12 +97,7 @@ namespace DETI_MakerLab
         public String ProjectName
         {
             get { return _projectName; }
-            set
-            {
-                if (value == null | String.IsNullOrEmpty(value))
-                    throw new Exception("Invalid Project Name");
-                _projectName = value;
-            }
+            set { _projectName = value; }
         }
 
         public int UserID
@@ -114,12 +109,7 @@ namespace DETI_MakerLab
         public String ProductDescription
         {
             get { return _productDescription; }
-            set
-            {
-                if (value == null | String.IsNullOrEmpty(value))
-                    throw new Exception("Invalid Product Description");
-                _productDescription = value;
-            }
+            set {  _productDescription = value; }
         }
 
         public int Units
@@ -131,12 +121,7 @@ namespace DETI_MakerLab
         public DateTime ReqDate
         {
             get { return _reqDate; }
-            set
-            {
-                if (value == null)
-                    throw new Exception("Invalid Date");
-                _reqDate = value;
-            }
+            set { _reqDate = value; }
         }
 
         public RequisitionInfo(int ReqID, String ProjectName, int UserID,

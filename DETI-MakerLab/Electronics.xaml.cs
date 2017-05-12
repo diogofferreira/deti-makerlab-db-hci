@@ -80,20 +80,18 @@ namespace DETI_MakerLab
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_WORKERS_INFO WHERE UserNMec=@nmec", cn);
-            cmd.Parameters.AddWithValue("@nmec", UserID);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_ACTIVE_REQS(@projectID)", cn);
+            cmd.Parameters.AddWithValue("@projectID", SelectedProject.ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
             projects_list.Items.Clear();
 
             while (reader.Read())
             {
-                Project prj = new Project(
-                    int.Parse(reader["ProjectID"].ToString()),
-                    reader["PrjName"].ToString(),
-                    reader["PrjDescription"].ToString(),
-                    reader["ClassName"].ToString()
+                Resources unit = new Resources(
+                    int.Parse(reader["ResourceID"].ToString()),
+                    reader["ProductDescription"].ToString()
                     );
-                projects_list.Items.Add(prj);
+                projects_list.Items.Add(unit);
             }
 
             cn.Close();

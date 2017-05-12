@@ -8,6 +8,19 @@
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="CreateProject">
+    <Page.Resources>
+        <DataTemplate x:Key="MembersItem">
+            <Grid Height="53" Width="236">
+                <Label x:Name="member_name" Content="{Binding Path=FirstName}" Margin="152,13,4,12" Width="80" Height="Auto" RenderTransformOrigin="0.5,0.5"/>
+                <ComboBox x:Name="member_role" HorizontalAlignment="Left" Margin="10,10,0,11" VerticalAlignment="Center" Width="126">
+                    <ComboBoxItem>Project Manager</ComboBoxItem>
+                    <ComboBoxItem>Documentation Manager</ComboBoxItem>
+                    <ComboBoxItem>Product Manager</ComboBoxItem>
+                    <ComboBoxItem>Developer</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
         <Label Content="New Project" Style="{StaticResource bigTitleStyle}" Margin="455,10,443,0" Width="298" HorizontalAlignment="Left"/>
@@ -17,7 +30,7 @@
         <Label Content="Class" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="236,464,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="91" Height="50"/>
         <TextBox x:Name="project_name" HorizontalAlignment="Left" Height="40" Margin="410,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="20"/>
         <TextBox x:Name="project_description" HorizontalAlignment="Left" Height="92" Margin="410,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="20"/>
-        <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="135" Margin="410,303,0,0" VerticalAlignment="Top" Width="537" FontSize="18"/>
+        <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="135" Margin="410,303,0,0" VerticalAlignment="Top" Width="537" ItemTemplate="{DynamicResource MembersItem}"/>
         <TextBox x:Name="project_class" HorizontalAlignment="Left" Height="30" Margin="410,464,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="20">
             <TextBox.ToolTip>
                 <ToolTip>

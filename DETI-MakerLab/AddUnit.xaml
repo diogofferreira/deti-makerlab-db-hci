@@ -8,10 +8,20 @@
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="AddUnit">
+    <Page.Resources>
+        <DataTemplate x:Key="UnitsItem">
+            <Grid Height="51" Width="335">
+                <Label x:Name="equipment_name" Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="27,10,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="equipment_supplier" HorizontalAlignment="Left" Height="23" Margin="152,14,-20,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="23" Margin="299,14,-71,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="24"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
 
     <Grid>
         <Label Content="Add Units" Style="{StaticResource bigTitleStyle}" Margin="466,45,488,0"/>
-        <ListBox x:Name="units_list" Margin="152,207,156,72"/>
+        <ListBox x:Name="units_list" Margin="152,207,156,72" ItemTemplate="{DynamicResource UnitsItem}"/>
         <Button x:Name="add_units_button" Content="Add units" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="380,819,0,0" VerticalAlignment="Top" Width="977" Height="66"/>
     </Grid>
 </Page>

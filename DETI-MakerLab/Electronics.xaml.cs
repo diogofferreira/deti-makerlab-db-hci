@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace DETI_MakerLab
         SqlConnection cn;
         private int _userID;
         private Project _selectedProject;
+        private ObservableCollection<Project> ProjectsListData;
+        private ObservableCollection<ElectronicResources> EquipmentsListData;
 
         internal int UserID
         {
@@ -36,6 +39,19 @@ namespace DETI_MakerLab
         {
             get { return _selectedProject; }
             set { _selectedProject = value; }
+        }
+
+        public Electronics()
+        {
+            InitializeComponent();
+            ProjectsListData = new ObservableCollection<Project>();
+            EquipmentsListData = new ObservableCollection<ElectronicResources>();
+            // Hardcoded Data
+            ProjectsListData.Add(new Project(1, "DETI-MakerLab", "Description", 3));
+            projects_list.ItemsSource = ProjectsListData;
+            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
+                "Pi", "Model B", "Description", null, "none"));
+            equipment_list.ItemsSource = EquipmentsListData;
         }
 
         public Electronics(int UserID)

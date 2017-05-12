@@ -8,14 +8,35 @@
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="Electronics">
+    <Page.Resources>
+        <DataTemplate x:Key="ElectronicProjectItem">
+            <Grid>
+                <RadioButton x:Name="project_button" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="project_name" Content="{Binding Path=ProjectName}" HorizontalAlignment="Left" Margin="20,0,0,-6" VerticalAlignment="Top"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ElectronicsEquipmentItem">
+            <Grid Width="291" Height="30">
+                <Label x:Name="equipment_name" Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Center" Height="26" Width="108"/>
+                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="152,3,-74,0" VerticalAlignment="Center" Width="65"/>
+                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="19" Margin="268,4,-147,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="22" RenderTransformOrigin="0.894,0.579" HorizontalContentAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ActiveRequisitionItem">
+            <Grid Height="26" Width="200">
+                <CheckBox x:Name="active_checkbox" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Center"/>
+                <Label x:Name="active_equipment" Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="51,0,-133,0" VerticalAlignment="Center" Width="147"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,0" />
-        <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="183" Margin="54,142,0,0" VerticalAlignment="Top" Width="455"/>
-        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="424" Margin="663,142,0,0" VerticalAlignment="Top" Width="459"/>
+        <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="183" Margin="54,142,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicProjectItem}"/>
+        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="424" Margin="663,142,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
         <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="196,27,752,553"/>
         <Label Content="Active electronic's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,27,0,553"/>
-        <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="184" Margin="54,382,0,0" VerticalAlignment="Top" Width="455"/>
+        <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="184" Margin="54,382,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicsEquipmentItem}"/>
         <Label Content="Project (to associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,105,0,0" VerticalAlignment="Top" Height="37" Width="218"/>
         <Label Content="Equipment" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,330,0,0" VerticalAlignment="Top" Height="52" Width="123"/>
         <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,584,0,0" VerticalAlignment="Top" Width="455" Height="34"/>

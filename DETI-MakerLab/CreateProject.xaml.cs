@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace DETI_MakerLab
     public partial class CreateProject : Page
     {
         SqlConnection cn;
+        private ObservableCollection<DMLUser> MembersListData;
         private List<Role> _roles = new List<Role>();
 
         internal List<Role> Roles
@@ -33,7 +35,11 @@ namespace DETI_MakerLab
         public CreateProject()
         {
             InitializeComponent();
-            LoadMembers();
+            MembersListData = new ObservableCollection<DMLUser>();
+            //LoadMembers();
+            // Hardcoded Data
+            MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "none", "ECT"));
+            project_members.ItemsSource = MembersListData;
         }
 
         private void LoadRoles()

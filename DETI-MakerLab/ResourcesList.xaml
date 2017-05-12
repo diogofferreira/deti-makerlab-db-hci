@@ -8,11 +8,26 @@
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="ResourcesList">
+    <Page.Resources>
+        <DataTemplate x:Key="EquipmentsList">
+            <Grid Height="49" Width="312">
+                <Label Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="34,10,0,0" VerticalAlignment="Top"/>
+                <Button Content="See Units" HorizontalAlignment="Left" Margin="211,13,0,0" VerticalAlignment="Top" Width="75"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="KitsList">
+            <Grid Height="49" Width="312">
+                <Label Content="{Binding Path=Description}" HorizontalAlignment="Left" Margin="34,10,0,0" VerticalAlignment="Top"/>
+                <Button Content="See Units" HorizontalAlignment="Left" Margin="211,13,0,0" VerticalAlignment="Top" Width="75"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,4,593,0" />
-        <ListBox x:Name="electronics_list" HorizontalAlignment="Left" Height="510" Margin="60,102,0,0" VerticalAlignment="Top" Width="448"/>
-        <ListBox x:Name="kits_list" HorizontalAlignment="Left" Height="528" Margin="693,84,0,0" VerticalAlignment="Top" Width="448"/>
+        <ListBox x:Name="electronics_list" HorizontalAlignment="Left" Height="528" Margin="60,84,0,0" VerticalAlignment="Top" Width="448" ItemTemplate="{DynamicResource EquipmentsList}"/>
+        <ListBox x:Name="kits_list" HorizontalAlignment="Left" Height="528" Margin="693,84,0,0" VerticalAlignment="Top" Width="448" ItemTemplate="{DynamicResource KitsList}" />
         <Label Content="Electronics" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.538,0.406" Margin="198,24,750,554"/>
         <Label Content="Kits" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="888,24,158,554"/>
     </Grid>

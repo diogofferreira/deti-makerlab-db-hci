@@ -31,6 +31,11 @@ namespace DETI_MakerLab
             set { _staffID = value; }
         }
 
+        public CreateEquipment()
+        {
+            InitializeComponent();
+        }
+
         public CreateEquipment(int StaffID)
         {
             InitializeComponent();
@@ -53,6 +58,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@ResDescription", equipment_description.Text);
             cmd.Parameters.AddWithValue("@EmployeeNum", StaffID.ToString());
             // Rever isto:
+            /*
             if (typeof(String).IsInstanceOfType(equipment_image))
             {
                 cmd.Parameters.AddWithValue("@PathToImage", equipment_image.Text);
@@ -74,7 +80,7 @@ namespace DETI_MakerLab
             {
                 cn.Close();
             }
-
+            */
         }
 
         private SqlConnection getSGBDConnection()

@@ -43,7 +43,7 @@ namespace DETI_MakerLab
 
             // Just for now, so that we can log in
             //bool logged = checkLogin();
-            user = new Student(
+            /*user = new Student(
                 95235,
                 "Jonas",
                 "Pistoleiro",
@@ -51,7 +51,8 @@ namespace DETI_MakerLab
                 "hash",
                 "none",
                 "ECT"
-            );
+            );*/
+            staff = new Staff(1, "Manuel", "Arez", "ma@ua.pt", "hash", "none");
             bool logged = true;
 
             if (logged) {

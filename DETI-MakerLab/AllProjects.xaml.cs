@@ -23,6 +23,12 @@ namespace DETI_MakerLab
     public partial class AllProjects : Page
     {
         SqlConnection cn;
+
+        public AllProjects()
+        {
+            InitializeComponent();
+        }
+
         public AllProjects(int userID)
         {
             InitializeComponent();

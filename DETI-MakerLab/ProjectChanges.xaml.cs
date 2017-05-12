@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,15 @@ namespace DETI_MakerLab
     /// </summary>
     public partial class ProjectChanges : Page
     {
+        private ObservableCollection<DMLUser> MembersListData;
+
         public ProjectChanges()
         {
             InitializeComponent();
+            MembersListData = new ObservableCollection<DMLUser>();
+            // Hardcoded Data
+            MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "none", "ECT"));
+            project_members.ItemsSource = MembersListData;
         }
     }
 }

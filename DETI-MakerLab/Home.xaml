@@ -10,7 +10,7 @@
       Title="Home">
 
     <Grid>
-        <Grid.Resources>
+       <!-- <Grid.Resources>
             <local:LastProjects x:Key="RecentProjects"/>
             <local:LastRequisitions x:Key="RecentRequisitions"/>
         </Grid.Resources>
@@ -38,5 +38,6 @@
         </ListBox>
         <Label Content="Last Projects" Style="{StaticResource titleStyle}" Margin="176,10,830,554" />
         <Label Content="Last Requisitions" Style="{StaticResource titleStyle}" Margin="796,10,144,564" />
+        -->
     </Grid>
 </Page>

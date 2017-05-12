@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -23,10 +24,17 @@ namespace DETI_MakerLab
     public partial class AddUnit : Page
     {
         private SqlConnection cn;
+        private ObservableCollection<ElectronicResources> EquipmentsListData;
+
         public AddUnit()
         {
             InitializeComponent();
-            LoadEquipments();
+            EquipmentsListData = new ObservableCollection<ElectronicResources>();
+            //LoadEquipments();
+            // Hardcoded Data
+            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
+                "Pi", "Model B", "Description", null, "none"));
+            units_list.ItemsSource = EquipmentsListData;
         }
 
 

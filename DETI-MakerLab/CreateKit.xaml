@@ -8,13 +8,22 @@
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="CreateKit">
+    <Page.Resources>
+        <DataTemplate x:Key="KitItem">
+            <Grid Width="386" Height="35">
+                <Label Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Height="31" Margin="31,0,0,0" VerticalAlignment="Top"/>
+                <Button Content="More Info" HorizontalAlignment="Left" Margin="195,3,0,0" VerticalAlignment="Top" Width="75"/>
+                <TextBox x:Name="equipment_unit"  HorizontalAlignment="Left" Height="23" Margin="349,2,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="25" HorizontalContentAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
         <Label Content="Add Kit" Style="{StaticResource bigTitleStyle}" Margin="474,29,456,0"/>
         <Label Content="Kit Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="136,133,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="156"/>
         <Label Content="Units" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="157,207,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="135"/>
         <TextBox x:Name="kit_name" HorizontalAlignment="Left" Height="39" Margin="355,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="644" FontSize="20"/>
-        <ListBox x:Name="units_list" HorizontalAlignment="Left" Height="331" Margin="355,207,0,0" VerticalAlignment="Top" Width="644" FontSize="18"/>
+        <ListBox x:Name="units_list" HorizontalAlignment="Left" Height="331" Margin="355,207,0,0" VerticalAlignment="Top" Width="644" FontSize="18" ItemTemplate="{DynamicResource KitItem}"/>
         <Button x:Name="create_kit_button" Content="Create Kit" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="98,578,0,0" VerticalAlignment="Top" Width="977" Height="40"/>
     </Grid>
 </Page>

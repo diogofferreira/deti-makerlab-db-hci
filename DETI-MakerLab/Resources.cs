@@ -11,6 +11,7 @@ namespace DETI_MakerLab
     {
         private int _resourceID;
         private Staff _creator;
+        private String _productDescription;
 
         public int ResourceID
         {
@@ -21,12 +22,13 @@ namespace DETI_MakerLab
         public Staff Creator
         {
             get { return _creator; }
-            set
-            {
-                if (value == null)
-                    throw new Exception("Invalid Staff");
-                _creator = value;
-            }
+            set { _creator = value; }
+        }
+
+        public String ProductDescription
+        {
+            get { return _productDescription; }
+            set { _productDescription = value; }
         }
 
         public override string ToString()
@@ -40,6 +42,12 @@ namespace DETI_MakerLab
         {
             this.ResourceID = ResourceID;
             this.Creator = Creator;
+        }
+
+        public Resources(int ResourceID, String ProductDescription)
+        {
+            this.ResourceID = ResourceID;
+            this.ProductDescription = ProductDescription;
         }
     }
 

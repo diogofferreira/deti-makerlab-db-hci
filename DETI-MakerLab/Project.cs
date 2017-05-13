@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DETI_MakerLab
 {
     [Serializable()]
-    class Project
+    public class Project
     {
         private int _projectID;
         private String _projectName;

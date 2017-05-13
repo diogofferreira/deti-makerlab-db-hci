@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Data;
 using System.Data.SqlClient;
+=======
+using System.Collections.ObjectModel;
+>>>>>>> 8e029ba4fce98088428440c5bbc89628eddb7c6b
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +26,28 @@ namespace DETI_MakerLab
     /// </summary>
     public partial class MyProjects : Page
     {
+        private ObservableCollection<Project> ProjectsListData;
         private SqlConnection cn;
 
         public MyProjects(int userID)
         {
             InitializeComponent();
-            LoadProjects(userID);
+            ProjectsListData = new ObservableCollection<Project>();
+            // LoadProjects(userID);
+            ProjectsListData.Add(new Project(1, "DETI-MakerLab", "DETI-MakerLab Project Description"));
+            ProjectsListData.Add(new Project(2, "BlueConf", "BlueConf Project Description"));
+            my_projects_listbox.ItemsSource = ProjectsListData;
+            my_projects_listbox.MouseDoubleClick += new MouseButtonEventHandler(my_projects_listbox_MouseDoubleClick);
+        }
+
+        private void my_projects_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            if (my_projects_listbox.SelectedItem != null)
+            {
+                Project selectedProject = my_projects_listbox.SelectedItem as Project;
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goToProjectPage(selectedProject);
+            }
         }
 
         private void LoadProjects(int userID)
@@ -40,7 +60,6 @@ namespace DETI_MakerLab
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@nmec", userID);
             SqlDataReader reader = cmd.ExecuteReader();
-            my_projects_listbox.Items.Clear();
 
             while (reader.Read())
             {
@@ -50,7 +69,7 @@ namespace DETI_MakerLab
                     reader["PrjDescription"].ToString(),
                     reader["ClassName"].ToString()
                     );
-                my_projects_listbox.Items.Add(prj);
+                ProjectsListData.Add(prj);
             }
 
             cn.Close();
@@ -71,5 +90,4 @@ namespace DETI_MakerLab
 
             return cn.State == ConnectionState.Open;
         }
-    }
 }

@@ -21,13 +21,11 @@
         <Label Content="Project Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="72,11,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="152" Height="58"/>
         <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="89,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="135" Height="45"/>
         <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="104,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="120" Height="46"/>
-        <Label Content="Tags" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="142,328,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="82" Height="48"/>
         <TextBlock x:Name="project_name" HorizontalAlignment="Left" Height="30" Margin="326,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
         <TextBlock x:Name="project_description" HorizontalAlignment="Left" Height="79" Margin="326,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
         <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="134" Margin="326,169,0,0" VerticalAlignment="Top" Width="624" FontSize="18" ItemTemplate="{DynamicResource MembersFrontItem}"/>
-        <TextBlock x:Name="project_tags" HorizontalAlignment="Left" Height="48" Margin="326,328,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
-        <Button x:Name="manage_project_button" Content="Manage Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="989,569,0,0" VerticalAlignment="Top" Width="180" Height="49"/>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="595,152,597,7" Width="4" >
+        <Button x:Name="manage_project_button" Content="Manage Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="989,569,0,0" VerticalAlignment="Top" Width="180" Height="49" Click="manage_project_button_Click"/>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="601,116,591,43" Width="4" >
             <Separator.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="1.13" ScaleX="0.885"/>
@@ -37,7 +35,7 @@
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
-        <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="326,392,269,0" Width="601" Height="79" />
-        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="142" Margin="142,476,0,0" VerticalAlignment="Top" Width="788"/>
+        <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="329,364,266,0" Width="601" Height="79" />
+        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="170" Margin="142,448,0,0" VerticalAlignment="Top" Width="788"/>
     </Grid>
 </Page>

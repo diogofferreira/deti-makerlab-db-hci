@@ -22,14 +22,24 @@ namespace DETI_MakerLab
     public partial class ProjectChanges : Page
     {
         private ObservableCollection<DMLUser> MembersListData;
+        private Project _project;
 
-        public ProjectChanges()
+        public ProjectChanges(Project project)
         {
             InitializeComponent();
+            this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
+
+            project_name.Text = _project.ProjectName;
+            project_description.Text = _project.ProjectDescription;
             // Hardcoded Data
             MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "none", "ECT"));
             project_members.ItemsSource = MembersListData;
+        }
+
+        private void save_project_changes_button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("The project has been changed!");
         }
     }
 }

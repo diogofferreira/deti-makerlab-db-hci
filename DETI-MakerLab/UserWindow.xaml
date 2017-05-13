@@ -71,7 +71,7 @@
             <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" Foreground="White" Margin="0,0,10,32"/>
             <Image x:Name="profile_image" HorizontalAlignment="Left" Height="90" Margin="883,10,0,0" VerticalAlignment="Top" Width="60" Source="/DETI-MakerLab;component/images/dml_logo_white.png" Grid.RowSpan="2"/>
             <Label x:Name="user_name" HorizontalAlignment="Center" Margin="948,26,110,0" VerticalAlignment="Top" Width="148" Foreground="White" FontSize="15" Height="44"/>
-            <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1101,21,0,0" VerticalAlignment="Top" Width="75" Height="44" Background="Transparent" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="#FF004D40"/>
+            <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1101,21,0,0" VerticalAlignment="Top" Width="75" Height="44" Background="Transparent" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="#FF004D40" Click="logout_button_Click"/>
         </Grid>
     </Grid>
 </Window>

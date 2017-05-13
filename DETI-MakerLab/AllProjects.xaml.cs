@@ -27,22 +27,16 @@ namespace DETI_MakerLab
         public AllProjects()
         {
             InitializeComponent();
+            LoadProjects();
         }
 
-        public AllProjects(int userID)
-        {
-            InitializeComponent();
-            LoadProjects(userID);
-        }
-
-        private void LoadProjects(int userID)
+        private void LoadProjects()
         {
             cn = getSGBDConnection();
             if (!verifySGBDConnection())
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_WORKERS_INFO WHERE UserNMec=@nmec", cn);
-            cmd.Parameters.AddWithValue("@nmec", userID);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_INFO", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             all_projects_listbox.Items.Clear();
 

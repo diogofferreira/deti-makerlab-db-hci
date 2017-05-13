@@ -64,7 +64,7 @@ namespace DETI_MakerLab
             if (!verifySGBDConnection())
                 throw new Exception("Could not connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_REQUISITIONS_INFO WHERE UserID=@userid", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_USER_REQS_INFO(@userid)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@userid", userID);
             SqlDataReader reader = cmd.ExecuteReader();

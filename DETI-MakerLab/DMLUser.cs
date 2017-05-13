@@ -81,6 +81,11 @@ namespace DETI_MakerLab
             set { _pathToImage = value; }
         }
 
+        public String FullName
+        {
+            get { return _firstName + ' ' + _lastName; }
+        }
+
         public override String ToString()
         {
             return _numMec.ToString();

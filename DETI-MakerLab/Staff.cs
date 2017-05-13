@@ -76,6 +76,11 @@ namespace DETI_MakerLab
             set { _pathToImage = value; }
         }
 
+        public String FullName
+        {
+            get { return _firstName + ' ' + _lastName; }
+        }
+
         public bool verifyPassword(String password)
         {
             /* Extract the bytes */

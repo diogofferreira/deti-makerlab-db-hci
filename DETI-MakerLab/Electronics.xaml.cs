@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -26,8 +25,6 @@ namespace DETI_MakerLab
         SqlConnection cn;
         private int _userID;
         private Project _selectedProject;
-        private ObservableCollection<Project> ProjectsListData;
-        private ObservableCollection<ElectronicResources> EquipmentsListData;
 
         internal int UserID
         {
@@ -41,25 +38,14 @@ namespace DETI_MakerLab
             set { _selectedProject = value; }
         }
 
-        public Electronics()
-        {
-            InitializeComponent();
-            ProjectsListData = new ObservableCollection<Project>();
-            EquipmentsListData = new ObservableCollection<ElectronicResources>();
-            // Hardcoded Data
-            ProjectsListData.Add(new Project(1, "DETI-MakerLab", "Description", 3));
-            projects_list.ItemsSource = ProjectsListData;
-            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
-                "Pi", "Model B", "Description", null, "none"));
-            equipment_list.ItemsSource = EquipmentsListData;
-        }
-
         public Electronics(int UserID)
         {
             InitializeComponent();
             this.UserID = UserID;
             this.SelectedProject = null;
             LoadProjects();
+            LoadAvailableResources();
+            LoadProjectActiveRequisitons();
         }
 
         private void LoadProjects()
@@ -113,7 +99,7 @@ namespace DETI_MakerLab
         {
             if (SelectedProject == null)
                 return;
-            int projectID = SelectedProject.ProjectID;
+            
             cn = getSGBDConnection();
             if (!verifySGBDConnection())
                 return;
@@ -121,7 +107,7 @@ namespace DETI_MakerLab
             SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_ACTIVE_REQS(@projectID)", cn);
             cmd.Parameters.AddWithValue("@projectID", SelectedProject.ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
-            projects_list.Items.Clear();
+            active_requisitions_list.Items.Clear();
 
             while (reader.Read())
             {
@@ -129,10 +115,88 @@ namespace DETI_MakerLab
                     int.Parse(reader["ResourceID"].ToString()),
                     reader["ProductDescription"].ToString()
                     );
-                projects_list.Items.Add(unit);
+                active_requisitions_list.Items.Add(unit);
             }
 
             cn.Close();
+        }
+
+        /* Precisamos de ver como fica lista para tirar os valores de lá
+        private void SubmitRequisitionResources()
+        {
+            bool createdRequisition = false;
+            int reqID = -1;
+
+            if (SelectedProject == null)
+                return;
+
+            foreach (ListBoxItem resource in equipment_list.Items)
+            {
+                if (int.Parse(resource.units) == 0)
+                    continue;
+
+                if (!createdRequisition)
+                {
+                    reqID = SubmitRequisition();
+                    createdRequisition = true;
+                }
+                if (createdRequisition && reqID == -1)
+                    throw new Exception("Error creating requisition");
+
+                cn = getSGBDConnection();
+                if (!verifySGBDConnection())
+                    throw new Exception("Error connecting to database"); ;
+
+                SqlCommand cmd = new SqlCommand("REQUEST_RESOURCES(@productDescription, @qty, @reqID)", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@productDescription", resource.ProductDescription);
+                cmd.Parameters.AddWithValue("@qty", int.Parse(resource.units));
+                cmd.Parameters.AddWithValue("@reqID", reqID);
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+
+            if (!createdRequisition)
+                throw new Exception("Cannot make a requisition of none equipments!");
+        }*/
+
+        private int SubmitRequisition()
+        {
+            int reqID = -1;
+            cn = getSGBDConnection();
+            if (!verifySGBDConnection())
+                return reqID;
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO Requisition(ProjectID, UserID, ReqDate) " +
+                "OUTPUT Inserted.RequisitionID VALUES (@ProjectID, @UserID, @ReqDate)", cn);
+            cmd.Parameters.AddWithValue("@ProjectID", SelectedProject.ProjectID);
+            cmd.Parameters.AddWithValue("@UserID", UserID);
+            cmd.Parameters.AddWithValue("@ReqDate", "CURRENT_TIMESTAMP");
+
+            try
+            {
+                reqID = (int)cmd.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+            }
+            finally
+            {
+                cn.Close();
+            }
+            return reqID;
         }
 
         private SqlConnection getSGBDConnection()

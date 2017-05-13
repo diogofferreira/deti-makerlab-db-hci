@@ -35,6 +35,17 @@ namespace DETI_MakerLab
             // Hardcoded Data
             MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "/images/dml_logo.png", "ECT"));
             project_members.ItemsSource = MembersListData;
+            project_members.MouseDoubleClick += new MouseButtonEventHandler(project_members_listbox_MouseDoubleClick);
+        }
+
+        private void project_members_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            if (project_members.SelectedItem != null)
+            {
+                DMLUser user = project_members.SelectedItem as DMLUser;
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goToUserPage(user);
+            }
         }
 
         private void manage_project_button_Click(object sender, RoutedEventArgs e)

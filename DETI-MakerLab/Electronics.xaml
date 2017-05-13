@@ -11,21 +11,21 @@
     <Page.Resources>
         <DataTemplate x:Key="ElectronicProjectItem">
             <Grid>
-                <RadioButton x:Name="project_button" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="project_button" GroupName="r" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top"/>
                 <Label x:Name="project_name" Content="{Binding Path=ProjectName}" HorizontalAlignment="Left" Margin="20,0,0,-6" VerticalAlignment="Top"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ElectronicsEquipmentItem">
             <Grid Width="291" Height="30">
                 <Label x:Name="equipment_name" Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Center" Height="26" Width="108"/>
-                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="152,3,-74,0" VerticalAlignment="Center" Width="65"/>
-                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="19" Margin="268,4,-147,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="22" RenderTransformOrigin="0.894,0.579" HorizontalContentAlignment="Center"/>
+                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="152,3,-74,0" VerticalAlignment="Center" Width="65" Click="equipment_info_Click"/>
+                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="19" Margin="268,4,-147,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="22" RenderTransformOrigin="0.894,0.579" HorizontalContentAlignment="Center" ToolTip="Number of units you want to request"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ActiveRequisitionItem">
             <Grid Height="26" Width="200">
                 <CheckBox x:Name="active_checkbox" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Center"/>
-                <Label x:Name="active_equipment" Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="51,0,-133,0" VerticalAlignment="Center" Width="147"/>
+                <Label x:Name="active_equipment" Content="{Binding Path=ProductDescription}" HorizontalAlignment="Left" Margin="51,0,-133,0" VerticalAlignment="Center" Width="147"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

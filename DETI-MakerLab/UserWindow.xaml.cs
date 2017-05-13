@@ -35,7 +35,7 @@ namespace DETI_MakerLab
             frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
         }
 
-        public void Home_Button_Click(object sender, RoutedEventArgs e)
+        private void Home_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show home page
             frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
@@ -44,7 +44,7 @@ namespace DETI_MakerLab
             this.resources_menu.Visibility = this.projects_menu.Visibility =  Visibility.Collapsed;
         }
 
-        public void Resources_Button_Click(object sender, RoutedEventArgs e)
+        private void Resources_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show/hide collapsed resources submenu
             this.resources_menu.Visibility = this.resources_menu.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
@@ -53,20 +53,19 @@ namespace DETI_MakerLab
             this.projects_menu.Visibility = Visibility.Collapsed;
         }
 
-        public void Electronics_Button_Click(object sender, RoutedEventArgs e)
+        private void Electronics_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show electronics page
-            Electronics page = new Electronics(_user.NumMec);
-            frame.Navigate(page);
+            goToElectronicsPage();
         }
 
-        public void Network_Button_Click(object sender, RoutedEventArgs e)
+        private void Network_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show network page
             frame.Source = new Uri("Network.xaml", UriKind.RelativeOrAbsolute);
         }
 
-        public void Projects_Buttons_Click(object sender, RoutedEventArgs e)
+        private void Projects_Buttons_Click(object sender, RoutedEventArgs e)
         {
             // Show/hide collapsed submenu
             this.projects_menu.Visibility = this.projects_menu.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
@@ -75,16 +74,17 @@ namespace DETI_MakerLab
             this.resources_menu.Visibility = Visibility.Collapsed;
         }
 
-        public void Create_Project_Button_Click(object sender, RoutedEventArgs e)
+        private void Create_Project_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show create project page
             frame.Source = new Uri("CreateProject.xaml", UriKind.RelativeOrAbsolute);
         }
 
-        public void My_Projects_Button_Click(object sender, RoutedEventArgs e)
+        private void My_Projects_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show my projects page
-            frame.Source = new Uri("MyProjects.xaml", UriKind.RelativeOrAbsolute);
+            MyProjects page = new MyProjects(_user.NumMec);
+            frame.Navigate(page);
         }
 
         public void goToProjectPage(Project proj)
@@ -96,6 +96,24 @@ namespace DETI_MakerLab
         public void goToChangeProjectPage(Project proj)
         {
             ProjectChanges page = new ProjectChanges(proj);
+            frame.Navigate(page);
+        }
+
+        public void goToEquipmentPage(ElectronicResources equipment)
+        {
+            EquipmentPage page = new EquipmentPage(equipment);
+            frame.Navigate(page);
+        }
+
+        public void goToElectronicsPage()
+        {
+            Electronics page = new Electronics(_user.NumMec);
+            frame.Navigate(page);
+        }
+
+        public void goToUserPage(DMLUser user)
+        {
+            UserPage page = new UserPage(user);
             frame.Navigate(page);
         }
 

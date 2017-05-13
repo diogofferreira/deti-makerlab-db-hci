@@ -32,5 +32,12 @@ namespace DETI_MakerLab
                 "Pi", "Model B", "Description", null, "none"));
             units_list.ItemsSource = EquipmentsListData;
         }
+
+        private void equipment_info_Click(object sender, RoutedEventArgs e)
+        {
+            ElectronicResources equipment = (ElectronicResources)(sender as Button).DataContext;
+            StaffWindow window = (StaffWindow) Window.GetWindow(this);
+            window.goToEquipmentPage(equipment);
+        }
     }
 }

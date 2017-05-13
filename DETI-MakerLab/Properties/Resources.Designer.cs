@@ -63,6 +63,16 @@ namespace DETI_MakerLab.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ard {
+            get {
+                object obj = ResourceManager.GetObject("ard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dml_logo {
             get {
                 object obj = ResourceManager.GetObject("dml_logo", resourceCulture);
@@ -96,6 +106,16 @@ namespace DETI_MakerLab.Properties {
         internal static System.Drawing.Bitmap projects {
             get {
                 object obj = ResourceManager.GetObject("projects", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rasp {
+            get {
+                object obj = ResourceManager.GetObject("rasp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

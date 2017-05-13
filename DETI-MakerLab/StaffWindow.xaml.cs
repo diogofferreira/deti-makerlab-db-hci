@@ -95,6 +95,12 @@ namespace DETI_MakerLab
             this.resources_menu.Visibility = Visibility.Collapsed;
         }
 
+        public void goToEquipmentPage(ElectronicResources equipment)
+        {
+            EquipmentPage page = new EquipmentPage(equipment);
+            frame.Navigate(page);
+        }
+
         private void logout_button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow login = new MainWindow();

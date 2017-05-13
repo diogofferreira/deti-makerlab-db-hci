@@ -12,8 +12,8 @@
         <DataTemplate x:Key="UnitsItem">
             <Grid Height="51" Width="335">
                 <Label x:Name="equipment_name" Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="27,10,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="equipment_supplier" HorizontalAlignment="Left" Height="23" Margin="152,14,-20,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="23" Margin="299,14,-71,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="24"/>
+                <TextBox x:Name="equipment_supplier" HorizontalAlignment="Left" Height="23" Margin="152,14,-20,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top" Width="120" ToolTip="Unit's supplier"/>
+                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="23" Margin="299,14,-71,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="24" ToolTip="Number of units you want to request"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -21,7 +21,7 @@
 
     <Grid>
         <Label Content="Add Units" Style="{StaticResource bigTitleStyle}" Margin="466,45,488,0"/>
-        <ListBox x:Name="units_list" Margin="152,207,156,72" ItemTemplate="{DynamicResource UnitsItem}"/>
-        <Button x:Name="add_units_button" Content="Add units" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="380,819,0,0" VerticalAlignment="Top" Width="977" Height="66"/>
+        <ListBox x:Name="units_list" Margin="148,167,160,112" ItemTemplate="{DynamicResource UnitsItem}"/>
+        <Button x:Name="add_units_button" Content="Add units" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="148,552,0,0" VerticalAlignment="Top" Width="888" Height="66"/>
     </Grid>
 </Page>

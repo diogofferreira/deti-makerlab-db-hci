@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.Data;
 using System.Data.SqlClient;
-=======
 using System.Collections.ObjectModel;
->>>>>>> 8e029ba4fce98088428440c5bbc89628eddb7c6b
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;

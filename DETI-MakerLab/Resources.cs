@@ -169,11 +169,22 @@ namespace DETI_MakerLab
     class Kit : Resources
     {
         private String _description;
+        private List<ElectronicUnit> _units = new List<ElectronicUnit>();
 
         public String Description
         {
             get { return _description; }
             set{ _description = value; }
+        }
+
+        public List<ElectronicUnit> Units
+        {
+            get { return _units; }
+        }
+
+        public void addUnit(ElectronicUnit unit)
+        {
+            _units.Add(unit);
         }
 
         public Kit(int ResourceID, String Description)

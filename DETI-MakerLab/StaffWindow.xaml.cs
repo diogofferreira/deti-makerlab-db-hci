@@ -60,7 +60,6 @@ namespace DETI_MakerLab
         {
             // Show/hide collapsed resources submenu
             this.resources_menu.Visibility = this.resources_menu.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-
         }
 
         private void resources_list_button_Click(object sender, RoutedEventArgs e)
@@ -94,6 +93,14 @@ namespace DETI_MakerLab
 
             // Hide collapsed submenus
             this.resources_menu.Visibility = Visibility.Collapsed;
+        }
+
+        private void logout_button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow login = new MainWindow();
+            login.Show();
+            login.goToLogin();
+            Window.GetWindow(this).Hide();
         }
     }
 }

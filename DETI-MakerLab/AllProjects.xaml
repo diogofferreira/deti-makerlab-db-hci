@@ -8,9 +8,16 @@
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="AllProjects">
+    <Page.Resources>
+        <DataTemplate x:Key="ProjectsItem">
+            <Grid Background="#4DB6AC" Width="950" Margin="0,10,0,10" >
+                <Label Content="{Binding Path=ProjectName}" FontSize="34" Foreground="White" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
         <Label Content="Projects List" Style="{StaticResource bigTitleStyle}" Margin="459,43,439,0" Width="298"/>
-        <ListBox x:Name="all_projects_listbox" Margin="150,185,148,72"/>
+        <ListBox x:Name="all_projects_listbox" Margin="114,161,114,68" HorizontalContentAlignment="Center" BorderBrush="Transparent" ItemTemplate="{DynamicResource ProjectsItem}" MouseDoubleClick="all_projects_listbox_MouseDoubleClick"/>
     </Grid>
 </Page>

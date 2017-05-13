@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -23,11 +24,26 @@ namespace DETI_MakerLab
     public partial class AllProjects : Page
     {
         SqlConnection cn;
+        private ObservableCollection<Project> ProjectsListData;
 
         public AllProjects()
         {
             InitializeComponent();
-            LoadProjects();
+            ProjectsListData = new ObservableCollection<Project>();
+            ProjectsListData.Add(new Project(1, "DETI-MakerLab", "DETI-MakerLab Project Description"));
+            ProjectsListData.Add(new Project(2, "BlueConf", "BlueConf Project Description"));
+            all_projects_listbox.ItemsSource = ProjectsListData;
+            //LoadProjects();
+        }
+
+        private void all_projects_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            if (all_projects_listbox.SelectedItem != null)
+            {
+                Project selectedProject = all_projects_listbox.SelectedItem as Project;
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goToProjectPage(selectedProject);
+            }
         }
 
         private void LoadProjects()

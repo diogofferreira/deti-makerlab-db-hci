@@ -167,7 +167,7 @@ namespace DETI_MakerLab
     }
 
     [Serializable()]
-    class Kit : Resources
+    public class Kit : Resources
     {
         private String _description;
 

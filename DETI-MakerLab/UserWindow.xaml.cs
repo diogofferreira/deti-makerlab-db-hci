@@ -56,7 +56,8 @@ namespace DETI_MakerLab
         private void Electronics_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show electronics page
-            goToElectronicsPage();
+            Electronics page = new Electronics(_user.NumMec);
+            frame.Navigate(page);
         }
 
         private void Network_Button_Click(object sender, RoutedEventArgs e)
@@ -105,16 +106,15 @@ namespace DETI_MakerLab
             frame.Navigate(page);
         }
 
-        public void goToElectronicsPage()
-        {
-            Electronics page = new Electronics(_user.NumMec);
-            frame.Navigate(page);
-        }
-
         public void goToUserPage(DMLUser user)
         {
             UserPage page = new UserPage(user);
             frame.Navigate(page);
+        }
+
+        public void goBack()
+        {
+            frame.GoBack();
         }
 
         private void logout_button_Click(object sender, RoutedEventArgs e)

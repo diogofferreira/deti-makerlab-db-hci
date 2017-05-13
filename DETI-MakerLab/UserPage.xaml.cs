@@ -102,5 +102,19 @@ namespace DETI_MakerLab
 
             return cn.State == ConnectionState.Open;
         }
+
+        private void go_back_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goBack();
+            } catch (Exception exc)
+            {
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goBack();
+            }
+            
+        }
     }
 }

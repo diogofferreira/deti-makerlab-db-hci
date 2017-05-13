@@ -94,9 +94,15 @@ namespace DETI_MakerLab
 
         private void go_back_Click(object sender, RoutedEventArgs e)
         {
-            // TODO :  check if window is HomeWindow or StaffWindow
-            HomeWindow window = (HomeWindow) Window.GetWindow(this);
-            window.goToElectronicsPage();
+            try
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goBack();
+            } catch (Exception exc)
+            {
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goBack();
+            }            
         }
     }
 }

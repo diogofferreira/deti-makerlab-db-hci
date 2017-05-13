@@ -31,10 +31,28 @@ namespace DETI_MakerLab
             EquipmentsListData = new ObservableCollection<ElectronicResources>();
             KitsListData = new ObservableCollection<Kit>();
             // Hardcoded Data
-            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3", "Pi", "Model B", "Description", null, "none"));
+            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
+            "Pi", "Model B", "Raspberry Description", null, "images/rasp.png"));
+            EquipmentsListData.Add(new ElectronicResources("Arduino Uno",
+            "Adafruit", "Uno", "Arduino Description", null, "images/ard.png"));
             electronics_list.ItemsSource = EquipmentsListData;
-            KitsListData.Add(new Kit(1, "Kit RaspberryPi"));
+            KitsListData.Add(new Kit(1, "Kit Raspberry Pi"));
+            KitsListData.Add(new Kit(2, "Kit Arduino Uno"));
             kits_list.ItemsSource = KitsListData;
+        }
+
+        private void equipment_info_Click(object sender, RoutedEventArgs e)
+        {
+            ElectronicResources equipment = (ElectronicResources)(sender as Button).DataContext;
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            window.goToEquipmentPage(equipment);
+        }
+
+        private void kit_info_Click(object sender, RoutedEventArgs e)
+        {
+            Kit kit = (Kit)(sender as Button).DataContext;
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            window.goToKitPage(kit);
         }
     }
 }

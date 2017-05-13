@@ -35,6 +35,6 @@
         </Separator>
         <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="383,322,389,0" Width="424" Height="84" />
         <ListBox x:Name="user_last_requisitions_list" HorizontalAlignment="Left" Height="207" Margin="211,411,0,0" VerticalAlignment="Top" Width="774" Grid.RowSpan="2"/>
-        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1067,160,0,0" VerticalAlignment="Top" Width="119" Height="50" Grid.Row="1"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1067,152,0,0" VerticalAlignment="Top" Width="119" Height="50" Grid.Row="1" Click="go_back_Click"/>
     </Grid>
 </Page>

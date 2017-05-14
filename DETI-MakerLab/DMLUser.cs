@@ -21,6 +21,7 @@ namespace DETI_MakerLab
         private String _email;
         private String _passwordHash;
         private String _pathToImage;
+        private int _roleID;
 
         public int NumMec
         {
@@ -79,6 +80,12 @@ namespace DETI_MakerLab
         {
             get { return _pathToImage; }
             set { _pathToImage = value; }
+        }
+
+        public int RoleID
+        {
+            get { return _roleID; }
+            set { _roleID = value; }
         }
 
         public String FullName

@@ -12,7 +12,8 @@
         <DataTemplate x:Key="MembersItem">
             <Grid Height="53" Width="236">
                 <Label x:Name="member_name" Content="{Binding Path=FirstName}" Margin="152,13,4,12" Width="80" Height="Auto" RenderTransformOrigin="0.5,0.5"/>
-                <ComboBox x:Name="member_role" HorizontalAlignment="Left" Margin="10,10,0,11" VerticalAlignment="Center" Width="126">
+                <ComboBox x:Name="member_role" SelectedIndex="0" HorizontalAlignment="Left" Margin="10,10,0,11" VerticalAlignment="Center" Width="126">
+                    <ComboBoxItem>Not a Member</ComboBoxItem>
                     <ComboBoxItem>Project Manager</ComboBoxItem>
                     <ComboBoxItem>Documentation Manager</ComboBoxItem>
                     <ComboBoxItem>Product Manager</ComboBoxItem>

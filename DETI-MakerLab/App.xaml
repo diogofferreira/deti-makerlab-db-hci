@@ -24,6 +24,12 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontFamily" Value="HP Simplified Light"/>
         </Style>
+        <Style x:Key="smallDescriptionStyle" TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="#00796B"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="HP Simplified Light"/>
+        </Style>
         <!-- Styles related to buttons -->
         <Style x:Key="dmlButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#FF4DB6AC"/>

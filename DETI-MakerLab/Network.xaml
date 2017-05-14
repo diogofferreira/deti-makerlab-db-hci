@@ -8,8 +8,51 @@
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
       Title="Network">
+    <Page.Resources>
+        <DataTemplate x:Key="ElectronicProjectItem">
+            <Grid>
+                <RadioButton x:Name="project_button" GroupName="r" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="project_name" Content="{Binding Path=ProjectName}" HorizontalAlignment="Left" Margin="20,0,0,-6" VerticalAlignment="Top"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="SocketItem">
+            <Grid Height="26" Width="200">
+                <CheckBox x:Name="active_checkbox" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Center"/>
+                <Label x:Name="active_socket" Content="{Binding Path=SocketNum}" HorizontalAlignment="Left" Margin="51,0,-133,0" VerticalAlignment="Center" Width="147"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ActiveRequisitionItem">
+            <Grid Height="26" Width="200">
+                <CheckBox x:Name="active_checkbox" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Center"/>
+                <Label x:Name="active_equipment" Content="{Binding Path=ResourceID}" HorizontalAlignment="Left" Margin="51,0,-133,0" VerticalAlignment="Center" Width="147"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid>
-        <Label x:Name="label" Content="Network" Style="{StaticResource bigTitleStyle}"/>
+        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,0" />
+        <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="93" Margin="54,103,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicProjectItem}"/>
+        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="463" Margin="663,103,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
+        <Label Content="Network" Style="{StaticResource titleStyle}" Margin="196,10,752,570"/>
+        <Label Content="Active network's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,10,0,570"/>
+        <ListBox x:Name="socket_list" HorizontalAlignment="Left" Height="76" Margin="54,485,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource SocketItem}"/>
+        <Label Content="Project (to Associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,66,0,0" VerticalAlignment="Top" Height="37" Width="218"/>
+        <Label Content="Sockets Ethernet" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,433,0,0" VerticalAlignment="Top" Height="52" Width="185" ToolTip="Request an ethernet socket on room switch"/>
+        <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,584,0,0" VerticalAlignment="Top" Width="455" Height="34"/>
+        <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="663,584,0,0" VerticalAlignment="Top" Width="459" Height="34"/>
+        <Label Content="Launch Virtual Machine" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,210,0,0" VerticalAlignment="Top" Height="37" Width="250" ToolTip="Access the VM by SSH : $ ssh dockerid@IP"/>
+        <ComboBox HorizontalAlignment="Left" SelectedIndex="0" Margin="54,251,0,0" VerticalAlignment="Top" Width="455" Height="26">
+            <ComboBoxItem>None</ComboBoxItem>
+            <ComboBoxItem>Debian</ComboBoxItem>
+            <ComboBoxItem>Ubuntu</ComboBoxItem>
+            <ComboBoxItem>Fedora</ComboBoxItem>
+            <ComboBoxItem>FreeBSD</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,285,0,0" VerticalAlignment="Top"/>
+        <PasswordBox HorizontalAlignment="Left" Height="22" Margin="196,285,0,0" VerticalAlignment="Top" Width="313"/>
+        <Label Content="Wifi Network" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,328,0,0" VerticalAlignment="Top" Height="37" Width="250" ToolTip="Create your own network with unique SSID"/>
+        <CheckBox Content="Active" HorizontalAlignment="Left" Margin="64,372,0,0" VerticalAlignment="Top" Foreground="#00796B" FontFamily="HP Simplified Light" FontSize="18"/>
+        <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,397,0,0" VerticalAlignment="Top"/>
+        <PasswordBox HorizontalAlignment="Left" Height="24" Margin="196,404,0,0" VerticalAlignment="Top" Width="313"/>
     </Grid>
 </Page>

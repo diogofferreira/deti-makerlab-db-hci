@@ -29,7 +29,6 @@ namespace DETI_MakerLab
         private ObservableCollection<ElectronicResources> EquipmentsListData;
         private ObservableCollection<Resources> ActiveRequisitionsData;
 
-
         private Project _selectedProject;
 
         internal int UserID

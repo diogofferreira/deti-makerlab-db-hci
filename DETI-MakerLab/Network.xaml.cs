@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,30 @@ namespace DETI_MakerLab
     /// </summary>
     public partial class Network : Page
     {
-        public Network()
+        private ObservableCollection<Project> ProjectsListData;
+        private ObservableCollection<EthernetSocket> SocketsListData;
+        private ObservableCollection<NetworkResources> ActiveRequisitionsData;
+
+        private int _userID;
+
+        public Network(int UserID)
         {
             InitializeComponent();
+            this._userID = UserID;
+            ProjectsListData = new ObservableCollection<Project>();
+            SocketsListData = new ObservableCollection<EthernetSocket>();
+            ActiveRequisitionsData = new ObservableCollection<NetworkResources>();
+            // Hardcoded Data
+            Project proj = new Project(1, "DETI-MakerLab", "DETI-MakerLab Project Description");
+            ProjectsListData.Add(proj);
+            ProjectsListData.Add(new Project(2, "BlueConf", "BlueConf Project Description"));
+            projects_list.ItemsSource = ProjectsListData;
+            SocketsListData.Add(new EthernetSocket(3, proj, 0));
+            SocketsListData.Add(new EthernetSocket(4, proj, 1));
+            socket_list.ItemsSource = SocketsListData;
+            ActiveRequisitionsData.Add(new NetworkResources(4, proj));
+            ActiveRequisitionsData.Add(new NetworkResources(5, proj));
+            active_requisitions_list.ItemsSource = ActiveRequisitionsData;
         }
     }
 }

@@ -63,7 +63,8 @@ namespace DETI_MakerLab
         private void Network_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show network page
-            frame.Source = new Uri("Network.xaml", UriKind.RelativeOrAbsolute);
+            Network page = new Network(_user.NumMec);
+            frame.Navigate(page);
         }
 
         private void Projects_Buttons_Click(object sender, RoutedEventArgs e)

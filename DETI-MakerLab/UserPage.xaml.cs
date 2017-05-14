@@ -42,20 +42,21 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             this.User = User;
-            this.user_name.Text = this.User.FirstName + ' ' + this.User.LastName;
-            this.user_email.Text = this.User.Email;
-            this.user_nmec.Text = this.user_nmec.ToString();
+            user_name.Text = _user.FirstName + ' ' + _user.LastName;
+            user_email.Text = _user.Email;
+            user_nmec.Text = _user.NumMec.ToString();
+            user_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Relative));
             if (typeof(Professor).IsInstanceOfType(this.User))
             {
-                //this.course_area.Content = 'Scientific Area';
-                this.user_course_area.Text = ((Professor)this.User).ScientificArea;
+                course_area.Content = "Scientific Area";
+                user_course_area.Text = ((Professor)_user).ScientificArea;
             }
             else
             {
-                //this.course_area.Content = 'Course';
-                this.user_course_area.Text = ((Student)this.User).Course;
+                course_area.Content = "Course";
+                user_course_area.Text = ((Student)_user).Course;
             }
-            LastRequisitions(int.Parse(this.user_nmec.ToString()));
+            //LastRequisitions(int.Parse(this.user_nmec.ToString()));
         }
 
         private void LastRequisitions(int userID)
@@ -100,6 +101,20 @@ namespace DETI_MakerLab
                 cn.Open();
 
             return cn.State == ConnectionState.Open;
+        }
+
+        private void go_back_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goBack();
+            } catch (Exception exc)
+            {
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goBack();
+            }
+            
         }
     }
 }

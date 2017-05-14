@@ -87,4 +87,5 @@ namespace DETI_MakerLab
 
             return cn.State == ConnectionState.Open;
         }
+    }
 }

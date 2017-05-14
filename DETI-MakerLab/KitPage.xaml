@@ -1,4 +1,4 @@
-﻿<Page x:Class="DETI_MakerLab.EquipmentPage"
+﻿<Page x:Class="DETI_MakerLab.KitPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,18 +7,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
-      Title="EquipmentPage">
+      Title="KitPage">
 
     <Grid>
         <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="45"/>
-        <Label Content="Model"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="36"/>
-        <Label Content="Manufacturer" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="59,172,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="156" Height="40"/>
-        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="65,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146" Height="36"/>
-        <TextBlock x:Name="equipment_name" HorizontalAlignment="Left" Height="31" Margin="273,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="498" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
-        <TextBlock x:Name="equipment_model" HorizontalAlignment="Left" Height="29" Margin="273,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
-        <TextBlock x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="30" Margin="273,171,0,0" VerticalAlignment="Top" Width="518" FontSize="18" RenderTransformOrigin="0.5,0.5"/>
-        <TextBlock x:Name="equipment_description" HorizontalAlignment="Left" Height="30" Margin="273,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
-        <Image x:Name="equipment_image" HorizontalAlignment="Left" Height="235" Margin="796,30,0,0" VerticalAlignment="Top" Width="271" RenderTransformOrigin="0.5,0.5"/>
+        <Label Content="Content"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="36"/>
+        <TextBlock x:Name="kit_name" HorizontalAlignment="Left" Height="31" Margin="273,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <ListBox x:Name="content_list" HorizontalAlignment="Left" Height="157" Margin="273,123,0,0" VerticalAlignment="Top" Width="690"/>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="578,-87,615,-65" Width="3" >
             <Separator.RenderTransform>
                 <TransformGroup>

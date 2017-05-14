@@ -1,4 +1,4 @@
-﻿<Page x:Class="DETI_MakerLab.ProjectPage"
+﻿<Page x:Class="DETI_MakerLab.ProjectPageStatic"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
-      Title="ProjectPage">
+      Title="ProjectPageStatic">
     <Page.Resources>
         <DataTemplate x:Key="MembersFrontItem">
             <Grid Height="50" Width="288" ToolTip="Click to see user profile">
@@ -24,7 +24,6 @@
         <TextBlock x:Name="project_name" HorizontalAlignment="Left" Height="30" Margin="326,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
         <TextBlock x:Name="project_description" HorizontalAlignment="Left" Height="79" Margin="326,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
         <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="134" Margin="326,169,0,0" VerticalAlignment="Top" Width="624" FontSize="18" ItemTemplate="{DynamicResource MembersFrontItem}"/>
-        <Button x:Name="manage_project_button" Content="Manage Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="989,569,0,0" VerticalAlignment="Top" Width="180" Height="49" Click="manage_project_button_Click"/>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="601,116,591,43" Width="4" >
             <Separator.RenderTransform>
                 <TransformGroup>
@@ -36,6 +35,6 @@
             </Separator.RenderTransform>
         </Separator>
         <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="329,364,266,0" Width="601" Height="79" />
-        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="170" Margin="142,448,0,0" VerticalAlignment="Top" Width="788"/>
+        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="170" Margin="222,443,0,0" VerticalAlignment="Top" Width="788"/>
     </Grid>
 </Page>

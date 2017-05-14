@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DETI_MakerLab
 {
     [Serializable()]
-    class Resources
+    public class Resources
     {
         private int _resourceID;
         private Staff _creator;
@@ -52,7 +52,7 @@ namespace DETI_MakerLab
     }
 
     [Serializable()]
-    class ElectronicResources
+    public class ElectronicResources
     {
         private String _productName;
         private String _manufactor;
@@ -123,6 +123,7 @@ namespace DETI_MakerLab
             this.ProductName = ProductName;
             this.Manufactor = Manufactor;
             this.Model = Model;
+            this.Description = Description;
             this.Creator = Creator;
             this.PathToImage = PathToImage;
         }
@@ -166,7 +167,7 @@ namespace DETI_MakerLab
     }
 
     [Serializable()]
-    class Kit : Resources
+    public class Kit : Resources
     {
         private String _description;
         private List<ElectronicUnit> _units = new List<ElectronicUnit>();

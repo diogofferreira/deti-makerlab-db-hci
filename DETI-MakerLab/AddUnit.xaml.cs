@@ -33,10 +33,11 @@ namespace DETI_MakerLab
             //LoadEquipments();
             // Hardcoded Data
             EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
-                "Pi", "Model B", "Description", null, "none"));
+                "Pi", "Model B", "Description", null, "images/rasp.png"));
+            EquipmentsListData.Add(new ElectronicResources("Arduino Uno",
+            "Adafruit", "Uno", "Arduino Description", null, "images/ard.png"));
             units_list.ItemsSource = EquipmentsListData;
         }
-
 
         private void LoadEquipments()
         {

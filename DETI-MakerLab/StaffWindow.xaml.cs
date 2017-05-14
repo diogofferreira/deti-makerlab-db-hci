@@ -44,7 +44,9 @@ namespace DETI_MakerLab
             
             // Set user name label and image
             user_name.Content = _user.FirstName + " " + _user.LastName;
-            //profile_image.Source = ;
+            
+            // Show home page
+            frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
         }
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)
@@ -93,6 +95,35 @@ namespace DETI_MakerLab
 
             // Hide collapsed submenus
             this.resources_menu.Visibility = Visibility.Collapsed;
+        }
+
+        public void goToEquipmentPage(ElectronicResources equipment)
+        {
+            EquipmentPage page = new EquipmentPage(equipment);
+            frame.Navigate(page);
+        }
+
+        public void goToKitPage(Kit kit)
+        {
+            KitPage page = new KitPage(kit);
+            frame.Navigate(page);
+        }
+
+        public void goToProjectPage(Project proj)
+        {
+            ProjectPageStatic page = new ProjectPageStatic(proj);
+            frame.Navigate(page);
+        }
+
+        public void goToUserPage(DMLUser user)
+        {
+            UserPage page = new UserPage(user);
+            frame.Navigate(page);
+        }
+
+        public void goBack()
+        {
+            frame.GoBack();
         }
 
         private void logout_button_Click(object sender, RoutedEventArgs e)

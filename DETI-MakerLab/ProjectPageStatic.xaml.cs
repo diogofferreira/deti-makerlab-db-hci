@@ -17,14 +17,14 @@ using System.Windows.Shapes;
 namespace DETI_MakerLab
 {
     /// <summary>
-    /// Interaction logic for ProjectPage.xaml
+    /// Interaction logic for ProjectPageStatic.xaml
     /// </summary>
-    public partial class ProjectPage : Page
+    public partial class ProjectPageStatic : Page
     {
         private ObservableCollection<DMLUser> MembersListData;
         private Project _project;
 
-        public ProjectPage(Project project)
+        public ProjectPageStatic(Project project)
         {
             InitializeComponent();
             this._project = project;
@@ -43,15 +43,9 @@ namespace DETI_MakerLab
             if (project_members.SelectedItem != null)
             {
                 DMLUser user = project_members.SelectedItem as DMLUser;
-                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 window.goToUserPage(user);
             }
-        }
-
-        private void manage_project_button_Click(object sender, RoutedEventArgs e)
-        {
-            HomeWindow window = (HomeWindow)Window.GetWindow(this);
-            window.goToChangeProjectPage(_project);
         }
     }
 }

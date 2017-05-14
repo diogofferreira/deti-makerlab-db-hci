@@ -10,7 +10,7 @@
       Title="Home">
 
     <Grid>
-       <!-- <Grid.Resources>
+       <!--<Grid.Resources>
             <local:LastProjects x:Key="RecentProjects"/>
             <local:LastRequisitions x:Key="RecentRequisitions"/>
         </Grid.Resources>

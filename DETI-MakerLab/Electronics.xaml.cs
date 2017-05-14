@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -24,6 +25,11 @@ namespace DETI_MakerLab
     {
         SqlConnection cn;
         private int _userID;
+        private ObservableCollection<Project> ProjectsListData;		
+        private ObservableCollection<ElectronicResources> EquipmentsListData;
+        private ObservableCollection<Resources> ActiveRequisitionsData;
+
+
         private Project _selectedProject;
 
         internal int UserID
@@ -43,9 +49,32 @@ namespace DETI_MakerLab
             InitializeComponent();
             this.UserID = UserID;
             this.SelectedProject = null;
-            LoadProjects();
-            LoadAvailableResources();
-            LoadProjectActiveRequisitons();
+            ProjectsListData = new ObservableCollection<Project>();
+            EquipmentsListData = new ObservableCollection<ElectronicResources>();
+            ActiveRequisitionsData = new ObservableCollection<Resources>();
+
+            // Hardcoded Data
+            ProjectsListData.Add(new Project(1, "DETI-MakerLab", "DETI-MakerLab Project Description"));
+            ProjectsListData.Add(new Project(2, "BlueConf", "BlueConf Project Description"));
+            projects_list.ItemsSource = ProjectsListData;
+            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
+            "Pi", "Model B", "Raspberry Description", null, "images/rasp.png"));
+            EquipmentsListData.Add(new ElectronicResources("Arduino Uno",
+            "Adafruit", "Uno", "Arduino Description", null, "images/ard.png"));
+            equipment_list.ItemsSource = EquipmentsListData;
+            ActiveRequisitionsData.Add(new Resources(4, "Raspberry Pi 3 - ID#4"));
+            ActiveRequisitionsData.Add(new Resources(5, "Arduino Uno - ID#5"));
+            active_requisitions_list.ItemsSource = ActiveRequisitionsData;
+            //LoadProjects();
+            //LoadAvailableResources();
+            //LoadProjectActiveRequisitons();
+        }
+
+        private void equipment_info_Click(object sender, RoutedEventArgs e)
+        {
+            ElectronicResources equipment = (ElectronicResources)(sender as Button).DataContext;
+            HomeWindow window = (HomeWindow)Window.GetWindow(this);
+            window.goToEquipmentPage(equipment);
         }
 
         private void LoadProjects()

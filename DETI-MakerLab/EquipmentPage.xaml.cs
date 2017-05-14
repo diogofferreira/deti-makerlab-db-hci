@@ -24,48 +24,29 @@ namespace DETI_MakerLab
     public partial class EquipmentPage : Page
     {
         private SqlConnection cn;
-        private String _productDescription;
+        private ElectronicResources _equipment;
 
-        internal String ProductDescription
+        internal ElectronicResources Equipment
         {
-            get { return _productDescription; }
+            get { return _equipment; }
             set
             {
-                if (value == null || String.IsNullOrEmpty(value))
+                if (value == null)
                     throw new Exception("Invalid Product Description");
-                _productDescription = value;
+                _equipment = value;
             }
         }
 
-        public EquipmentPage(String ProductDescription)
+        public EquipmentPage(ElectronicResources equipment)
         {
             InitializeComponent();
-            this.ProductDescription = ProductDescription;
-            loadResource();
-        }
-
-        private void loadResource()
-        {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
-
-            SqlCommand cmd = new SqlCommand("SELECT * FROM ElectronicResource WHERE ProductName + ' ' + Model = @ProductDescription", cn);
-            cmd.Parameters.AddWithValue("@ProductDescription", ProductDescription);
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            if (reader.HasRows)
-            {
-                reader.Read();
-                equipment_name.Text = reader["ProductName"].ToString();
-                equipment_model.Text = reader["Model"].ToString();
-                equipment_manufacturer.Text = reader["Manufacturer"].ToString();
-                equipment_description.Text = reader["ResDescription"].ToString();
-                equipment_image.Source = new BitmapImage(new Uri(reader["PathToImage"].ToString(), UriKind.Relative));
-
-
-            }
-            cn.Close();
+            this._equipment = equipment;
+            equipment_name.Text = _equipment.ProductName;
+            equipment_model.Text = _equipment.Model;
+            equipment_manufacturer.Text = _equipment.Manufactor;
+            equipment_description.Text = _equipment.Description;
+            equipment_image.Source = new BitmapImage(new Uri(_equipment.PathToImage, UriKind.Relative));
+            //loadRequisitions();
         }
 
         private void loadRequisitions()
@@ -76,7 +57,7 @@ namespace DETI_MakerLab
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_EQUIP_REQUISITIONS(@ProductDescription)", cn);
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@ProductDescription", ProductDescription);
+            cmd.Parameters.AddWithValue("@ProductDescription", _equipment.Description);
             SqlDataReader reader = cmd.ExecuteReader();
             CultureInfo provider = CultureInfo.InvariantCulture;
             equipment_last_requisitions_list.Items.Clear();
@@ -109,6 +90,19 @@ namespace DETI_MakerLab
                 cn.Open();
 
             return cn.State == ConnectionState.Open;
+        }
+
+        private void go_back_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goBack();
+            } catch (Exception exc)
+            {
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goBack();
+            }            
         }
     }
 }

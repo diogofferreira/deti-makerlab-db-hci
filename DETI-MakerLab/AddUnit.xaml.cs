@@ -131,5 +131,13 @@ namespace DETI_MakerLab
 
             return cn.State == ConnectionState.Open;
         }
+
+        private void add_units_button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Unit has been added!");
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            // TODO : create object and pass it to kit page
+            //window.goToKitPage(kit);
+        }
     }
 }

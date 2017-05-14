@@ -90,6 +90,9 @@
       <DependentUpon>ProjectPageStatic.xaml</DependentUpon>
     </Compile>
     <Compile Include="Requisition.cs" />
+    <Compile Include="RequisitionPage.xaml.cs">
+      <DependentUpon>RequisitionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources.cs" />
     <Compile Include="ResourcesList.xaml.cs">
       <DependentUpon>ResourcesList.xaml</DependentUpon>
@@ -142,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ProjectPageStatic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RequisitionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

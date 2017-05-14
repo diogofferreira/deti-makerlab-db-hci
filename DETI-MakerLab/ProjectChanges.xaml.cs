@@ -252,10 +252,10 @@ namespace DETI_MakerLab
 
         private void save_project_changes_button_Click(object sender, RoutedEventArgs e)
         {
-            saveChanges();
+            //saveChanges();
             MessageBox.Show("The project has been changed!");
-            HomeWindow window = (HomeWindow)Window.GetWindow(this);
-            window.goToProjectPage(_project);
+            //HomeWindow window = (HomeWindow)Window.GetWindow(this);
+            //window.goToProjectPage(_project);
         }
 
         private SqlConnection getSGBDConnection()

@@ -33,13 +33,13 @@
     <Grid>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,0" />
         <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="183" Margin="54,142,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicProjectItem}"/>
-        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="424" Margin="663,142,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
+        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="424" Margin="675,142,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
         <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="196,27,752,553"/>
         <Label Content="Active electronic's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,27,0,553"/>
         <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="184" Margin="54,382,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicsEquipmentItem}"/>
         <Label Content="Project (to associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,105,0,0" VerticalAlignment="Top" Height="37" Width="218"/>
         <Label Content="Equipment" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,330,0,0" VerticalAlignment="Top" Height="52" Width="123"/>
-        <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,584,0,0" VerticalAlignment="Top" Width="455" Height="34"/>
-        <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="663,584,0,0" VerticalAlignment="Top" Width="459" Height="34"/>
+        <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,571,0,0" VerticalAlignment="Top" Width="455" Height="47" Click="request_button_Click"/>
+        <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="675,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
     </Grid>
 </Page>

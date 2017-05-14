@@ -121,6 +121,12 @@ namespace DETI_MakerLab
             frame.Navigate(page);
         }
 
+        public void goToRequisitionPage(RequisitionInfo req)
+        {
+            RequisitionPage page = new RequisitionPage(req);
+            frame.Navigate(page);
+        }
+
         public void goBack()
         {
             frame.GoBack();

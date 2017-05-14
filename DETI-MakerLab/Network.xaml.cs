@@ -222,6 +222,15 @@ namespace DETI_MakerLab
                 cn.Open();
 
             return cn.State == ConnectionState.Open;
+
+        private void request_button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Request done with sucess !");
+        }
+
+        private void deliver_button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Delivery done with sucess !");
         }
     }
 }

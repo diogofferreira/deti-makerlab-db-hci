@@ -13,24 +13,17 @@
         <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="45"/>
         <Label Content="Model"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="36"/>
         <Label Content="Manufacturer" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="59,172,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="156" Height="40"/>
-        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="65,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146" Height="36"/>
-        <TextBlock x:Name="equipment_name" HorizontalAlignment="Left" Height="31" Margin="273,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="498" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
-        <TextBlock x:Name="equipment_model" HorizontalAlignment="Left" Height="29" Margin="273,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
-        <TextBlock x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="30" Margin="273,171,0,0" VerticalAlignment="Top" Width="518" FontSize="18" RenderTransformOrigin="0.5,0.5"/>
-        <TextBlock x:Name="equipment_description" HorizontalAlignment="Left" Height="30" Margin="273,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="65,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="146" Height="58"/>
+        <TextBlock x:Name="equipment_name" HorizontalAlignment="Left" Height="31" Margin="273,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="498" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="equipment_model" HorizontalAlignment="Left" Height="29" Margin="273,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="30" Margin="273,182,0,0" VerticalAlignment="Top" Width="518" FontSize="18" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="equipment_description" HorizontalAlignment="Left" Height="30" Margin="273,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
         <Image x:Name="equipment_image" HorizontalAlignment="Left" Height="235" Margin="796,30,0,0" VerticalAlignment="Top" Width="271" RenderTransformOrigin="0.5,0.5"/>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="578,-87,615,-65" Width="3" >
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="89.813"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="363,315,425,0" Width="408" RenderTransformOrigin="0.5,0.5" Height="71" />
-        <ListBox x:Name="equipment_last_requisitions_list" HorizontalAlignment="Left" Height="206" Margin="185,393,0,0" VerticalAlignment="Top" Width="778" RenderTransformOrigin="0.5,0.5"/>
-        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1029,561,0,0" VerticalAlignment="Top" Width="127" Height="57" Click="go_back_Click"/>
+        <StackPanel Orientation="Vertical" Margin="-10,32,10,-32">
+            <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
+        </StackPanel>
+        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="371,315,417,0" Width="408" RenderTransformOrigin="0.5,0.5" Height="71" />
+        <ListBox x:Name="equipment_last_requisitions_list" HorizontalAlignment="Left" Height="225" Margin="185,393,0,0" VerticalAlignment="Top" Width="778" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource goBackStyle}" Margin="985,569,31,10" Click="go_back_Click"/>
     </Grid>
 </Page>

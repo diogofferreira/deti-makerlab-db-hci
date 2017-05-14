@@ -42,6 +42,6 @@
                 </ToolTip>
             </TextBox.ToolTip>
         </TextBox>
-        <Button x:Name="create_project_button" Content="Create Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="183,580,0,0" VerticalAlignment="Top" Width="851" Height="38"/>
+        <Button x:Name="create_project_button" Content="Create Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="183,570,0,0" VerticalAlignment="Top" Width="851" Height="48" Click="create_project_button_Click"/>
     </Grid>
 </Page>

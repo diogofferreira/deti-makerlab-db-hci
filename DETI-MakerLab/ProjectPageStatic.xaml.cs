@@ -47,5 +47,11 @@ namespace DETI_MakerLab
                 window.goToUserPage(user);
             }
         }
+
+        private void go_back_button_Click(object sender, RoutedEventArgs e)
+        {
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            window.goBack();
+        }
     }
 }

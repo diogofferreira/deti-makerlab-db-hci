@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DETI_MakerLab
 {
     [Serializable()]
-    class Requisition
+    public class Requisition
     {
         private int _requisitionID;
         private Project _reqProject;
@@ -85,6 +85,7 @@ namespace DETI_MakerLab
         private String _projectName;
         private int _userID;
         private String _productDescription;
+        private List<int> _resources = new List<int>();
         private int _units;
         private DateTime _reqDate;
 
@@ -110,6 +111,16 @@ namespace DETI_MakerLab
         {
             get { return _productDescription; }
             set {  _productDescription = value; }
+        }
+
+        public List<int> Resources
+        {
+            get { return _resources; }
+        }
+
+        public void addResource(int resourceID)
+        {
+            Resources.Add(resourceID);
         }
 
         public int Units

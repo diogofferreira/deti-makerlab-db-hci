@@ -24,6 +24,6 @@
         <Label Content="Units" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="157,207,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="135"/>
         <TextBox x:Name="kit_name" HorizontalAlignment="Left" Height="39" Margin="355,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="644" FontSize="20"/>
         <ListBox x:Name="units_list" HorizontalAlignment="Left" Height="331" Margin="355,207,0,0" VerticalAlignment="Top" Width="644" FontSize="18" ItemTemplate="{DynamicResource KitItem}"/>
-        <Button x:Name="create_kit_button" Content="Create Kit" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="98,578,0,0" VerticalAlignment="Top" Width="977" Height="40"/>
+        <Button x:Name="create_kit_button" Content="Create Kit" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="98,565,0,0" VerticalAlignment="Top" Width="977" Height="53" Click="create_kit_button_Click"/>
     </Grid>
 </Page>

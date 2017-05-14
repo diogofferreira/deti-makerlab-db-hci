@@ -25,17 +25,16 @@ namespace DETI_MakerLab
     {
         SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
-        private List<Role> _roles = new List<Role>();
-
-        internal List<Role> Roles
-        {
-            get { return _roles; }
-        }
+        private List<Role> roles;
+        private List<Class> classes;
 
         public CreateProject()
         {
             InitializeComponent();
             MembersListData = new ObservableCollection<DMLUser>();
+            roles = new List<Role>();
+            classes = new List<Class>();
+            // LoadRoles();
             //LoadMembers();
             // Hardcoded Data
             MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "none", "ECT"));
@@ -54,8 +53,32 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                Role R = new Role(int.Parse(reader["RoleID"].ToString()), reader["RoleDescription"].ToString());
-                Roles.Add(R);
+                roles.Add(new Role(
+                    int.Parse(reader["RoleID"].ToString()), 
+                    reader["RoleDescription"].ToString())
+                    );
+            }
+
+            cn.Close();
+        }
+
+        private void LoadClasses()
+        {
+            cn = getSGBDConnection();
+            if (!verifySGBDConnection())
+                return;
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Class", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+            project_members.Items.Clear();
+
+            while (reader.Read())
+            {
+                classes.Add(new Class(
+                    int.Parse(reader["ClassID"].ToString()),
+                    reader["ClassName"].ToString(),
+                    reader["ClDescription"].ToString()
+                    ));
             }
 
             cn.Close();

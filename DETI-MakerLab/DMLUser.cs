@@ -95,7 +95,7 @@ namespace DETI_MakerLab
 
         public override String ToString()
         {
-            return _numMec.ToString();
+            return FullName + "(" + NumMec.ToString() + ")";
         }
 
         public bool verifyPassword(String password)

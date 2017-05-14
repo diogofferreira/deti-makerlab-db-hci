@@ -11,14 +11,14 @@
     <Page.Resources>
         <DataTemplate x:Key="EquipmentsList">
             <Grid Height="49" Width="312">
-                <Label Content="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="34,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="{Binding}" HorizontalAlignment="Left" Margin="34,10,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="equipment_info" Content="See Units" HorizontalAlignment="Left" Margin="211,13,0,0" VerticalAlignment="Top" Width="75" Click="equipment_info_Click"/>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="KitsList">
             <Grid Height="49" Width="312">
-                <Label Content="{Binding Path=Description}" HorizontalAlignment="Left" Margin="34,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="{Binding}" HorizontalAlignment="Left" Margin="34,10,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="kit_info" Content="See Units" HorizontalAlignment="Left" Margin="211,13,0,0" VerticalAlignment="Top" Width="75" Click="kit_info_Click"/>
             </Grid>
         </DataTemplate>

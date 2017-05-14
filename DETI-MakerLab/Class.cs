@@ -11,7 +11,8 @@ namespace DETI_MakerLab
     {
         private int _classID;
         private String _className;
-        private List<Professor> _managers = new List<Professor>();
+        private String _classDescription;
+        private List<Professor> _managers;
 
         public int ClassID
         {
@@ -28,6 +29,12 @@ namespace DETI_MakerLab
                     throw new Exception("Invalid ClassName");
                 _className = value; 
             }
+        }
+
+        public String ClassDescription
+        {
+            get { return _className; }
+            set { _className = value; }
         }
 
         public List<Professor> Managers
@@ -55,13 +62,15 @@ namespace DETI_MakerLab
 
         public override String ToString()
         {
-            return "Class: " + ClassName.ToString();
+            return ClassName;
         }
 
-        public Class(int ClassID, String ClassName)
+        public Class(int ClassID, String ClassName, String ClassDescription)
         {
+            _managers = new List<Professor>();
             this.ClassID = ClassID;
             this.ClassName = ClassName;
+            this.ClassDescription = ClassDescription;
         }
     }
 }

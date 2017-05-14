@@ -75,7 +75,7 @@ namespace DETI_MakerLab
 
         public override string ToString()
         {
-            return "Project " + ProjectName;
+            return ProjectName;
         }
 
         public Project(int ProjectID, String ProjectName, String ProjectDescription)

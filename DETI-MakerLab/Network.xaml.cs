@@ -208,6 +208,8 @@ namespace DETI_MakerLab
             cn.Close();
         }
 
+        // Falta a saveChanges()!!!!!!!!
+
         private SqlConnection getSGBDConnection()
         {
             return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
@@ -222,6 +224,7 @@ namespace DETI_MakerLab
                 cn.Open();
 
             return cn.State == ConnectionState.Open;
+        }
 
         private void request_button_Click(object sender, RoutedEventArgs e)
         {

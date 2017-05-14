@@ -114,7 +114,7 @@ namespace DETI_MakerLab
 
         public override string ToString()
         {
-            return "Eletronic Resource: " + ProductName + " - " + Manufactor + " - " + Model;
+            return ProductName + " " + Model + " by " + Manufactor;
         }
 
         public ElectronicResources(String ProductName, String Manufactor, String Model,
@@ -157,6 +157,11 @@ namespace DETI_MakerLab
             }
         }
 
+        public override string ToString()
+        {
+            return Model.ProductName + " " + Model.Model + " by " + Model.Manufactor + " #" + ResourceID.ToString();
+        }
+
         public ElectronicUnit(int ResourceID, ElectronicResources Model, String Supplier)
         {
             this.ResourceID = ResourceID;
@@ -170,7 +175,7 @@ namespace DETI_MakerLab
     public class Kit : Resources
     {
         private String _description;
-        private List<ElectronicUnit> _units = new List<ElectronicUnit>();
+        private List<ElectronicUnit> _units;
 
         public String Description
         {
@@ -188,8 +193,14 @@ namespace DETI_MakerLab
             _units.Add(unit);
         }
 
+        public override string ToString()
+        {
+            return Description + " #" + ResourceID.ToString();
+        }
+
         public Kit(int ResourceID, String Description)
         {
+            _units = new List<ElectronicUnit>();
             this.ResourceID = ResourceID;
             this.Description = Description;
         }

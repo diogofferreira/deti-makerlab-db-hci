@@ -24,17 +24,31 @@ namespace DETI_MakerLab
     /// </summary>
     public partial class Home : Page
     {
+        private SqlConnection cn;
+        private ObservableCollection<Project> ProjectsListData;
+        private ObservableCollection<RequisitionInfo> RequisitionsListData;
+
         public Home()
         {
             InitializeComponent();
+            ProjectsListData = new ObservableCollection<Project>();
+            RequisitionsListData = new ObservableCollection<RequisitionInfo>();
+            /*
+            LoadProjects();
+            LoadRequisitions();
+            */
+            // Hardcoded Data
+            ProjectsListData.Add(new Project(1, "DETI MakerLab", "Wiki for DML"));
+            ProjectsListData.Add(new Project(2, "BlueConf", "Conference management"));
+
+            RequisitionsListData.Add(new RequisitionInfo(1, "DETI MakerLab", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13)));
+            RequisitionsListData.Add(new RequisitionInfo(1, "BlueConf", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13)));
+
+            last_project_list.ItemsSource = ProjectsListData;
+            last_requisitions_list.ItemsSource = RequisitionsListData;
         }
-    }
 
-    internal class LastProjects : ObservableCollection<Project>
-    {
-        private SqlConnection cn;
-
-        public LastProjects()
+        private void LastProjects()
         {
             cn = getSGBDConnection();
             if (!verifySGBDConnection())
@@ -45,7 +59,7 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                Add(new Project(
+                ProjectsListData.Add(new Project(
                     int.Parse(reader["ProjectID"].ToString()),
                     reader["PrjName"].ToString(),
                     reader["PrjDescription"].ToString(),
@@ -55,29 +69,7 @@ namespace DETI_MakerLab
             cn.Close();
         }
 
-        private SqlConnection getSGBDConnection()
-        {
-            //TODO: fix data source
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
-        }
-    }
-
-    internal class LastRequisitions : ObservableCollection<RequisitionInfo>
-    {
-        private SqlConnection cn;
-
-        public LastRequisitions()
+        private void LastRequisitions()
         {
             cn = getSGBDConnection();
             if (!verifySGBDConnection())
@@ -89,7 +81,7 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                Add(new RequisitionInfo(
+                RequisitionsListData.Add(new RequisitionInfo(
                     int.Parse(reader["RequisitionID"].ToString()),
                     reader["PrjName"].ToString(),
                     int.Parse(reader["UserID"].ToString()),
@@ -117,5 +109,20 @@ namespace DETI_MakerLab
 
             return cn.State == ConnectionState.Open;
         }
+
+        private void project_info_Click(object sender, RoutedEventArgs e)
+        {
+            Project project = (Project)(sender as Button).DataContext;
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            window.goToProjectPage(project);
+        }
+
+        private void requisition_info_Click(object sender, RoutedEventArgs e)
+        {
+            RequisitionInfo requisition = (RequisitionInfo)(sender as Button).DataContext;
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            //window.goToRequisitionPage(requisition);
+        }
     }
+
 }

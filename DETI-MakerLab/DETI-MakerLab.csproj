@@ -94,7 +94,6 @@
     <Compile Include="ResourcesList.xaml.cs">
       <DependentUpon>ResourcesList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SqlConnect.cs" />
     <Compile Include="Staff.cs" />
     <Compile Include="StaffWindow.xaml.cs">
       <DependentUpon>StaffWindow.xaml</DependentUpon>

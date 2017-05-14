@@ -130,7 +130,7 @@ namespace DETI_MakerLab
     }
 
     [Serializable()]
-    class ElectronicUnit : Resources
+    public class ElectronicUnit : Resources
     {
         private ElectronicResources _model;
         private String _supplier;

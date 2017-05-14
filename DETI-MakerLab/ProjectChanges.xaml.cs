@@ -54,7 +54,6 @@ namespace DETI_MakerLab
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM Roles", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            project_members.Items.Clear();
 
             while (reader.Read())
             {

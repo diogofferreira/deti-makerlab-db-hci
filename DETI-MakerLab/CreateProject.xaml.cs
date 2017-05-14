@@ -175,5 +175,13 @@ namespace DETI_MakerLab
 
             return cn.State == ConnectionState.Open;
         }
+
+        private void create_project_button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Project has been created !");
+            HomeWindow window = (HomeWindow)Window.GetWindow(this);
+            // TODO : create object and pass it to project page
+            //window.goToProjectPage(project);
+        }
     }
 }

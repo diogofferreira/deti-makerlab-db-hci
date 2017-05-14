@@ -98,5 +98,13 @@ namespace DETI_MakerLab
 
             return cn.State == ConnectionState.Open;
         }
+
+        private void create_equipment_button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Equipment has been added !");
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            // TODO : create object and pass it to equipment page
+            //window.goToEquipmentPage(equipment);
+        }
     }
 }

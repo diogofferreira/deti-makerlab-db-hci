@@ -41,5 +41,13 @@ namespace DETI_MakerLab
             StaffWindow window = (StaffWindow) Window.GetWindow(this);
             window.goToEquipmentPage(equipment);
         }
+
+        private void create_kit_button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Kit has been added !");
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            // TODO : create object and pass it to kit page
+            //window.goToKitPage(kit);
+        }
     }
 }

@@ -23,18 +23,11 @@
         <TextBlock x:Name="user_nmec" HorizontalAlignment="Left" Height="34" Margin="335,178,0,0" VerticalAlignment="Top" Width="424" FontSize="18"/>
         <TextBlock x:Name="user_course_area" HorizontalAlignment="Left" Height="34" Margin="335,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424" FontSize="20"/>
         <Image x:Name="user_image" HorizontalAlignment="Left" Height="263" Margin="825,22,0,0" VerticalAlignment="Top" Width="255"/>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="612,-11,581,-13" Width="3" Grid.RowSpan="2" >
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="1.073" ScaleX="0.932"/>
-                    <SkewTransform AngleY="0.041"/>
-                    <RotateTransform Angle="89.945"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="383,322,389,0" Width="424" Height="84" />
-        <ListBox x:Name="user_last_requisitions_list" HorizontalAlignment="Left" Height="207" Margin="211,411,0,0" VerticalAlignment="Top" Width="774" Grid.RowSpan="2"/>
-        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1067,152,0,0" VerticalAlignment="Top" Width="119" Height="50" Grid.Row="1" Click="go_back_Click"/>
+        <StackPanel Orientation="Vertical" Margin="-10,30,10,182" Grid.RowSpan="2">
+            <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
+        </StackPanel>
+        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="370,316,402,0" Width="424" Height="84" />
+        <ListBox x:Name="user_last_requisitions_list" HorizontalAlignment="Left" Height="207" Margin="180,405,0,0" VerticalAlignment="Top" Width="774" Grid.RowSpan="2"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource goBackStyle}" Margin="985,147,31,16" Grid.Row="1" Click="go_back_Click"/>
     </Grid>
 </Page>

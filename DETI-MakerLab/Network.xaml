@@ -38,8 +38,8 @@
         <ListBox x:Name="socket_list" HorizontalAlignment="Left" Height="76" Margin="54,485,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource SocketItem}"/>
         <Label Content="Project (to Associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,66,0,0" VerticalAlignment="Top" Height="37" Width="218"/>
         <Label Content="Sockets Ethernet" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,433,0,0" VerticalAlignment="Top" Height="52" Width="185" ToolTip="Request an ethernet socket on room switch"/>
-        <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,584,0,0" VerticalAlignment="Top" Width="455" Height="34"/>
-        <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="663,584,0,0" VerticalAlignment="Top" Width="459" Height="34"/>
+        <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,566,0,0" VerticalAlignment="Top" Width="455" Height="52" Click="request_button_Click"/>
+        <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="663,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
         <Label Content="Launch Virtual Machine" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,210,0,0" VerticalAlignment="Top" Height="37" Width="250" ToolTip="Access the VM by SSH : $ ssh dockerid@IP"/>
         <ComboBox HorizontalAlignment="Left" SelectedIndex="0" Margin="54,251,0,0" VerticalAlignment="Top" Width="455" Height="26">
             <ComboBoxItem>None</ComboBoxItem>

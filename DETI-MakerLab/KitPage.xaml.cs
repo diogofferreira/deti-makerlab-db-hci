@@ -27,7 +27,7 @@ namespace DETI_MakerLab
             InitializeComponent();
             _kit = kit;
             kit_name.Text = _kit.Description;
-            //content_list.Items = kit.Units;
+            content_list.ItemsSource = kit.Units;
         }
 
         private void go_back_Click(object sender, RoutedEventArgs e)

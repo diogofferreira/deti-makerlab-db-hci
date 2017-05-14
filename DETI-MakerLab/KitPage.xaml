@@ -12,20 +12,13 @@
     <Grid>
         <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="45"/>
         <Label Content="Content"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="36"/>
-        <TextBlock x:Name="kit_name" HorizontalAlignment="Left" Height="31" Margin="273,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="kit_name" HorizontalAlignment="Left" Height="31" Margin="273,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
         <ListBox x:Name="content_list" HorizontalAlignment="Left" Height="157" Margin="273,123,0,0" VerticalAlignment="Top" Width="690"/>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="578,-87,615,-65" Width="3" >
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="89.813"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="363,315,425,0" Width="408" RenderTransformOrigin="0.5,0.5" Height="71" />
-        <ListBox x:Name="equipment_last_requisitions_list" HorizontalAlignment="Left" Height="206" Margin="185,393,0,0" VerticalAlignment="Top" Width="778" RenderTransformOrigin="0.5,0.5"/>
-        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1029,561,0,0" VerticalAlignment="Top" Width="127" Height="57" Click="go_back_Click"/>
+        <StackPanel Orientation="Vertical" Margin="-10,31,10,-31">
+            <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
+        </StackPanel>
+        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="375,315,413,0" Width="408" RenderTransformOrigin="0.5,0.5" Height="71" />
+        <ListBox x:Name="equipment_last_requisitions_list" HorizontalAlignment="Left" Height="220" Margin="185,393,0,0" VerticalAlignment="Top" Width="778" RenderTransformOrigin="0.5,0.5"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource goBackStyle}" Margin="990,564,26,15" Click="go_back_Click"/>
     </Grid>
 </Page>

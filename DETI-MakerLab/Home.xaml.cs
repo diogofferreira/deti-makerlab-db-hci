@@ -40,9 +40,14 @@ namespace DETI_MakerLab
             // Hardcoded Data
             ProjectsListData.Add(new Project(1, "DETI MakerLab", "Wiki for DML"));
             ProjectsListData.Add(new Project(2, "BlueConf", "Conference management"));
-
-            RequisitionsListData.Add(new RequisitionInfo(1, "DETI MakerLab", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13)));
-            RequisitionsListData.Add(new RequisitionInfo(1, "BlueConf", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13)));
+            RequisitionInfo req1 = new RequisitionInfo(1, "DETI MakerLab", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
+            RequisitionInfo req2 = new RequisitionInfo(1, "BlueConf", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
+            req1.addResource(1);
+            req1.addResource(2);
+            req2.addResource(3);
+            req2.addResource(4);
+            RequisitionsListData.Add(req1);
+            RequisitionsListData.Add(req2);
 
             last_project_list.ItemsSource = ProjectsListData;
             last_requisitions_list.ItemsSource = RequisitionsListData;
@@ -113,15 +118,30 @@ namespace DETI_MakerLab
         private void project_info_Click(object sender, RoutedEventArgs e)
         {
             Project project = (Project)(sender as Button).DataContext;
-            StaffWindow window = (StaffWindow)Window.GetWindow(this);
-            window.goToProjectPage(project);
+            try
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goToProjectPage(project);
+            } catch (Exception exc)
+            {
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goToProjectPage(project);
+            }
+            
         }
 
         private void requisition_info_Click(object sender, RoutedEventArgs e)
         {
             RequisitionInfo requisition = (RequisitionInfo)(sender as Button).DataContext;
-            StaffWindow window = (StaffWindow)Window.GetWindow(this);
-            //window.goToRequisitionPage(requisition);
+            try
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goToRequisitionPage(requisition);
+            } catch (Exception exc)
+            {
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goToRequisitionPage(requisition);
+            }
         }
     }
 

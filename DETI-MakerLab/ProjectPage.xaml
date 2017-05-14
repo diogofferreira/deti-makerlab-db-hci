@@ -25,17 +25,10 @@
         <TextBlock x:Name="project_description" HorizontalAlignment="Left" Height="79" Margin="326,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
         <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="134" Margin="326,169,0,0" VerticalAlignment="Top" Width="624" FontSize="18" ItemTemplate="{DynamicResource MembersFrontItem}"/>
         <Button x:Name="manage_project_button" Content="Manage Project" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="989,569,0,0" VerticalAlignment="Top" Width="180" Height="49" Click="manage_project_button_Click"/>
-        <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Margin="601,116,591,43" Width="4" >
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="1.13" ScaleX="0.885"/>
-                    <SkewTransform AngleY="0.07"/>
-                    <RotateTransform Angle="90.253"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="329,364,266,0" Width="601" Height="79" />
-        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="170" Margin="142,448,0,0" VerticalAlignment="Top" Width="788"/>
+        <StackPanel Orientation="Vertical" Margin="-10,74,10,-74">
+            <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
+        </StackPanel>
+        <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="249,360,346,0" Width="601" Height="79" />
+        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="179" Margin="142,439,0,0" VerticalAlignment="Top" Width="788"/>
     </Grid>
 </Page>

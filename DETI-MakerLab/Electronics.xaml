@@ -17,9 +17,9 @@
         </DataTemplate>
         <DataTemplate x:Key="ElectronicsEquipmentItem">
             <Grid Width="291" Height="30">
-                <Label x:Name="equipment_name" Content="{Binding}" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Center" Height="26" Width="108"/>
-                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="152,3,-74,0" VerticalAlignment="Center" Width="65" Click="equipment_info_Click"/>
-                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="19" Margin="268,4,-147,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="22" RenderTransformOrigin="0.894,0.579" HorizontalContentAlignment="Center" ToolTip="Number of units you want to request"/>
+                <Label x:Name="equipment_name" Content="{Binding}" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Center" Height="26" Width="220"/>
+                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="245,5,-19,5" VerticalAlignment="Center" Width="65" Click="equipment_info_Click"/>
+                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="19" Margin="348,0,-79,5" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" Width="22" RenderTransformOrigin="0.894,0.579" HorizontalContentAlignment="Center" ToolTip="Number of units you want to request"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ActiveRequisitionItem">

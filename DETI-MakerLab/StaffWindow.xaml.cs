@@ -44,7 +44,8 @@ namespace DETI_MakerLab
             
             // Set user name label and image
             user_name.Content = _user.FirstName + " " + _user.LastName;
-            
+            profile_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Relative));
+
             // Show home page
             frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
         }

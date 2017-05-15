@@ -10,9 +10,13 @@
       Title="CreateProject">
     <Page.Resources>
         <DataTemplate x:Key="MembersItem">
-            <Grid Height="53" Width="236">
-                <Label x:Name="member_name" Content="{Binding}" Margin="152,13,4,12" Width="80" Height="Auto" RenderTransformOrigin="0.5,0.5"/>
-                <ComboBox x:Name="member_role" SelectedIndex="0" HorizontalAlignment="Left" Margin="10,10,0,11" VerticalAlignment="Center" Width="126">
+            <Grid Height="53" Width="505">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="61*"/>
+                    <ColumnDefinition Width="16*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="member_name" Content="{Binding Path=FullName}" Margin="290,5,-105,10" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
+                <ComboBox x:Name="member_role" SelectedIndex="0" HorizontalAlignment="Stretch" Margin="10,10,130,15" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Height="28">
                     <ComboBoxItem>Not a Member</ComboBoxItem>
                     <ComboBoxItem>Project Manager</ComboBoxItem>
                     <ComboBoxItem>Documentation Manager</ComboBoxItem>

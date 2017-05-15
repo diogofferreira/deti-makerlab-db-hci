@@ -38,14 +38,15 @@ namespace DETI_MakerLab
             */
 
             // Hardcoded Data
-            ElectronicResources r = new ElectronicResources("Raspberry Pi 3",
+            ElectronicResources r1 = new ElectronicResources("Raspberry Pi 3",
             "Pi", "Model B", "Raspberry Description", null, "images/rasp.png");
-            EquipmentsListData.Add(r);
-            EquipmentsListData.Add(new ElectronicResources("Arduino Uno",
-            "Adafruit", "Uno", "Arduino Description", null, "images/ard.png"));
+            ElectronicResources r2 = new ElectronicResources("Arduino Uno",
+            "Adafruit", "Uno", "Arduino Description", null, "images/ard.png");
+            EquipmentsListData.Add(r1);
+            EquipmentsListData.Add(r2);
             electronics_list.ItemsSource = EquipmentsListData;
-            ElectronicUnit e1 = new ElectronicUnit(1, r, "Miradell");
-            ElectronicUnit e2 = new ElectronicUnit(1, r, "Casable");
+            ElectronicUnit e1 = new ElectronicUnit(1, r1, "Miradell");
+            ElectronicUnit e2 = new ElectronicUnit(2, r2, "Casable");
             Kit k1 = new Kit(1, "Kit Raspberry Pi");
             Kit k2 = new Kit(2, "Kit Arduino Uno");
             k1.addUnit(e1);

@@ -266,10 +266,13 @@
     <Resource Include="images\resources.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="images\ard.png" />
+    <Resource Include="images\ard.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="images\rasp.png" />
+    <Resource Include="images\rasp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\default-profile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

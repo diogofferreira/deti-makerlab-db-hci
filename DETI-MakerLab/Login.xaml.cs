@@ -41,19 +41,15 @@ namespace DETI_MakerLab
             user = null;
             staff = null;
 
-            // Just for now, so that we can log in
             //bool logged = checkLogin();
-            /*user = new Student(
-                95235,
-                "Jonas",
-                "Pistoleiro",
-                "jonas@dameotetra.benfica",
-                "hash",
-                "none",
-                "ECT"
-            );*/
-            staff = new Staff(1, "Manuel", "Arez", "ma@ua.pt", "hash", "none");
             bool logged = true;
+
+            // Just for now, so that we can log in
+            if (email_box.Text.Equals("User")) { 
+                user = new Student( 95235, "DML", "User", "user@dml.com", "hash", "/images/default-profile.png", "ECT");
+            } else { 
+                staff = new Staff(1, "Mr.", "Staff", "staff@dml.", "hash", "/images/default-profile.png");
+            }
 
             if (logged) {
                 if (user != null)

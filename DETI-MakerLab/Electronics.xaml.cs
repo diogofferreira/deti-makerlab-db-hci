@@ -57,9 +57,9 @@ namespace DETI_MakerLab
             ProjectsListData.Add(new Project(2, "BlueConf", "BlueConf Project Description"));
             projects_list.ItemsSource = ProjectsListData;
             EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
-            "Pi", "Model B", "Raspberry Description", null, "images/rasp.png"));
+            "Pi", "Model B", "Raspberry Description", null, "/images/rasp.png"));
             EquipmentsListData.Add(new ElectronicResources("Arduino Uno",
-            "Adafruit", "Uno", "Arduino Description", null, "images/ard.png"));
+            "Adafruit", "Uno", "Arduino Description", null, "/images/ard.png"));
             equipment_list.ItemsSource = EquipmentsListData;
             ActiveRequisitionsData.Add(new Resources(4, "Raspberry Pi 3 - ID#4"));
             ActiveRequisitionsData.Add(new Resources(5, "Arduino Uno - ID#5"));

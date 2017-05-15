@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Data.SqlClient;
 using System.Data;
+using System.Windows.Media.Imaging;
 
 namespace DETI_MakerLab
 {
@@ -29,7 +30,7 @@ namespace DETI_MakerLab
 
             // Set user name label and image
             user_name.Content = _user.FirstName + " " + _user.LastName;
-            //profile_image.Source = ;
+            profile_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Relative));
 
             // Show home page
             frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
@@ -56,8 +57,7 @@ namespace DETI_MakerLab
         private void Electronics_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show electronics page
-            Electronics page = new Electronics(_user.NumMec);
-            frame.Navigate(page);
+            goToElectronicsPage();
         }
 
         private void Network_Button_Click(object sender, RoutedEventArgs e)
@@ -116,6 +116,12 @@ namespace DETI_MakerLab
         public void goToRequisitionPage(RequisitionInfo req)
         {
             RequisitionPage page = new RequisitionPage(req);
+            frame.Navigate(page);
+        }
+
+        public void goToElectronicsPage()
+        {
+            Electronics page = new Electronics(_user.NumMec);
             frame.Navigate(page);
         }
 

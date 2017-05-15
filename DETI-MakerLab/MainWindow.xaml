@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DETI_MakerLab"
         mc:Ignorable="d"
         Title="DETI-MakerLab - Login" Height="735" Width="1366"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" Background="#FF4DB6AC">
+        WindowStartupLocation="CenterScreen" Background="#FF4DB6AC">
 
     <DockPanel>
         <Frame x:Name="frame" NavigationUIVisibility="Hidden"/>

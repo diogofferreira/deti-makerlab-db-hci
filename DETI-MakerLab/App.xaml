@@ -22,7 +22,7 @@
             <Setter Property="Foreground" Value="#00796B"/>
             <Setter Property="FontSize" Value="25"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontFamily" Value="HP Simplified Light"/>
+            <Setter Property="FontFamily" Value="Calibri Light"/>
         </Style>
         <Style x:Key="smallDescriptionStyle" TargetType="{x:Type Label}">
             <Setter Property="Foreground" Value="#00796B"/>

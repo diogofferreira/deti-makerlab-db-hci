@@ -27,7 +27,7 @@ namespace DETI_MakerLab
         private int _userID;
         private ObservableCollection<Project> ProjectsListData;		
         private ObservableCollection<ElectronicResources> EquipmentsListData;
-        private ObservableCollection<Resources> ActiveRequisitionsData;
+        private ObservableCollection<RequisitionInfo> ActiveRequisitionsData;
 
         private Project _selectedProject;
 
@@ -50,7 +50,7 @@ namespace DETI_MakerLab
             this.SelectedProject = null;
             ProjectsListData = new ObservableCollection<Project>();
             EquipmentsListData = new ObservableCollection<ElectronicResources>();
-            ActiveRequisitionsData = new ObservableCollection<Resources>();
+            ActiveRequisitionsData = new ObservableCollection<RequisitionInfo>();
 
             // Hardcoded Data
             ProjectsListData.Add(new Project(1, "DETI-MakerLab", "DETI-MakerLab Project Description"));
@@ -61,8 +61,14 @@ namespace DETI_MakerLab
             EquipmentsListData.Add(new ElectronicResources("Arduino Uno",
             "Adafruit", "Uno", "Arduino Description", null, "/images/ard.png"));
             equipment_list.ItemsSource = EquipmentsListData;
-            ActiveRequisitionsData.Add(new Resources(4, "Raspberry Pi 3 - ID#4"));
-            ActiveRequisitionsData.Add(new Resources(5, "Arduino Uno - ID#5"));
+            RequisitionInfo req1 = new RequisitionInfo(1, "DETI MakerLab", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
+            RequisitionInfo req2 = new RequisitionInfo(1, "BlueConf", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
+            req1.addResource(1);
+            req1.addResource(2);
+            req2.addResource(3);
+            req2.addResource(4);
+            ActiveRequisitionsData.Add(req1);
+            ActiveRequisitionsData.Add(req2);
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
             //LoadProjects();
             //LoadAvailableResources();

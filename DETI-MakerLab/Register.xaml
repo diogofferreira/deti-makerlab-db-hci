@@ -1,0 +1,24 @@
+﻿<Page x:Class="DETI_MakerLab.Register"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DETI_MakerLab"
+      mc:Ignorable="d" 
+      d:DesignHeight="704" d:DesignWidth="1358"
+      Title="Register">
+
+    <Grid x:Name="password">
+        <TextBox x:Name="email" HorizontalAlignment="Left" Height="41" Margin="669,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265"/>
+        <TextBox x:Name="name" HorizontalAlignment="Left" Height="41" Margin="669,361,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265"/>
+        <TextBox x:Name="nmec" HorizontalAlignment="Left" Height="41" Margin="669,444,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265"/>
+        <PasswordBox HorizontalAlignment="Left" Margin="669,283,0,0" VerticalAlignment="Top" Width="265" Height="41"/>
+        <Label Content="Email" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="434,204,0,0" VerticalAlignment="Top"/>
+        <Label Content="Password" Style="{StaticResource ResourceKey=descriptionStyle}" HorizontalAlignment="Left" Margin="399,283,0,0" VerticalAlignment="Top"/>
+        <Label Content="Name" Style="{StaticResource ResourceKey=descriptionStyle}" HorizontalAlignment="Left" Margin="434,361,0,0" VerticalAlignment="Top"/>
+        <Label Content="Mec. Number" Style="{StaticResource ResourceKey=descriptionStyle}" HorizontalAlignment="Left" Margin="355,444,0,0" VerticalAlignment="Top"/>
+        <Image HorizontalAlignment="Left" Height="145" Margin="575,10,0,0" VerticalAlignment="Top" Width="135" Source="images/dml_logo.png"/>
+        <Button x:Name="register_button" Content="Register" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="355,570,0,0" VerticalAlignment="Top" Width="579" Height="45" Click="register_button_Click"/>
+        <Button x:Name="go_back_button" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1120,649,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="go_back_button_Click"/>
+    </Grid>
+</Page>

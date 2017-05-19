@@ -163,6 +163,21 @@ namespace DETI_MakerLab
             return Convert.ToBase64String(hashBytes);
         }
 
+        private static String getIP()
+        {
+            Random random = new Random();
+            return String.Format("{0}.{1}.{2}.{3}", random.Next(0, 255), random.Next(0, 255), 
+                random.Next(0, 255), random.Next(0, 255));
+        }
+
+        private static String getDockerID()
+        {
+            Random random = new Random();
+            String input = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var chars = Enumerable.Range(0, 15).Select(x => input[random.Next(0, input.Length)]);
+            return new String(chars.ToArray());
+        }
+
         public VirtualMachine(int ResourceID, Project ReqProject, String IP, 
             String PasswordHash, String DockerID, OS UsedOS)
         {

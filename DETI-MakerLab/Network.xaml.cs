@@ -28,6 +28,8 @@ namespace DETI_MakerLab
         private ObservableCollection<NetworkResources> ActiveRequisitionsData;
         private ObservableCollection<OS> OSList;
         private SqlConnection cn;
+        private Project selectedProject;
+        private WirelessLAN currentWLAN;
 
         private int _userID;
 
@@ -144,7 +146,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM VM_INFO WHERE ReqProject=@ProjectID", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM VM_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", ((Project)projects_list.SelectedItem).ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -170,7 +172,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM SOCKET_INFO WHERE ReqProject=@ProjectID", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM SOCKET_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", ((Project)projects_list.SelectedItem).ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -193,25 +195,293 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM WLAN_INFO WHERE ReqProject=@ProjectID", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM WLAN_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", ((Project)projects_list.SelectedItem).ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
+            if (reader.HasRows)
             {
-                ActiveRequisitionsData.Add(new WirelessLAN(
+                reader.Read();
+                currentWLAN = new WirelessLAN(
                     int.Parse(reader["NetResID"].ToString()),
                     (Project)projects_list.SelectedItem,
                     reader["SSID"].ToString(),
                     reader["PasswordHash"].ToString()
-                    ));
+                    );
+                wifi_checkbox.IsChecked = true;
+                wifi_password.Password = currentWLAN.PasswordHash;
             }
 
             cn.Close();
         }
 
         // Falta a saveChanges()!!!!!!!!
+        private void launchVM()
+        {
+            int resID = -1;
+            OS selectedOS = os_list.SelectedItem as OS;
+            if (selectedOS.OSID == -1)
+                throw new Exception("You need to select an Operating System to the Virtual Machine!");
+            String vmPassword = vm_password.Password;
+            if (String.IsNullOrEmpty(vmPassword))
+                throw new Exception("Your Virtual Machine needs to be protected by a password!");
+            if (vmPassword.Length < 8 || vmPassword.Length > 25)
+                throw new Exception("Your Virtual Machine password needs to have between 8 and 25 characters.");
+
+            VirtualMachine vm = new VirtualMachine(
+                resID,
+                (Project)projects_list.SelectedItem,
+                VirtualMachine.getIP(),
+                VirtualMachine.hashPassword(vmPassword),
+                VirtualMachine.getDockerID(),
+                selectedOS
+                );
+
+            SqlCommand cmd = new SqlCommand("REQUEST_VM (@ProjectID, @IP, @PasswordHash, @DockerID, @OSID, @resID)", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@ProjectID", vm.ReqProject.ProjectID);
+            cmd.Parameters.AddWithValue("@IP", vm.IP);
+            cmd.Parameters.AddWithValue("@PasswordHash", vm.PasswordHash);
+            cmd.Parameters.AddWithValue("@DockerID", vm.DockerID);
+            cmd.Parameters.AddWithValue("@DockerID", vm.UsedOS.OSID);
+            cmd.Parameters.Add("@resID", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                vm.ResourceID = Convert.ToInt32(cmd.Parameters["resID"].Value);
+                ActiveRequisitionsData.Add(vm);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+
+        private void saveNetworkChanges()
+        {
+            saveWLAN();
+            saveSockets();
+        }
+
+        private void saveSockets()
+        {
+            if (selectedProject == null)
+                throw new Exception("You have to select a project first!");
+
+            DataTable toRequest = new DataTable();
+            toRequest.Clear();
+            toRequest.Columns.Add("ResourceID", typeof(int));
+
+            foreach (var resource in socket_list.Items)
+            {
+                var container = socket_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                if (!((CheckBox)socket_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false)
+                    continue;
+
+                EthernetSocket socket = resource as EthernetSocket;
+                DataRow row = toRequest.NewRow();
+                row["ResourceID"] = socket.ResourceID;
+            }
+
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Error connecting to database");
+
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("REQUEST_SOCKETS (@UnitsList, @ProjectID)", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toRequest);
+            listParam.SqlDbType = SqlDbType.Structured;
+            cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            cn.Close();
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                ActiveRequisitionsData.Add(new EthernetSocket(
+                    int.Parse(row["ResourceID"].ToString()),
+                    selectedProject,
+                    int.Parse(row["SocketNum"].ToString())
+                    ));
+            }
+        }
+
+        private void saveWLAN()
+        {
+            if (currentWLAN == null)
+            {
+                if (!(wifi_checkbox.IsChecked ?? false))
+                    return;
+
+                currentWLAN = new WirelessLAN(
+                    -1,
+                    selectedProject,
+                    "WIFI_" + selectedProject.ProjectID.ToString(),
+                    WirelessLAN.hashPassword(wifi_password.Password)
+                    );
+
+                createWLAN();
+            }
+            else if (!(wifi_checkbox.IsChecked ?? false))
+                destroyWLAN();
+            else
+            {
+                // CHECK IF THEY ARE DIFFERENT FIRST
+                currentWLAN.PasswordHash = WirelessLAN.hashPassword(wifi_password.Password);
+                updateWLAN();
+            }
+        }
+
+        private void createWLAN()
+        {
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Error connecting to database");
+
+            SqlCommand cmd = new SqlCommand("REQUEST_WLAN (@ProjectID, @SSID, @PasswordHash, @resID)", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
+            cmd.Parameters.AddWithValue("@SSID", currentWLAN.SSID);
+            cmd.Parameters.AddWithValue("@PasswordHash", currentWLAN.PasswordHash);
+            cmd.Parameters.Add("@resID", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                currentWLAN.ResourceID = Convert.ToInt32(cmd.Parameters["resID"].Value);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+
+
+        private void updateWLAN()
+        {
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Error connecting to database");
+
+            SqlCommand cmd = new SqlCommand("UPDATE WirelessLAN SET PasswordHash = @PasswordHash WHERE NetResID=@resID)", cn);
+            cmd.Parameters.AddWithValue("@PasswordHash", currentWLAN.PasswordHash);
+            cmd.Parameters.AddWithValue("@resID", currentWLAN.ResourceID);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+
+        private void destroyWLAN()
+        {
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Error connecting to database");
+
+            SqlCommand cmd = new SqlCommand("DELETE FROM WirelessLAN WHERE NetResID=@resID)", cn);
+            cmd.Parameters.AddWithValue("@resID", currentWLAN.ResourceID);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+
+        private void deliverResources()
+        {
+            if (selectedProject == null)
+                throw new Exception("You have to select a project first!");
+
+            List<EthernetSocket> socketToDeliver = new List<EthernetSocket>();
+            DataTable toDeliver = new DataTable();
+            toDeliver.Clear();
+            toDeliver.Columns.Add("ResourceID", typeof(int));
+
+            foreach (var resource in active_requisitions_list.Items)
+            {
+                var container = active_requisitions_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                if (!((CheckBox)active_requisitions_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false)
+                    continue;
+
+                NetworkResources unit = resource as NetworkResources;
+                if (resource is EthernetSocket)
+                    socketToDeliver.Add(resource as EthernetSocket);
+
+                DataRow row = toDeliver.NewRow();
+                row["ResourceID"] = unit.ResourceID;
+            }
+
+            if (toDeliver.Rows.Count == 0)
+                throw new Exception("You can't deliver 0 resources!");
+
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Error connecting to database");
+
+            SqlCommand cmd = new SqlCommand("DELIVER_NET_RESOURCES (@UnitsList)", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toDeliver);
+            listParam.SqlDbType = SqlDbType.Structured;
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                foreach (EthernetSocket socket in socketToDeliver) {
+                    socket.ResourceID = -1;
+                    socket.ReqProject = null;
+                    SocketsListData.Add(socket);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
 
         private void request_button_Click(object sender, RoutedEventArgs e)
         {

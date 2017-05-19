@@ -49,10 +49,10 @@
             <ComboBoxItem>FreeBSD</ComboBoxItem>
         </ComboBox>
         <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,285,0,0" VerticalAlignment="Top"/>
-        <PasswordBox HorizontalAlignment="Left" Height="22" Margin="196,285,0,0" VerticalAlignment="Top" Width="313"/>
+        <PasswordBox x:Name="vm_password" HorizontalAlignment="Left" Height="22" Margin="196,285,0,0" VerticalAlignment="Top" Width="313"/>
         <Label Content="Wifi Network" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,328,0,0" VerticalAlignment="Top" Height="37" Width="250" ToolTip="Create your own network with unique SSID"/>
-        <CheckBox Content="Active" HorizontalAlignment="Left" Margin="64,372,0,0" VerticalAlignment="Top" Foreground="#00796B" FontFamily="HP Simplified Light" FontSize="18"/>
+        <CheckBox x:Name="wifi_checkbox" Content="Active" HorizontalAlignment="Left" Margin="64,372,0,0" VerticalAlignment="Top" Foreground="#00796B" FontFamily="HP Simplified Light" FontSize="18"/>
         <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,397,0,0" VerticalAlignment="Top"/>
-        <PasswordBox HorizontalAlignment="Left" Height="24" Margin="196,404,0,0" VerticalAlignment="Top" Width="313"/>
+        <PasswordBox x:Name="wifi_password" HorizontalAlignment="Left" Height="24" Margin="196,404,0,0" VerticalAlignment="Top" Width="313"/>
     </Grid>
 </Page>

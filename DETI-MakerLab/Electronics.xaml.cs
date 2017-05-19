@@ -393,6 +393,7 @@ namespace DETI_MakerLab
                 cmd.ExecuteNonQuery();
                 foreach (Resources resource in toBeRequested)
                     ActiveRequisitionsData.Add(resource);
+                    
             }
             catch (Exception ex)
             {
@@ -444,6 +445,7 @@ namespace DETI_MakerLab
             DataTable toDeliver = new DataTable();
             toDeliver.Clear();
             toDeliver.Columns.Add("ResourceID", typeof(int));
+            List<Resources> toDelete = new List<Resources>();
 
             foreach (Resources resource in active_requisitions_list.Items)
             {
@@ -457,6 +459,7 @@ namespace DETI_MakerLab
                 if (!((CheckBox)equipment_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false)
                     continue;
 
+                toDelete.Add(resource);
                 DataRow row = toDeliver.NewRow();
                 row["ResourceID"] = resource.ResourceID;
             }
@@ -481,6 +484,8 @@ namespace DETI_MakerLab
             try
             {
                 cmd.ExecuteNonQuery();
+                foreach (Resources r in toDelete)
+                    ActiveRequisitionsData.Remove(r);
             }
             catch (Exception ex)
             {

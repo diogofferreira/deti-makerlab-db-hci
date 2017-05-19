@@ -28,7 +28,7 @@
             <Setter Property="Foreground" Value="#00796B"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontFamily" Value="HP Simplified Light"/>
+            <Setter Property="FontFamily" Value="Calibri Light"/>
         </Style>
         <!-- Styles related to buttons -->
         <Style x:Key="dmlButtonStyle" TargetType="{x:Type Button}">

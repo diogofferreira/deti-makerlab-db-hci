@@ -483,14 +483,23 @@ namespace DETI_MakerLab
             }
         }
 
-        private void request_button_Click(object sender, RoutedEventArgs e)
+        private void request_vm_button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Request done with sucess !");
+            launchVM();
+            // TODO : show a message with more content, like ssh command
+            MessageBox.Show("VM has been launched with success !");
+        }
+
+        private void request_network_button_Click(object sender, RoutedEventArgs e)
+        {
+            saveNetworkChanges();
+            MessageBox.Show("Network's requisition done with success !");
         }
 
         private void deliver_button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Delivery done with sucess !");
+            MessageBox.Show("Delivery done with success !");
         }
+
     }
 }

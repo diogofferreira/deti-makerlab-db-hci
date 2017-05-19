@@ -15,6 +15,7 @@ namespace DETI_MakerLab
     [Serializable()]
     public class DMLUser
     {
+        private static CreateProject createProject = new CreateProject();
         private int _numMec;
         private String _firstName;
         private String _lastName;
@@ -91,6 +92,11 @@ namespace DETI_MakerLab
         public String FullName
         {
             get { return _firstName + ' ' + _lastName; }
+        }
+
+        public CreateProject CreateProject
+        {
+            get { return createProject; }
         }
 
         public override String ToString()

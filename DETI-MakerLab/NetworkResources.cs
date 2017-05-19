@@ -163,14 +163,14 @@ namespace DETI_MakerLab
             return Convert.ToBase64String(hashBytes);
         }
 
-        private static String getIP()
+        public static String getIP()
         {
             Random random = new Random();
             return String.Format("{0}.{1}.{2}.{3}", random.Next(0, 255), random.Next(0, 255), 
                 random.Next(0, 255), random.Next(0, 255));
         }
 
-        private static String getDockerID()
+        public static String getDockerID()
         {
             Random random = new Random();
             String input = "abcdefghijklmnopqrstuvwxyz0123456789";

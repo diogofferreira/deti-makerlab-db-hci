@@ -25,8 +25,8 @@ namespace DETI_MakerLab
     {
         SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
-        private ObservableCollection<Role> RolesListData;
         private ObservableCollection<Class> ClassListData;
+        private static ObservableCollection<Role> RolesListData;
 
         public CreateProject()
         {
@@ -43,8 +43,14 @@ namespace DETI_MakerLab
             MembersListData.Add(new Student(78452, "Pedro", "Martins", "pbmartins@ua.pt", "hash", "/images/default-profile.png", "ECT"));
             MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "/images/default-profile.png", "EET"));
             project_members.ItemsSource = MembersListData;
-            member_role.ItemsSource = Roles;
-            project_class.ItemsSource = ClassesListData;
+            project_class.ItemsSource = ClassListData;
+        }
+
+        public ObservableCollection<Role> RolesList 
+        {
+            get {
+                return RolesListData;
+            }
         }
 
         private void LoadRoles()

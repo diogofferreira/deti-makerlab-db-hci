@@ -17,6 +17,7 @@ namespace DETI_MakerLab
         private String _className;
         private List<int[]> _workers = new List<int[]>();
 
+
         public int ProjectID
         {
             get { return _projectID; }
@@ -107,7 +108,7 @@ namespace DETI_MakerLab
     }
 
     [Serializable()]
-    class Role
+    public class Role
     {
         private int _roleID;
         private String _roleDescription;

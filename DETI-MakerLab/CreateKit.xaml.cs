@@ -47,10 +47,14 @@ namespace DETI_MakerLab
             ResourceItems = new List<ResourceItem>();
 
             // Hardcoded Data
-            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
-            "Pi", "Model B", "Raspberry Description", null, "/images/rasp.png"));
-            EquipmentsListData.Add(new ElectronicResources("Arduino Uno",
+            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi",
+            "Pi", "3 Model B", "Raspberry Description", null, "/images/rasp.png"));
+            EquipmentsListData.Add(new ElectronicResources("Arduino",
             "Adafruit", "Uno", "Arduino Description", null, "/images/ard.png"));
+            EquipmentsListData.Add(new ElectronicResources("Micro SD 16GB",
+            "Kingston", "Class 10", "Card description", null, "/images/card.jpg"));
+            EquipmentsListData.Add(new ElectronicResources("12V Power Brick",
+            "Pi", "B", "Original Raspberry power adapter", null, "/images/power.jpg"));
             units_list.ItemsSource = EquipmentsListData;
         }
 

@@ -25,7 +25,7 @@ namespace DETI_MakerLab
     {
         SqlConnection cn;
         private int _userID;
-        private ObservableCollection<Project> ProjectsListData;		
+        private ObservableCollection<Project> ProjectsListData;
         private ObservableCollection<ListItem> ResourcesListData;
         private ObservableCollection<Resources> ActiveRequisitionsData;
         private List<ResourceItem> ResourceItems;

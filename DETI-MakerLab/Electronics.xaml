@@ -23,9 +23,9 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ActiveRequisitionItem">
-            <Grid Height="26" Width="200">
-                <CheckBox x:Name="active_checkbox" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Center"/>
-                <Label x:Name="active_equipment" Content="{Binding}" HorizontalAlignment="Left" Margin="51,0,-133,0" VerticalAlignment="Center" Width="147"/>
+            <Grid Height="26" Width="310">
+                <CheckBox x:Name="active_checkbox" HorizontalAlignment="Left" Margin="10,5,0,6" VerticalAlignment="Center"/>
+                <Label x:Name="active_equipment" Content="{Binding}" HorizontalAlignment="Left" Margin="55,0,0,0" VerticalAlignment="Center" Width="205" Height="26"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

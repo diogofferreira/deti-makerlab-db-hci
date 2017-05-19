@@ -90,6 +90,9 @@
     <Compile Include="ProjectPageStatic.xaml.cs">
       <DependentUpon>ProjectPageStatic.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Register.xaml.cs">
+      <DependentUpon>Register.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Requisition.cs" />
     <Compile Include="RequisitionPage.xaml.cs">
       <DependentUpon>RequisitionPage.xaml</DependentUpon>
@@ -146,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ProjectPageStatic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Register.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -274,6 +281,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\default-profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\card.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\power.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

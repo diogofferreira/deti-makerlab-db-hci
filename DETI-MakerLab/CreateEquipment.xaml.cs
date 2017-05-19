@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace DETI_MakerLab
     public partial class CreateEquipment : Page
     {
         private SqlConnection cn;
+        private String fileName;
         private int _staffID;
 
         public int StaffID
@@ -74,10 +76,25 @@ namespace DETI_MakerLab
             
         }
 
+        private void upload_image_button_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "All Image Files | *.*";
+            if (dlg.ShowDialog() == true)
+            {
+                fileName = dlg.FileName;
+                equipment_image.Text = fileName.ToString();
+            }
+        }
+
         private void create_equipment_button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                // Copy image to project file and produce its path
+                String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
+                String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + System.IO.Path.GetFileName(fileName);
+                System.IO.File.Copy(fileName, imagePath, true);
                 SubmitEquipment();
                 MessageBox.Show("Equipment has been added!");
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
@@ -88,7 +105,6 @@ namespace DETI_MakerLab
             {
                 MessageBox.Show(ex.Message);
             }
-            
         }
     }
 }

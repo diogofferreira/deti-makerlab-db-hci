@@ -21,5 +21,10 @@ namespace DETI_MakerLab
         {
             frame.Source = new Uri("FAQ.xaml", UriKind.RelativeOrAbsolute);
         }
+
+        public void goToRegister()
+        {
+            frame.Source = new Uri("Register.xaml", UriKind.RelativeOrAbsolute);
+        }
     }
 }

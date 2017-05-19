@@ -12,7 +12,8 @@ namespace DETI_MakerLab
         private int _projectID;
         private String _projectName;
         private String _projectDescription;
-        private int _classID;
+        private String _miniDescription;
+        private Class _class;
         private String _className;
         private List<int[]> _workers = new List<int[]>();
 
@@ -36,13 +37,23 @@ namespace DETI_MakerLab
         public String ProjectDescription
         {
             get { return _projectDescription; }
-            set { _projectDescription = value; }
+            set
+            {
+                _projectDescription = value;
+                _miniDescription = value.Length > 30 ? value.Substring(0, 30) + "..." : value;
+            }
         }
 
-        public int ClassID
+        public String MiniDescription
         {
-            get { return _classID; }
-            set { _classID = value; }
+            get { return _miniDescription; }
+            set { _miniDescription = value; }
+        }
+
+        public Class ProjectClass
+        {
+            get { return _class; }
+            set { _class = value; }
         }
 
         public String ClassName
@@ -83,23 +94,15 @@ namespace DETI_MakerLab
             this.ProjectID = ProjectID;
             this.ProjectName = ProjectName;
             this.ProjectDescription = ProjectDescription;
-            this.ClassID = -1;
+            this.ProjectClass = null;
         }
 
-        public Project(int ProjectID, String ProjectName, String ProjectDescription, int ClassID)
+        public Project(int ProjectID, String ProjectName, String ProjectDescription, Class ProjectClass)
         {
             this.ProjectID = ProjectID;
             this.ProjectName = ProjectName;
             this.ProjectDescription = ProjectDescription;
-            this.ClassID = ClassID;
-        }
-
-        public Project(int ProjectID, String ProjectName, String ProjectDescription, String ClassName)
-        {
-            this.ProjectID = ProjectID;
-            this.ProjectName = ProjectName;
-            this.ProjectDescription = ProjectDescription;
-            this.ClassName = ClassName;
+            this.ProjectClass = ProjectClass;
         }
     }
 

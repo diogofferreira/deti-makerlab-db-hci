@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -25,71 +26,84 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private ElectronicResources _equipment;
-
-        internal ElectronicResources Equipment
-        {
-            get { return _equipment; }
-            set
-            {
-                if (value == null)
-                    throw new Exception("Invalid Product Description");
-                _equipment = value;
-            }
-        }
+        private ObservableCollection<Requisition> RequisitionsData;
 
         public EquipmentPage(ElectronicResources equipment)
         {
             InitializeComponent();
+            RequisitionsData = new ObservableCollection<Requisition>();
             this._equipment = equipment;
             equipment_name.Text = _equipment.ProductName;
             equipment_model.Text = _equipment.Model;
             equipment_manufacturer.Text = _equipment.Manufactor;
             equipment_description.Text = _equipment.Description;
             equipment_image.Source = new BitmapImage(new Uri(_equipment.PathToImage, UriKind.Relative));
+            equipment_last_requisitions_list.ItemsSource = RequisitionsData;
             //loadRequisitions();
         }
 
         private void loadRequisitions()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_EQUIP_REQUISITIONS(@ProductDescription)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_EQUIP_REQUISITIONS (@ProductName, @Model, @Manufacturer)", cn);
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@ProductDescription", _equipment.Description);
+            cmd.Parameters.AddWithValue("@ProductDescription", _equipment.ProductName);
+            cmd.Parameters.AddWithValue("@Model", _equipment.Model);
+            cmd.Parameters.AddWithValue("@Manufacturer", _equipment.Manufactor);
             SqlDataReader reader = cmd.ExecuteReader();
             CultureInfo provider = CultureInfo.InvariantCulture;
-            equipment_last_requisitions_list.Items.Clear();
 
             while (reader.Read())
             {
-                equipment_last_requisitions_list.Items.Add(new RequisitionInfo(
+                try
+                {
+                    Requisition r = new Requisition(
                     int.Parse(reader["RequisitionID"].ToString()),
-                    reader["PrjName"].ToString(),
-                    int.Parse(reader["UserID"].ToString()),
+                    new Project(
+                        int.Parse(reader["ProjectID"].ToString()),
+                        reader["PrjName"].ToString(),
+                        reader["PrjDescription"].ToString()),
                     null,
-                    int.Parse(reader["Units"].ToString()),
                     DateTime.ParseExact(reader["ReqDate"].ToString(), "yyMMddHHmm", provider)
-                    ));
+                    );
+                    r.addResource(new ElectronicUnit(
+                        int.Parse(reader["ResourceID"].ToString()),
+                        new ElectronicResources(
+                            reader["ProductName"].ToString(),
+                            reader["Manufactor"].ToString(),
+                            reader["Model"].ToString(),
+                            reader["Description"].ToString(),
+                            null,
+                            reader["PathToImage"].ToString()),
+                        reader["Supplier"].ToString()
+                        ));
+                    RequisitionsData.Add(r);
+                }
+                catch (Exception e)
+                {
+                    foreach (Requisition r in RequisitionsData)
+                    {
+                        if (r.RequisitionID == int.Parse(reader["RequisitionID"].ToString()))
+                        {
+                            r.addResource(new ElectronicUnit(
+                                int.Parse(reader["ResourceID"].ToString()),
+                                new ElectronicResources(
+                                    reader["ProductName"].ToString(),
+                                    reader["Manufactor"].ToString(),
+                                    reader["Model"].ToString(),
+                                    reader["Description"].ToString(),
+                                    null,
+                                    reader["PathToImage"].ToString()),
+                                reader["Supplier"].ToString()
+                            ));
+                        }
+                    }
+                }
             }
             cn.Close();
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
         }
 
         private void go_back_Click(object sender, RoutedEventArgs e)

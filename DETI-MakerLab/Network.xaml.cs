@@ -26,7 +26,7 @@ namespace DETI_MakerLab
         private ObservableCollection<Project> ProjectsListData;
         private ObservableCollection<EthernetSocket> SocketsListData;
         private ObservableCollection<NetworkResources> ActiveRequisitionsData;
-        private List<OS> osList;
+        private ObservableCollection<OS> OSList;
         private SqlConnection cn;
 
         private int _userID;
@@ -38,7 +38,7 @@ namespace DETI_MakerLab
             ProjectsListData = new ObservableCollection<Project>();
             SocketsListData = new ObservableCollection<EthernetSocket>();
             ActiveRequisitionsData = new ObservableCollection<NetworkResources>();
-            osList = new List<OS>();
+            OSList = new ObservableCollection<OS>();
             /*
             LoadOS();
             LoadProjects();
@@ -60,9 +60,9 @@ namespace DETI_MakerLab
 
         private void LoadProjects()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM Project", cn);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -80,16 +80,18 @@ namespace DETI_MakerLab
 
         private void LoadOS()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM OS", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
+            OSList.Add(new OS(-1, "None"));
+
             while (reader.Read())
             {
-                osList.Add(new OS(
+                OSList.Add(new OS(
                     int.Parse(reader["OSID"].ToString()), 
                     reader["OSName"].ToString())
                     );
@@ -100,7 +102,7 @@ namespace DETI_MakerLab
 
         private OS getOS(int OSID)
         {
-            foreach (OS os in osList)
+            foreach (OS os in OSList)
                 if (os.OSID == OSID)
                     return os;
             return null;
@@ -108,19 +110,20 @@ namespace DETI_MakerLab
 
         private void LoadAvailableSockets()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             List<int> availableSockets = Enumerable.Range(1, 20).ToList();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM EthernetSocket", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM AVAILABLE_SOCKETS()", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
-                availableSockets.Remove(int.Parse(reader["SocketNum"].ToString()));
-
-            foreach (int socketNum in availableSockets)
-                SocketsListData.Add(new EthernetSocket(-1, null, socketNum));
+                SocketsListData.Add(new EthernetSocket(
+                    -1, 
+                    null, 
+                    int.Parse(reader["SocketNum"].ToString())
+                    ));
 
             cn.Close();
         }
@@ -137,9 +140,9 @@ namespace DETI_MakerLab
 
         private void loadVMs()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM VM_INFO WHERE ReqProject=@ProjectID", cn);
             cmd.Parameters.Clear();
@@ -163,9 +166,9 @@ namespace DETI_MakerLab
 
         private void loadSockets()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM SOCKET_INFO WHERE ReqProject=@ProjectID", cn);
             cmd.Parameters.Clear();
@@ -186,9 +189,9 @@ namespace DETI_MakerLab
 
         private void loadWLANs()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM WLAN_INFO WHERE ReqProject=@ProjectID", cn);
             cmd.Parameters.Clear();
@@ -209,22 +212,6 @@ namespace DETI_MakerLab
         }
 
         // Falta a saveChanges()!!!!!!!!
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
-        }
 
         private void request_button_Click(object sender, RoutedEventArgs e)
         {

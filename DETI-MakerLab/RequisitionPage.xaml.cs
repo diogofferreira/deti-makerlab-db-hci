@@ -21,13 +21,13 @@ namespace DETI_MakerLab
     /// </summary>
     public partial class RequisitionPage : Page
     {
-        private RequisitionInfo _requisition;
+        private Requisition _requisition;
 
-        public RequisitionPage(RequisitionInfo requisition)
+        public RequisitionPage(Requisition requisition)
         {
             InitializeComponent();
             this._requisition = requisition;
-            project_name.Text = _requisition.ProjectName;
+            project_name.Text = _requisition.ReqProject.ProjectName;
             content_list.ItemsSource = _requisition.Resources;
         }
 

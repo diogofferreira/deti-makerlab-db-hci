@@ -11,7 +11,7 @@
     <Page.Resources>
         <DataTemplate x:Key="ProjectsItem">
             <Grid Background="#4DB6AC" Width="950" Margin="0,10,0,10" >
-                <Label Content="{Binding Path=ProjectName}" FontSize="34" Foreground="White" HorizontalAlignment="Center"/>
+                <Label Content="{Binding}" FontSize="34" Foreground="White" HorizontalAlignment="Center"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

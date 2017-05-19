@@ -25,30 +25,35 @@ namespace DETI_MakerLab
     {
         SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
-        private List<Role> roles;
-        private List<Class> classes;
+        private ObservableCollection<Role> RolesListData;
+        private ObservableCollection<Class> ClassListData;
 
         public CreateProject()
         {
             InitializeComponent();
             MembersListData = new ObservableCollection<DMLUser>();
-            roles = new List<Role>();
-            classes = new List<Class>();
+            RolesListData = new ObservableCollection<Role>();
+            ClassListData = new ObservableCollection<Class>();
             // LoadRoles();
-            //LoadMembers();
+            // LoadClasses();
+            // LoadMembers();
             // Hardcoded Data
             MembersListData.Add(new Student(78452, "Ana", "Gomes", "ana@ua.pt", "hash", "/images/default-profile.png", "EET"));
             MembersListData.Add(new Student(78452, "Diogo", "Ferreira", "pdiogoferreira@ua.pt", "hash", "/images/default-profile.png", "ECT"));
             MembersListData.Add(new Student(78452, "Pedro", "Martins", "pbmartins@ua.pt", "hash", "/images/default-profile.png", "ECT"));
             MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "/images/default-profile.png", "EET"));
             project_members.ItemsSource = MembersListData;
+            member_role.ItemsSource = Roles;
+            project_class.ItemsSource = ClassesListData;
         }
 
         private void LoadRoles()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
+
+            RolesListData.Add(new Role(-1, "Not a Member"));
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM Roles", cn);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -56,8 +61,8 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                roles.Add(new Role(
-                    int.Parse(reader["RoleID"].ToString()), 
+                RolesListData.Add(new Role(
+                    int.Parse(reader["RoleID"].ToString()),
                     reader["RoleDescription"].ToString())
                     );
             }
@@ -67,9 +72,11 @@ namespace DETI_MakerLab
 
         private void LoadClasses()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
+
+            ClassListData.Add(new Class(-1, "No Class", "None"));
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM Class", cn);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -77,7 +84,7 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                classes.Add(new Class(
+                ClassListData.Add(new Class(
                     int.Parse(reader["ClassID"].ToString()),
                     reader["ClassName"].ToString(),
                     reader["ClDescription"].ToString()
@@ -89,13 +96,12 @@ namespace DETI_MakerLab
 
         private void LoadMembers()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM DMLUser", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            project_members.Items.Clear();
 
             while (reader.Read())
             {
@@ -107,7 +113,7 @@ namespace DETI_MakerLab
                 User.PasswordHash = reader["PasswordHash"].ToString();
                 User.PathToImage = reader["PathToImage"].ToString();
 
-                project_members.Items.Add(User);
+                MembersListData.Add(User);
             }
 
             cn.Close();
@@ -116,29 +122,33 @@ namespace DETI_MakerLab
         private void SubmitProject()
         {
             SqlCommand cmd;
-            int returnedID;
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            int projectID;
+            
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
-            cmd = new SqlCommand("INSERT INTO Project (PrjName, PrjDescription, Class) " +
-                "OUTPUT Inserted.ProjectID VALUES (@PrjName, @PrjDescription, @Class)", cn);
+            cmd = new SqlCommand("CREATE_PROJECT (@PrjName, @PrjDescription, @Class)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@PrjName", project_name.Text);
             cmd.Parameters.AddWithValue("@PrjDescription", project_description.Text);
-            if (String.IsNullOrEmpty(project_class.Text))
+            cmd.Parameters.Add("@ProjectID", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+
+            if (((Role)project_class.SelectedValue).RoleID != -1)
             {
-                cmd.Parameters.AddWithValue("@Class", "NULL");
+                cmd.Parameters.AddWithValue("@Class", ((Role)project_class.SelectedValue).RoleID);
             }
             else
             {
-                cmd.Parameters.AddWithValue("@Class", project_class.Text);
+                cmd.Parameters.AddWithValue("@Class", DBNull.Value);
             }
 
             try
             {
-                returnedID = (int)cmd.ExecuteScalar();
-                SubmitMembers(returnedID);
+                cmd.ExecuteNonQuery();
+                projectID = Convert.ToInt32(cmd.Parameters["@ProjectID"].Value);
+                SubmitMembers(projectID);
             }
             catch (Exception ex)
             {
@@ -154,20 +164,30 @@ namespace DETI_MakerLab
         private void SubmitMembers(int projectID)
         {
             SqlCommand cmd;
-
-            /*
+            
             foreach (DMLUser checkedMember in project_members.Items)
             {
-                cn = getSGBDConnection();
-                if (!verifySGBDConnection())
+                var container = project_members.ItemContainerGenerator.ContainerFromItem(checkedMember) as FrameworkElement;
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
                     return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                Role r = (Role)((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedItem;
+                if (r.RoleID == -1)
+                    continue;
+
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
+                    throw new Exception("Cannot connect to database");
 
                 cmd = new SqlCommand("INSERT INTO WorksOn (UserNMec, ProjectID, UserRole) " +
                     "VALUES (@UserNMec, @ProjectID, @UserRole)", cn);
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@UserNmec", checkMember.NumMec);
+                cmd.Parameters.AddWithValue("@UserNmec", checkedMember.NumMec);
                 cmd.Parameters.AddWithValue("@ProjectID", projectID);
-                cmd.Parameters.AddWithValue("@UserRole", checkMember.Role.RoleID);
+                cmd.Parameters.AddWithValue("@UserRole", r.RoleID);
 
                 try
                 {
@@ -182,24 +202,8 @@ namespace DETI_MakerLab
                     cn.Close();
                 }
             }
-            */
             
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
+            
         }
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)

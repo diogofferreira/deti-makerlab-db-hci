@@ -45,8 +45,8 @@ namespace DETI_MakerLab
         public void SubmitEquipment()
         {
             SqlCommand cmd;
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
                 return;
 
             cmd = new SqlCommand("INSERT INTO ElectronicResource (ProductName, Manufacturer, Model, ResDescription, EmployeeNum, PathToImage) " +
@@ -56,17 +56,8 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@Manufacturer", equipment_manufacturer.Text);
             cmd.Parameters.AddWithValue("@Model", equipment_model.Text);
             cmd.Parameters.AddWithValue("@ResDescription", equipment_description.Text);
-            cmd.Parameters.AddWithValue("@EmployeeNum", StaffID.ToString());
-            // Rever isto:
-            /*
-            if (typeof(String).IsInstanceOfType(equipment_image))
-            {
-                cmd.Parameters.AddWithValue("@PathToImage", equipment_image.Text);
-            }
-            else
-            {
-                cmd.Parameters.AddWithValue("@PathToImage", "NULL");
-            }
+            cmd.Parameters.AddWithValue("@EmployeeNum", StaffID);
+            //cmd.Parameters.AddWithValue("@PathToImage", typeof(String).IsInstanceOfType(equipment_image) ? equipment_image.Text : "NULL");
 
             try
             {
@@ -80,31 +71,24 @@ namespace DETI_MakerLab
             {
                 cn.Close();
             }
-            */
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
+            
         }
 
         private void create_equipment_button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Equipment has been added !");
-            StaffWindow window = (StaffWindow)Window.GetWindow(this);
-            // TODO : create object and pass it to equipment page
-            //window.goToEquipmentPage(equipment);
+            try
+            {
+                SubmitEquipment();
+                MessageBox.Show("Equipment has been added!");
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                // TODO : create object and pass it to equipment page
+                //window.goToEquipmentPage(equipment);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }

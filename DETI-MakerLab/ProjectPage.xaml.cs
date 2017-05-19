@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +24,9 @@ namespace DETI_MakerLab
     /// </summary>
     public partial class ProjectPage : Page
     {
+        private SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
+        private ObservableCollection<Requisition> RequisitionsData;
         private Project _project;
 
         public ProjectPage(Project project)
@@ -29,6 +34,7 @@ namespace DETI_MakerLab
             InitializeComponent();
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
+            RequisitionsData = new ObservableCollection<Requisition>();
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
 
@@ -39,6 +45,85 @@ namespace DETI_MakerLab
             MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "/images/default-profile.png", "EET"));
             project_members.ItemsSource = MembersListData;
             project_members.MouseDoubleClick += new MouseButtonEventHandler(project_members_listbox_MouseDoubleClick);
+        }
+
+        private void loadRequisitions()
+        {
+            cn = getSGBDConnection();
+            if (!verifySGBDConnection())
+                return;
+
+            CultureInfo provider = CultureInfo.InvariantCulture;
+
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("PROJECT_REQS (@ProjectID)", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@ProjectID", _project.ProjectID);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            cn.Close();
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                try
+                {
+                    Requisition r = new Requisition(
+                    int.Parse(row["RequisitionID"].ToString()),
+                    _project,
+                    null,
+                    DateTime.ParseExact(row["ReqDate"].ToString(), "yyMMddHHmm", provider)
+                    );
+                    r.addResource(new ElectronicUnit(
+                        int.Parse(row["ResourceID"].ToString()),
+                        new ElectronicResources(
+                            row["ProductName"].ToString(),
+                            row["Manufactor"].ToString(),
+                            row["Model"].ToString(),
+                            row["Description"].ToString(),
+                            null,
+                            row["PathToImage"].ToString()),
+                        row["Supplier"].ToString()
+                        ));
+                    RequisitionsData.Add(r);
+                }
+                catch (Exception e)
+                {
+                    foreach (Requisition r in RequisitionsData)
+                    {
+                        if (r.RequisitionID == int.Parse(row["RequisitionID"].ToString()))
+                        {
+                            r.addResource(new ElectronicUnit(
+                                int.Parse(row["ResourceID"].ToString()),
+                                new ElectronicResources(
+                                    row["ProductName"].ToString(),
+                                    row["Manufactor"].ToString(),
+                                    row["Model"].ToString(),
+                                    row["Description"].ToString(),
+                                    null,
+                                    row["PathToImage"].ToString()),
+                                row["Supplier"].ToString()
+                            ));
+                        }
+                    }
+                }
+            }
+        }
+
+        private SqlConnection getSGBDConnection()
+        {
+            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
+        }
+
+        private bool verifySGBDConnection()
+        {
+            if (cn == null)
+                cn = getSGBDConnection();
+
+            if (cn.State != ConnectionState.Open)
+                cn.Open();
+
+            return cn.State == ConnectionState.Open;
         }
 
         private void project_members_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)

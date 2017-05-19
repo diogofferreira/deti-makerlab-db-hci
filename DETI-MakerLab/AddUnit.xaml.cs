@@ -25,10 +25,22 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private ObservableCollection<ElectronicResources> EquipmentsListData;
+        private Staff _user;
 
-        public AddUnit()
+        internal Staff User
+        {
+            get { return _user; }
+            set
+            {
+                if (_user == null)
+                    throw new Exception("You need to be logged in as a Staff user");
+            }
+        }
+
+        public AddUnit(Staff user)
         {
             InitializeComponent();
+            this.User = user;
             EquipmentsListData = new ObservableCollection<ElectronicResources>();
             //LoadEquipments();
             // Hardcoded Data
@@ -41,23 +53,30 @@ namespace DETI_MakerLab
 
         private void LoadEquipments()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM ElectronicResource", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM ELECTRONIC_RESOURCES_INFO", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             units_list.Items.Clear();
 
             while (reader.Read())
             {
-                ElectronicResources Resource = new ElectronicResources(
+                ElectronicResources Resource = new ElectronicResources (
                     reader["ProductName"].ToString(),
                     reader["Manufacturer"].ToString(),
                     reader["Model"].ToString(),
                     reader["Description"].ToString(),
-                    null,
-                    reader["PathToImage"].ToString()
+                    new Staff (
+                        int.Parse(reader["EmployeeNum"].ToString()),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        reader["Email"].ToString(),
+                        null,
+                        reader["StaffName"].ToString()
+                        ),
+                    reader["ResImage"].ToString()
                     );
                 units_list.Items.Add(Resource);
             }
@@ -67,40 +86,39 @@ namespace DETI_MakerLab
 
         private void UpdateUnits()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
-
-            /*
-            foreach (ListBoxItem resource in units_list.Items)
+            foreach (ElectronicResources resource in units_list.Items)
             {
-                
-                if (resource.units != 0)
-                    UpdateSingleEquipment(resource.resource, resource.units, resource.supplier)
-            }
-            */
+                var container = units_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                int units = int.Parse(((TextBox)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
+                if (units > 0)
+                {
+                    String supplier = ((TextBox)units_list.ItemTemplate.FindName("equipment_supplier", listBoxItemCP)).Text;
+                    UpdateSingleEquipment(resource, units, supplier);
+                }
+            }            
         }
 
         private void UpdateSingleEquipment(ElectronicResources resource, int units, String supplier)
         {
-            int i = 0;
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = cn;
-            cmd.CommandText = "INSERT INTO ElectronicUnit (ProductName, Manufacturer, Model, Supplier) VALUES ";
-            for (i = 0; i < units; i++)
-            {
-                if (i != 0)
-                    cmd.CommandText += ", ";
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
-                cmd.CommandText += "(" +
-                    resource.ProductName + ", " +
-                    resource.Manufactor + ", " +
-                    resource.Model + ", " +
-                    supplier + ")";
-            }
+            SqlCommand cmd = new SqlCommand("ADD_UNITS (@ProductName, @Manufacturer, @Model, @Supplier, @Units, @EmployeeID)", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@ProductName", resource.ProductName);
+            cmd.Parameters.AddWithValue("@Manufacturer", resource.Manufactor);
+            cmd.Parameters.AddWithValue("@Model", resource.Model);
+            cmd.Parameters.AddWithValue("@Supplier", supplier);
+            cmd.Parameters.AddWithValue("@Units", units);
+            cmd.Parameters.AddWithValue("@EmployeeID", User.EmployeeNum);
 
             try
             {
@@ -116,28 +134,21 @@ namespace DETI_MakerLab
             }
         }
 
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
-        }
-
         private void add_units_button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Unit has been added!");
-            StaffWindow window = (StaffWindow)Window.GetWindow(this);
-            // TODO : create object and pass it to kit page
-            //window.goToKitPage(kit);
+            try
+            {
+                UpdateUnits();
+                MessageBox.Show("Unit has been added!");
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                // TODO : create object and pass it to kit page
+                //window.goToKitPage(kit);
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
         }
     }
 }

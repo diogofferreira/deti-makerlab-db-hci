@@ -75,6 +75,7 @@
     <Compile Include="FAQ.xaml.cs">
       <DependentUpon>FAQ.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers.cs" />
     <Compile Include="KitPage.xaml.cs">
       <DependentUpon>KitPage.xaml</DependentUpon>
     </Compile>

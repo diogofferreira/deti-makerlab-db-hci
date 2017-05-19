@@ -26,6 +26,7 @@ namespace DETI_MakerLab
     {
         private DMLUser _user;
         private SqlConnection cn;
+        private ObservableCollection<Requisition> RequisitionsData;
 
         public DMLUser User
         {
@@ -42,6 +43,7 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             this.User = User;
+            RequisitionsData = new ObservableCollection<Requisition>();
             user_name.Text = _user.FirstName + ' ' + _user.LastName;
             user_email.Text = _user.Email;
             user_nmec.Text = _user.NumMec.ToString();
@@ -56,40 +58,80 @@ namespace DETI_MakerLab
                 course_area.Content = "Course";
                 user_course_area.Text = ((Student)_user).Course;
             }
-            //LastRequisitions(int.Parse(this.user_nmec.ToString()));
+
+            // LoadRequisitions();
+            user_last_requisitions_list.ItemsSource = RequisitionsData;
         }
 
-        private void LastRequisitions(int userID)
+        private void loadRequisitions()
         {
             cn = getSGBDConnection();
             if (!verifySGBDConnection())
-                throw new Exception("Could not connect to database");
+                return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_USER_REQS_INFO(@userid)", cn);
-            cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@userid", userID);
-            SqlDataReader reader = cmd.ExecuteReader();
             CultureInfo provider = CultureInfo.InvariantCulture;
-            user_last_requisitions_list.Items.Clear();
 
-            while (reader.Read())
-            {
-                user_last_requisitions_list.Items.Add(new RequisitionInfo(
-                    int.Parse(reader["RequisitionID"].ToString()),
-                    reader["PrjName"].ToString(),
-                    int.Parse(reader["UserID"].ToString()),
-                    reader["ProductDescription"].ToString(),
-                    int.Parse(reader["Units"].ToString()),
-                    DateTime.ParseExact(reader["ReqDate"].ToString(), "yyMMddHHmm", provider)
-                    ));
-            }
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("USER_REQS (@UserID)", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@UserID", _user.NumMec);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
             cn.Close();
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                try
+                {
+                    Requisition r = new Requisition(
+                    int.Parse(row["RequisitionID"].ToString()),
+                    new Project(
+                        int.Parse(row["ProjectID"].ToString()),
+                        row["PrjName"].ToString(),
+                        row["PrjDescription"].ToString()),
+                    null,
+                    DateTime.ParseExact(row["ReqDate"].ToString(), "yyMMddHHmm", provider)
+                    );
+                    r.addResource(new ElectronicUnit(
+                        int.Parse(row["ResourceID"].ToString()),
+                        new ElectronicResources(
+                            row["ProductName"].ToString(),
+                            row["Manufactor"].ToString(),
+                            row["Model"].ToString(),
+                            row["Description"].ToString(),
+                            null,
+                            row["PathToImage"].ToString()),
+                        row["Supplier"].ToString()
+                        ));
+                    RequisitionsData.Add(r);
+                }
+                catch (Exception e)
+                {
+                    foreach (Requisition r in RequisitionsData)
+                    {
+                        if (r.RequisitionID == int.Parse(row["RequisitionID"].ToString()))
+                        {
+                            r.addResource(new ElectronicUnit(
+                                int.Parse(row["ResourceID"].ToString()),
+                                new ElectronicResources(
+                                    row["ProductName"].ToString(),
+                                    row["Manufactor"].ToString(),
+                                    row["Model"].ToString(),
+                                    row["Description"].ToString(),
+                                    null,
+                                    row["PathToImage"].ToString()),
+                                row["Supplier"].ToString()
+                            ));
+                        }
+                    }
+                }
+            }
         }
 
         private SqlConnection getSGBDConnection()
         {
-            //TODO: fix data source
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
+            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
         }
 
         private bool verifySGBDConnection()

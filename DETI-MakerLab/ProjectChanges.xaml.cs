@@ -25,6 +25,7 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
+        private ObservableCollection<Role> RolesListData;
         private Project _project;
         private List<Role> _roles = new List<Role>();
 
@@ -38,6 +39,7 @@ namespace DETI_MakerLab
             InitializeComponent();
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
+            RolesListData = new ObservableCollection<Role>();
 
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
@@ -51,28 +53,32 @@ namespace DETI_MakerLab
 
         private void LoadRoles()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
+
+            RolesListData.Add(new Role(-1, "Not a Member"));
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM Roles", cn);
             SqlDataReader reader = cmd.ExecuteReader();
+            project_members.Items.Clear();
 
             while (reader.Read())
             {
-                Role R = new Role(int.Parse(reader["RoleID"].ToString()), reader["RoleDescription"].ToString());
-                Roles.Add(R);
+                RolesListData.Add(new Role(
+                    int.Parse(reader["RoleID"].ToString()),
+                    reader["RoleDescription"].ToString())
+                    );
             }
 
             cn.Close();
         }
 
         private void LoadMembers()
-        { 
-
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+        {
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM DMLUser", cn);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -164,9 +170,9 @@ namespace DETI_MakerLab
 
             foreach (DMLUser user in newWorker)
             {
-                cn = getSGBDConnection();
-                if (!verifySGBDConnection())
-                    return;
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
+                    throw new Exception("Cannot connect to database");
 
                 cmd = new SqlCommand("INSERT INTO WorksOn (UserNMec, ProjectID, UserRole) " +
                     "VALUES (@UserNMec, @ProjectID, @UserRole)", cn);
@@ -196,9 +202,9 @@ namespace DETI_MakerLab
 
             foreach (DMLUser user in updateWorker)
             {
-                cn = getSGBDConnection();
-                if (!verifySGBDConnection())
-                    return;
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
+                    throw new Exception("Cannot connect to database");
 
                 cmd = new SqlCommand("UPDATE WorksOn SET UserRole=@UserRole " +
                     "WHERE UserNMec=@UserNMec AND ProjectID=@ProjectID", cn);
@@ -228,9 +234,9 @@ namespace DETI_MakerLab
 
             foreach (DMLUser user in removeWorker)
             {
-                cn = getSGBDConnection();
-                if (!verifySGBDConnection())
-                    return;
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
+                    throw new Exception("Cannot connect to database");
 
                 cmd = new SqlCommand("DELETE FROM WorksOn " +
                     "WHERE UserNMec=@UserNMec AND ProjectID=@ProjectID", cn);
@@ -255,26 +261,18 @@ namespace DETI_MakerLab
 
         private void save_project_changes_button_Click(object sender, RoutedEventArgs e)
         {
-            //saveChanges();
-            MessageBox.Show("The project has been changed!");
-            //HomeWindow window = (HomeWindow)Window.GetWindow(this);
-            //window.goToProjectPage(_project);
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
+            try
+            {
+                //saveChanges();
+                MessageBox.Show("The project has been changed!");
+                //HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                //window.goToProjectPage(_project);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }

@@ -48,8 +48,8 @@ namespace DETI_MakerLab
 
         private void LoadProjects()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
                 return;
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_INFO", cn);
@@ -62,28 +62,15 @@ namespace DETI_MakerLab
                     int.Parse(reader["ProjectID"].ToString()),
                     reader["PrjName"].ToString(),
                     reader["PrjDescription"].ToString(),
-                    reader["ClassName"].ToString()
-                    );
-                all_projects_listbox.Items.Add(prj);
+                    new Class(
+                        int.Parse(reader["ClassID"].ToString()),
+                        reader["ClassName"].ToString(),
+                        reader["ClDescription"].ToString()
+                    ));
+                ProjectsListData.Add(prj);
             }
 
             cn.Close();
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
         }
     }
 }

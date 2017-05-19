@@ -13,7 +13,7 @@ namespace DETI_MakerLab
         private Project _reqProject;
         private DMLUser _user;
         private DateTime _reqDate;
-        private List<int> _resources = new List<int>();
+        private List<Resources> _resources = new List<Resources>();
 
         public int RequisitionID
         {
@@ -35,31 +35,22 @@ namespace DETI_MakerLab
         public DMLUser User
         {
             get { return _user; }
-            set
-            {
-                if (value == null)
-                    throw new Exception("Invalid User");
-                _user = value;
-            }
+            set { _user = value; }
         }
 
         public DateTime ReqDate
         {
             get { return _reqDate; }
             set
-            {
-                if (value == null)
-                    throw new Exception("Invalid ReqDate");
-                _reqDate = value;
-            }
+            { _reqDate = value; }
         }
 
-        public List<int> Resources
+        public List<Resources> Resources
         {
             get { return _resources; }
         }
 
-        public void addResource(int resourceID)
+        public void addResource(Resources resourceID)
         {
             Resources.Add(resourceID);
         }
@@ -74,75 +65,6 @@ namespace DETI_MakerLab
             this.RequisitionID = RequisitionID;
             this.ReqProject = ReqProject;
             this.User = User;
-            this.ReqDate = ReqDate;
-        }
-    }
-
-    [Serializable()]
-    public class RequisitionInfo
-    {
-        private int _reqID;
-        private String _projectName;
-        private int _userID;
-        private String _productDescription;
-        private List<int> _resources = new List<int>();
-        private int _units;
-        private DateTime _reqDate;
-
-        public int ReqID
-        {
-            get { return _reqID; }
-            set { _reqID = value; }
-        }
-
-        public String ProjectName
-        {
-            get { return _projectName; }
-            set { _projectName = value; }
-        }
-
-        public int UserID
-        {
-            get { return _userID; }
-            set { _userID = value; }
-        }
-
-        public String ProductDescription
-        {
-            get { return _productDescription; }
-            set {  _productDescription = value; }
-        }
-
-        public List<int> Resources
-        {
-            get { return _resources; }
-        }
-
-        public void addResource(int resourceID)
-        {
-            Resources.Add(resourceID);
-        }
-
-        public int Units
-        {
-            get { return _units; }
-            set { _units = value; }
-        }
-
-        public DateTime ReqDate
-        {
-            get { return _reqDate; }
-            set { _reqDate = value; }
-        }
-
-        public RequisitionInfo(int ReqID, String ProjectName, int UserID,
-            String ProductDescription, int Units, DateTime ReqDate)
-        {
-            this.ReqID = ReqID;
-            this.ProjectName = ProjectName;
-            this.UserID = UserID;
-            this.ProductDescription = ProductDescription;
-            this.Units = Units;
             this.ReqDate = ReqDate;
         }
     }

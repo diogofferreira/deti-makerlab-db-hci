@@ -16,24 +16,6 @@ namespace DETI_MakerLab
         public Login()
         {
             InitializeComponent();
-            cn = getSGBDConnection();
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            //TODO: fix data source
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -73,7 +55,8 @@ namespace DETI_MakerLab
             SqlDataReader userData;
 
             try {
-                if (!verifySGBDConnection())
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
                     return false;
                 cmd = new SqlCommand("SELECT * FROM DMLUser WHERE Email=@email");
                 cmd.Parameters.Clear();
@@ -107,7 +90,7 @@ namespace DETI_MakerLab
 
         private bool checkProfessor(SqlDataReader userData)
         {
-            if (!verifySGBDConnection())
+            if (!Helpers.verifySGBDConnection(cn))
                 return false;
             bool result = false;
             SqlCommand cmdType = new SqlCommand("SELECT * FROM Professor WHERE NumMec=@nummec");
@@ -134,7 +117,7 @@ namespace DETI_MakerLab
 
         private bool checkStudent(SqlDataReader userData)
         {
-            if (!verifySGBDConnection())
+            if (!Helpers.verifySGBDConnection(cn))
                 return false;
             bool result = false;
             SqlCommand cmdType = new SqlCommand("SELECT * FROM Student WHERE NumMec=@nummec");
@@ -161,7 +144,7 @@ namespace DETI_MakerLab
 
         private bool checkStaff()
         {
-            if (!verifySGBDConnection())
+            if (!Helpers.verifySGBDConnection(cn))
                 return false;
             bool result = false;
             SqlCommand cmd = new SqlCommand("SELECT * FROM Staff WHERE Email=@email");

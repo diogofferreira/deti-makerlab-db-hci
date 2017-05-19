@@ -26,13 +26,13 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private ObservableCollection<Project> ProjectsListData;
-        private ObservableCollection<RequisitionInfo> RequisitionsListData;
+        private ObservableCollection<Resources> RequisitionsListData;
 
         public Home()
         {
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
-            RequisitionsListData = new ObservableCollection<RequisitionInfo>();
+            RequisitionsListData = new ObservableCollection<Resources>();
             /*
             LoadProjects();
             LoadRequisitions();
@@ -40,14 +40,14 @@ namespace DETI_MakerLab
             // Hardcoded Data
             ProjectsListData.Add(new Project(1, "DETI MakerLab", "Wiki for DML"));
             ProjectsListData.Add(new Project(2, "BlueConf", "Conference management"));
-            RequisitionInfo req1 = new RequisitionInfo(1, "DETI MakerLab", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
-            RequisitionInfo req2 = new RequisitionInfo(1, "BlueConf", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
-            req1.addResource(1);
-            req1.addResource(2);
-            req2.addResource(3);
-            req2.addResource(4);
-            RequisitionsListData.Add(req1);
-            RequisitionsListData.Add(req2);
+            //RequisitionInfo req1 = new RequisitionInfo(1, "DETI MakerLab", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
+            //RequisitionInfo req2 = new RequisitionInfo(1, "BlueConf", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
+            //req1.addResource(1);
+            //req1.addResource(2);
+            //req2.addResource(3);
+            //req2.addResource(4);
+            //RequisitionsListData.Add(req1);
+            //RequisitionsListData.Add(req2);
 
             last_project_list.ItemsSource = ProjectsListData;
             last_requisitions_list.ItemsSource = RequisitionsListData;
@@ -55,8 +55,8 @@ namespace DETI_MakerLab
 
         private void LastProjects()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Could not connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_PROJECTS", cn);
@@ -68,52 +68,54 @@ namespace DETI_MakerLab
                     int.Parse(reader["ProjectID"].ToString()),
                     reader["PrjName"].ToString(),
                     reader["PrjDescription"].ToString(),
-                    int.Parse(reader["ClassID"].ToString())
-                    ));
+                    new Class(
+                        int.Parse(reader["ClassID"].ToString()),
+                        reader["ClassName"].ToString(),
+                        reader["ClDescription"].ToString()
+                    )));
             }
             cn.Close();
         }
 
         private void LastRequisitions()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Could not connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_REQUISITIONS_INFO", cn);
-            SqlDataReader reader = cmd.ExecuteReader();
-            CultureInfo provider = CultureInfo.InvariantCulture;
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("LAST_REQUISITIONS", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            cn.Close();
 
-            while (reader.Read())
+            foreach (DataRow row in ds.Tables[0].Rows)
             {
-                RequisitionsListData.Add(new RequisitionInfo(
-                    int.Parse(reader["RequisitionID"].ToString()),
-                    reader["PrjName"].ToString(),
-                    int.Parse(reader["UserID"].ToString()),
-                    reader["ProductDescription"].ToString(),
-                    int.Parse(reader["Units"].ToString()),
-                    DateTime.ParseExact(reader["ReqDate"].ToString(), "yyMMddHHmm", provider)
+                RequisitionsListData.Add(new ElectronicUnit(
+                    int.Parse(row["ResourceID"].ToString()),
+                    new ElectronicResources(
+                        row["ProductName"].ToString(),
+                        row["Manufactor"].ToString(),
+                        row["Model"].ToString(),
+                        row["Description"].ToString(),
+                        null,
+                        row["PathToImage"].ToString()
+                        ),
+                    row["Supplier"].ToString()
                     ));
             }
-            cn.Close();
+
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                RequisitionsListData.Add(new Kit(
+                    int.Parse(row["ResourceID"].ToString()),
+                    row["KitDescription"].ToString()
+                    ));
+            }
         }
 
-        private SqlConnection getSGBDConnection()
-        {
-            //TODO: fix data source
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
-        }
+        // REVER A QUESTÂO DO QUE MOSTRAR NAS REQUISIÇÕES
 
         private void project_info_Click(object sender, RoutedEventArgs e)
         {
@@ -132,7 +134,7 @@ namespace DETI_MakerLab
 
         private void requisition_info_Click(object sender, RoutedEventArgs e)
         {
-            RequisitionInfo requisition = (RequisitionInfo)(sender as Button).DataContext;
+            Requisition requisition = (Requisition)(sender as Button).DataContext;
             try
             {
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);

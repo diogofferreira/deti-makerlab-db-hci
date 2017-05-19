@@ -49,11 +49,11 @@ namespace DETI_MakerLab
 
         private void LoadProjects(int userID)
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_WORKERS_INFO(@nmec)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM USER_PROJECTS (@nmec)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@nmec", userID);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -64,28 +64,15 @@ namespace DETI_MakerLab
                     int.Parse(reader["ProjectID"].ToString()),
                     reader["PrjName"].ToString(),
                     reader["PrjDescription"].ToString(),
-                    reader["ClassName"].ToString()
-                    );
+                    new Class(
+                        int.Parse(reader["ClassID"].ToString()),
+                        reader["ClassName"].ToString(),
+                        reader["ClDescription"].ToString()
+                    ));
                 ProjectsListData.Add(prj);
             }
 
             cn.Close();
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
         }
     }
 }

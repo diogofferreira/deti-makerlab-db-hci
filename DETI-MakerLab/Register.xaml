@@ -10,7 +10,8 @@
 
     <Grid x:Name="password">
         <TextBox x:Name="email" HorizontalAlignment="Left" Height="41" Margin="669,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265"/>
-        <TextBox x:Name="name" HorizontalAlignment="Left" Height="41" Margin="669,361,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265"/>
+        <TextBox x:Name="first_name" HorizontalAlignment="Left" Height="41" Margin="669,361,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265"/>
+        <TextBox x:Name="last_name" HorizontalAlignment="Left" Height="41" Margin="669,361,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265"/>
         <TextBox x:Name="nmec" HorizontalAlignment="Left" Height="41" Margin="669,444,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="265"/>
         <PasswordBox HorizontalAlignment="Left" Margin="669,283,0,0" VerticalAlignment="Top" Width="265" Height="41"/>
         <Label Content="Email" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="434,204,0,0" VerticalAlignment="Top"/>

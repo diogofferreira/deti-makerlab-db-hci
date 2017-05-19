@@ -27,12 +27,6 @@ namespace DETI_MakerLab
         private ObservableCollection<DMLUser> MembersListData;
         private ObservableCollection<Role> RolesListData;
         private Project _project;
-        private List<Role> _roles = new List<Role>();
-
-        internal List<Role> Roles
-        {
-            get { return _roles; }
-        }
 
         public ProjectChanges(Project project)
         {
@@ -61,7 +55,6 @@ namespace DETI_MakerLab
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM Roles", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            project_members.Items.Clear();
 
             while (reader.Read())
             {

@@ -60,12 +60,11 @@ namespace DETI_MakerLab
 
         private void LoadResources()
         {
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
-
-            SqlCommand cmd = new SqlCommand("SELECT * FROM ElectronicResource", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM ALL_ELECTRONIC_RESOURCES", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -75,7 +74,14 @@ namespace DETI_MakerLab
                     reader["Manufacturer"].ToString(),
                     reader["Model"].ToString(),
                     reader["ResDescription"].ToString(),
-                    null,
+                    new Staff(
+                        int.Parse(reader["EmployeeNum"].ToString()),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        reader["Email"].ToString(),
+                        null,
+                        reader["StaffImage"].ToString()
+                        ),
                     reader["PathToImage"].ToString()
                     );
 
@@ -87,10 +93,9 @@ namespace DETI_MakerLab
 
         private void LoadKits()
         {
-
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM Kit", cn);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -106,22 +111,6 @@ namespace DETI_MakerLab
             }
 
             cn.Close();
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
         }
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)

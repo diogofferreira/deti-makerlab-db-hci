@@ -65,9 +65,9 @@ namespace DETI_MakerLab
 
         private void loadRequisitions()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
-                return;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             CultureInfo provider = CultureInfo.InvariantCulture;
 
@@ -127,22 +127,6 @@ namespace DETI_MakerLab
                     }
                 }
             }
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
         }
 
         private void go_back_Click(object sender, RoutedEventArgs e)

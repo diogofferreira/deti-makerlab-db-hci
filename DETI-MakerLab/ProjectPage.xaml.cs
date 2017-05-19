@@ -38,6 +38,7 @@ namespace DETI_MakerLab
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
 
+            // loadRequisitions();
             // Hardcoded Data
             MembersListData.Add(new Student(78452, "Ana", "Gomes", "ana@ua.pt", "hash", "/images/default-profile.png", "EET"));
             MembersListData.Add(new Student(78452, "Diogo", "Ferreira", "pdiogoferreira@ua.pt", "hash", "/images/default-profile.png", "ECT"));
@@ -49,8 +50,8 @@ namespace DETI_MakerLab
 
         private void loadRequisitions()
         {
-            cn = getSGBDConnection();
-            if (!verifySGBDConnection())
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
                 return;
 
             CultureInfo provider = CultureInfo.InvariantCulture;
@@ -108,22 +109,6 @@ namespace DETI_MakerLab
                     }
                 }
             }
-        }
-
-        private SqlConnection getSGBDConnection()
-        {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
-        }
-
-        private bool verifySGBDConnection()
-        {
-            if (cn == null)
-                cn = getSGBDConnection();
-
-            if (cn.State != ConnectionState.Open)
-                cn.Open();
-
-            return cn.State == ConnectionState.Open;
         }
 
         private void project_members_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)

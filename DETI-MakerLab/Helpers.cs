@@ -31,7 +31,7 @@ namespace DETI_MakerLab
 
         public static SqlConnection getSGBDConnection()
         {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=Northwind");
+            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
         }
 
         public static bool verifySGBDConnection(SqlConnection cn)

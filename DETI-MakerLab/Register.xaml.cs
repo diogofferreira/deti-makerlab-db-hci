@@ -38,6 +38,7 @@ namespace DETI_MakerLab
 
             DMLUser user;
             SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@userID", int.Parse(nmec.Text));
@@ -58,7 +59,7 @@ namespace DETI_MakerLab
                     imagePath, 
                     area_or_course_response.Text
                     );
-                cmd.CommandText = "REGISTER_STUDENT (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @Course, @userID)";
+                cmd.CommandText = "dbo.REGISTER_STUDENT";
                 cmd.Parameters.AddWithValue("@Course", area_or_course_response.Text);
             } else
             {
@@ -71,7 +72,7 @@ namespace DETI_MakerLab
                     imagePath,
                     area_or_course_response.Text
                     );
-                cmd.CommandText = "REGISTER_PROFESSOR (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @ScientificArea, @userID)";
+                cmd.CommandText = "dbo.REGISTER_PROFESSOR (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @ScientificArea, @userID)";
                 cmd.Parameters.AddWithValue("@ScientificArea", area_or_course_response.Text);
             }
 
@@ -118,9 +119,7 @@ namespace DETI_MakerLab
             {
                 Console.WriteLine(ex);
                 Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.InnerException);
-                Console.WriteLine(ex.InnerException.Message);
-                MessageBox.Show(ex.InnerException.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 

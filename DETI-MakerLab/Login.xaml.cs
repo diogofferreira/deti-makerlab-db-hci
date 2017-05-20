@@ -45,6 +45,7 @@ namespace DETI_MakerLab
             bool result = false;
             SqlCommand cmd;
             SqlDataReader userData;
+            DMLUser user;
 
             try {
                 cn = Helpers.getSGBDConnection();
@@ -58,13 +59,22 @@ namespace DETI_MakerLab
                 if (userData.HasRows)
                 {
                     userData.Read();
+                    user = new DMLUser(
+                        int.Parse(userData["NumMec"].ToString()),
+                        userData["FirstName"].ToString(),
+                        userData["LastName"].ToString(),
+                        userData["Email"].ToString(),
+                        Convert.ToBase64String((byte[])userData["PasswordHash"]),
+                        userData["PathToImage"].ToString()
+                        );
                     // Check if password matches
-                    verifyPassword(password_box.Password, userData["PasswordHash"].ToString());
+                    if (!user.verifyPassword(password_box.Password))
+                        return false;
                     cn.Close();
 
                     // Check if it is professor or student
-                    if (checkProfessor(userData)) { result = true; }
-                    if (!result && checkStudent(userData)) { result = true; }
+                    if (checkProfessor(user)) { result = true; }
+                    if (!result && checkStudent(user)) { result = true; }
                 }
                 else
                 {
@@ -80,26 +90,27 @@ namespace DETI_MakerLab
             return result;
         }
 
-        private bool checkProfessor(SqlDataReader userData)
+        private bool checkProfessor(DMLUser user)
         {
             if (!Helpers.verifySGBDConnection(cn))
                 return false;
             bool result = false;
             SqlCommand cmdType = new SqlCommand("SELECT * FROM Professor WHERE NumMec=@nummec");
             cmdType.Parameters.Clear();
-            cmdType.Parameters.AddWithValue("@nummec", int.Parse(userData["NumMec"].ToString()));
+            cmdType.Parameters.AddWithValue("@nummec", user.NumMec);
             cmdType.Connection = cn;
             SqlDataReader typeData = cmdType.ExecuteReader();
             if (typeData.HasRows)
             {
-                user = new Student(
-                    int.Parse(userData["NumMec"].ToString()),
-                    userData["FirstName"].ToString(),
-                    userData["LastName"].ToString(),
-                    userData["Email"].ToString(),
-                    userData["PasswordHash"].ToString(),
-                    userData["PathToImage"].ToString(),
-                    typeData["Course"].ToString()
+                typeData.Read();
+                user = new Professor(
+                    user.NumMec,
+                    user.FirstName,
+                    user.LastName,
+                    user.Email,
+                    user.PasswordHash,
+                    user.PathToImage,
+                    typeData["ScientificArea"].ToString()
                     );
                 result = true;
             }
@@ -107,28 +118,28 @@ namespace DETI_MakerLab
             return result;
         }
 
-        private bool checkStudent(SqlDataReader userData)
+        private bool checkStudent(DMLUser user)
         {
             if (!Helpers.verifySGBDConnection(cn))
                 return false;
             bool result = false;
             SqlCommand cmdType = new SqlCommand("SELECT * FROM Student WHERE NumMec=@nummec");
             cmdType.Parameters.Clear();
-            cmdType.Parameters.AddWithValue("@nummec", int.Parse(userData["NumMec"].ToString()));
+            cmdType.Parameters.AddWithValue("@nummec", user.NumMec);
             cmdType.Connection = cn;
             SqlDataReader typeData = cmdType.ExecuteReader();
             if (typeData.HasRows)
             {
-                user = new Professor(
-                    int.Parse(userData["NumMec"].ToString()),
-                    userData["FirstName"].ToString(),
-                    userData["LastName"].ToString(),
-                    userData["Email"].ToString(),
-                    userData["PasswordHash"].ToString(),
-                    userData["PathToImage"].ToString(),
-                    typeData["ScientificArea"].ToString()
+                typeData.Read();
+                user = new Student(
+                    user.NumMec,
+                    user.FirstName,
+                    user.LastName,
+                    user.Email,
+                    user.PasswordHash,
+                    user.PathToImage,
+                    typeData["Course"].ToString()
                     );
-                result = true;
             }
             cn.Close();
             return result;
@@ -148,17 +159,15 @@ namespace DETI_MakerLab
             {
                 userData.Read();
                 // Check if password matches
-                verifyPassword(password_box.Password, userData["PasswordHash"].ToString());
-
                 staff = new Staff(
                     int.Parse(userData["EmployeeNum"].ToString()),
                     userData["FirstName"].ToString(),
                     userData["LastName"].ToString(),
                     userData["Email"].ToString(),
-                    userData["PasswordHash"].ToString(),
+                    Convert.ToBase64String((byte[])userData["PasswordHash"]),
                     userData["PathToImage"].ToString()
                     );
-                result = true;
+                result = staff.verifyPassword(password_box.Password);
             }
             cn.Close();
             return result;

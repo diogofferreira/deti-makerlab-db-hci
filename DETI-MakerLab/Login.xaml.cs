@@ -23,15 +23,7 @@ namespace DETI_MakerLab
             user = null;
             staff = null;
 
-            //bool logged = checkLogin();
-            bool logged = true;
-
-            // Just for now, so that we can log in
-            if (email_box.Text.Equals("User")) { 
-                user = new Student( 95235, "DML", "User", "user@dml.com", "hash", "/images/default-profile.png", "ECT");
-            } else { 
-                staff = new Staff(1, "Mr.", "Staff", "staff@dml.", "hash", "/images/default-profile.png");
-            }
+            bool logged = checkLogin();
 
             if (logged) {
                 if (user != null)

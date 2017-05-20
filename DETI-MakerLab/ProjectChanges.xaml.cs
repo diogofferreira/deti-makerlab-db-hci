@@ -34,14 +34,10 @@ namespace DETI_MakerLab
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
             RolesListData = new ObservableCollection<Role>();
-
+            LoadMembers();
+            LoadRoles();
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
-            // Hardcoded Data
-            MembersListData.Add(new Student(78452, "Ana", "Gomes", "ana@ua.pt", "hash", "/images/default-profile.png", "EET"));
-            MembersListData.Add(new Student(78452, "Diogo", "Ferreira", "pdiogoferreira@ua.pt", "hash", "/images/default-profile.png", "ECT"));
-            MembersListData.Add(new Student(78452, "Pedro", "Martins", "pbmartins@ua.pt", "hash", "/images/default-profile.png", "ECT"));
-            MembersListData.Add(new Student(78452, "Rui", "Lemos", "ruilemos@ua.pt", "hash", "/images/default-profile.png", "EET"));
             project_members.ItemsSource = MembersListData;
         }
 

@@ -59,7 +59,7 @@ namespace DETI_MakerLab
                 user_course_area.Text = ((Student)_user).Course;
             }
 
-            // LoadRequisitions();
+            loadRequisitions();
             user_last_requisitions_list.ItemsSource = RequisitionsData;
         }
 

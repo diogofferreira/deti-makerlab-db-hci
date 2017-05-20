@@ -46,31 +46,31 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@Email", email.Text);
             cmd.Parameters.AddWithValue("@PasswordHash", DMLUser.hashPassword(password.Password));
             cmd.Parameters.AddWithValue("@PathToImage", null);
-
-            if (RadioButton is Student)
+            
+            if (user_type.Text.Equals("Student"))
             {
-                user = new Student(nmec.Text,
+                user = new Student(int.Parse(nmec.Text),
                     first_name.Text, 
                     last_name.Text, 
                     email.Text, 
                     DMLUser.hashPassword(password.Password), 
                     null, 
-                    course.Text
+                    area_or_course_response.Text
                     );
                 cmd.CommandText = "REGISTER_STUDENT (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @Couse, @reqID)";
-                cmd.Parameters.AddWithValue("@Course", course.Text);
+                cmd.Parameters.AddWithValue("@Course", area_or_course_response.Text);
             } else
             {
-                user = new Professor(nmec.Text,
+                user = new Professor(int.Parse(nmec.Text),
                     first_name.Text,
                     last_name.Text,
                     email.Text,
                     DMLUser.hashPassword(password.Password),
                     null,
-                    course.Text
+                    area_or_course_response.Text
                     );
                 cmd.CommandText = "REGISTER_PROFESSOR (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @ScientificArea, @reqID)";
-                cmd.Parameters.AddWithValue("@ScientificArea", course.Text);
+                cmd.Parameters.AddWithValue("@ScientificArea", area_or_course_response.Text);
             }
 
             try
@@ -121,6 +121,14 @@ namespace DETI_MakerLab
         {
             MainWindow window = (MainWindow)Window.GetWindow(this);
             window.goToLogin();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (user_type.Text.Equals("Student"))
+                area_or_course.Content = "Course";
+            else
+                area_or_course.Content = "Scientific Area";
         }
     }
 }

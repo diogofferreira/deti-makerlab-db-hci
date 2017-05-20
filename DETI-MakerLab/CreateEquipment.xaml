@@ -11,14 +11,14 @@
 
     <Grid>
         <Label Content="New Equipment" Style="{StaticResource bigTitleStyle}" Width="387" Margin="414,0,0,0" HorizontalAlignment="Left"/>
-        <Label Content="Equipment Name (*)"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,107,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="251"/>
-        <Label Content="Model (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="240,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="122"/>
-        <Label Content="Manufacturer (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="156,233,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="206"/>
+        <Label Content="Equipment Name (*)"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="123,107,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="251"/>
+        <Label Content="Model (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="232,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="122"/>
+        <Label Content="Manufacturer (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="159,233,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="206"/>
         <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="215,297,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="147"/>
         <Label Content="Image" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="83" Margin="279,485,0,0"/>
-        <TextBox x:Name="equipment_name" HorizontalAlignment="Left" Height="39" Margin="451,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
-        <TextBox x:Name="equipment_model" HorizontalAlignment="Left" Height="39" Margin="451,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
-        <TextBox x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="39" Margin="451,234,0,0" VerticalAlignment="Top" Width="552" FontSize="18"/>
+        <TextBox x:Name="equipment_name" HorizontalAlignment="Left" Height="39" Margin="451,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="equipment_model" HorizontalAlignment="Left" Height="39" Margin="451,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="39" Margin="451,234,0,0" VerticalAlignment="Top" Width="552" FontSize="18" VerticalContentAlignment="Center"/>
         <TextBox x:Name="equipment_description" HorizontalAlignment="Left" Height="157" Margin="451,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
         <TextBlock x:Name="equipment_image" HorizontalAlignment="Left" Height="27" Margin="540,493,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="453"/>
         <Button x:Name="upload_image_button" Content="Choose File" HorizontalAlignment="Left" Margin="460,493,0,0" VerticalAlignment="Top" Width="75" Height="27" Click="upload_image_button_Click"/>

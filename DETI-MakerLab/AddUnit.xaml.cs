@@ -42,12 +42,7 @@ namespace DETI_MakerLab
             InitializeComponent();
             this.User = user;
             EquipmentsListData = new ObservableCollection<ElectronicResources>();
-            //LoadEquipments();
-            // Hardcoded Data
-            EquipmentsListData.Add(new ElectronicResources("Raspberry Pi 3",
-                "Pi", "Model B", "Description", null, "/images/rasp.png"));
-            EquipmentsListData.Add(new ElectronicResources("Arduino Uno",
-            "Adafruit", "Uno", "Arduino Description", null, "/images/ard.png"));
+            LoadEquipments();
             units_list.ItemsSource = EquipmentsListData;
         }
 

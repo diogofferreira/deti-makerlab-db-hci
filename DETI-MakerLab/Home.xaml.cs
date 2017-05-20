@@ -33,22 +33,8 @@ namespace DETI_MakerLab
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
             RequisitionsListData = new ObservableCollection<Resources>();
-            /*
-            LoadProjects();
-            LoadRequisitions();
-            */
-            // Hardcoded Data
-            ProjectsListData.Add(new Project(1, "DETI MakerLab", "Wiki for DML"));
-            ProjectsListData.Add(new Project(2, "BlueConf", "Conference management"));
-            //RequisitionInfo req1 = new RequisitionInfo(1, "DETI MakerLab", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
-            //RequisitionInfo req2 = new RequisitionInfo(1, "BlueConf", 1, "Raspberry Pi 3 Model B", 2, new DateTime(2017, 5, 13));
-            //req1.addResource(1);
-            //req1.addResource(2);
-            //req2.addResource(3);
-            //req2.addResource(4);
-            //RequisitionsListData.Add(req1);
-            //RequisitionsListData.Add(req2);
-
+            LastProjects();
+            LastRequisitions();
             last_project_list.ItemsSource = ProjectsListData;
             last_requisitions_list.ItemsSource = RequisitionsListData;
         }

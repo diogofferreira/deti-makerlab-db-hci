@@ -80,22 +80,11 @@ namespace DETI_MakerLab
             ActiveRequisitionsData = new ObservableCollection<Resources>();
             ResourceItems = new List<ResourceItem>();
             KitItems = new List<KitItem>();
-
-            // Hardcoded Data
-            ProjectsListData.Add(new Project(1, "DETI-MakerLab", "DETI-MakerLab Project Description"));
-            ProjectsListData.Add(new Project(2, "BlueConf", "BlueConf Project Description"));
-            projects_list.ItemsSource = ProjectsListData;
-            //ResourcesListData.Add(new ElectronicResources("Raspberry Pi 3",
-            //"Pi", "Model B", "Raspberry Description", null, "/images/rasp.png"));
-            //ResourcesListData.Add(new ElectronicResources("Arduino Uno",
-            //"Adafruit", "Uno", "Arduino Description", null, "/images/ard.png"));
+            LoadProjects();
+            LoadAvailableResources();
+            LoadProjectActiveRequisitons();
             equipment_list.ItemsSource = ResourcesListData;
-            //ActiveRequisitionsData.Add(new ElectronicUnit(4, "Raspberry Pi 3 - ID#4"));
-            //ActiveRequisitionsData.Add(new Resources(5, "Arduino Uno - ID#5"));
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
-            //LoadProjects();
-            //LoadAvailableResources();
-            //LoadProjectActiveRequisitons();
         }
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)

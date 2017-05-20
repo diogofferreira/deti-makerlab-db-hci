@@ -41,22 +41,11 @@ namespace DETI_MakerLab
             SocketsListData = new ObservableCollection<EthernetSocket>();
             ActiveRequisitionsData = new ObservableCollection<NetworkResources>();
             OSList = new ObservableCollection<OS>();
-            /*
             LoadOS();
             LoadProjects();
             LoadActiveRequisitions();
-             * */
-
-            // Hardcoded Data
-            Project proj = new Project(1, "DETI-MakerLab", "DETI-MakerLab Project Description");
-            ProjectsListData.Add(proj);
-            ProjectsListData.Add(new Project(2, "BlueConf", "BlueConf Project Description"));
             projects_list.ItemsSource = ProjectsListData;
-            SocketsListData.Add(new EthernetSocket(3, proj, 0));
-            SocketsListData.Add(new EthernetSocket(4, proj, 1));
             socket_list.ItemsSource = SocketsListData;
-            ActiveRequisitionsData.Add(new NetworkResources(4, proj));
-            ActiveRequisitionsData.Add(new NetworkResources(5, proj));
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
         }
 

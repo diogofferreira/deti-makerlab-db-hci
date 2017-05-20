@@ -27,10 +27,10 @@
         <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="183,189,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="126" Height="41"/>
         <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="200,303,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="127" Height="40"/>
         <Label Content="Class" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="236,464,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="91" Height="50"/>
-        <TextBox x:Name="project_name" HorizontalAlignment="Left" Height="40" Margin="410,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="20"/>
+        <TextBox x:Name="project_name" HorizontalAlignment="Left" Height="40" Margin="410,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="20" VerticalContentAlignment="Center"/>
         <TextBox x:Name="project_description" HorizontalAlignment="Left" Height="92" Margin="410,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="20"/>
         <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="135" Margin="410,303,0,0" VerticalAlignment="Top" Width="537" ItemTemplate="{DynamicResource MembersItem}"/>
-        <ComboBox x:Name="project_class" HorizontalAlignment="Left" Height="30" Margin="410,464,0,0" VerticalAlignment="Top" Width="537" FontSize="20">
+        <ComboBox x:Name="project_class" HorizontalAlignment="Left" Height="30" Margin="410,464,0,0" VerticalAlignment="Top" Width="537" FontSize="20" VerticalContentAlignment="Center">
             <!--<TextBox.ToolTip>
                 <ToolTip>
                     <StackPanel>

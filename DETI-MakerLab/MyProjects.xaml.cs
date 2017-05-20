@@ -30,9 +30,7 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
-            // LoadProjects(userID);
-            ProjectsListData.Add(new Project(1, "DETI-MakerLab", "DETI-MakerLab Project Description"));
-            ProjectsListData.Add(new Project(2, "BlueConf", "BlueConf Project Description"));
+            LoadProjects(userID);
             my_projects_listbox.ItemsSource = ProjectsListData;
             my_projects_listbox.MouseDoubleClick += new MouseButtonEventHandler(my_projects_listbox_MouseDoubleClick);
         }

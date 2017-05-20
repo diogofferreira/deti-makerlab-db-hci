@@ -9,27 +9,27 @@
       Title="Register">
 
     <Grid>
-        <TextBox x:Name="email" Text="pbmartins@ua.pt" HorizontalAlignment="Left" Height="41" Margin="416,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="first_name" Text="Pedro" HorizontalAlignment="Left" Height="41" Margin="416,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="last_name" Text="Martins" HorizontalAlignment="Left" Height="41" Margin="871,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" VerticalContentAlignment="Center"/>
-        <TextBox x:Name="nmec" Text="76551" HorizontalAlignment="Left" Height="41" Margin="416,436,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" VerticalContentAlignment="Center"/>
-        <PasswordBox x:Name="password" HorizontalAlignment="Left" Margin="416,275,0,0" VerticalAlignment="Top" Width="763" Height="41" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="email" HorizontalAlignment="Left" Height="41" Margin="416,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" VerticalContentAlignment="Center" TabIndex="1"/>
+        <TextBox x:Name="first_name" HorizontalAlignment="Left" Height="41" Margin="416,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" VerticalContentAlignment="Center" TabIndex="3"/>
+        <TextBox x:Name="last_name" HorizontalAlignment="Left" Height="41" Margin="871,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="308" VerticalContentAlignment="Center" TabIndex="4"/>
+        <TextBox x:Name="nmec" HorizontalAlignment="Left" Height="41" Margin="416,436,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" VerticalContentAlignment="Center" TabIndex="5"/>
+        <PasswordBox x:Name="password" HorizontalAlignment="Left" Margin="416,275,0,0" VerticalAlignment="Top" Width="763" Height="41" VerticalContentAlignment="Center" TabIndex="2"/>
         <Label Content="Email" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="301,196,0,0" VerticalAlignment="Top" Width="78"/>
         <Label Content="Password" Style="{StaticResource ResourceKey=descriptionStyle}" HorizontalAlignment="Left" Margin="266,275,0,0" VerticalAlignment="Top" Width="121"/>
         <Label Content="First Name" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="252,353,0,0" VerticalAlignment="Top" Width="131"/>
         <Label Content="Mec. Number" Style="{StaticResource ResourceKey=descriptionStyle}" HorizontalAlignment="Left" Margin="226,436,0,0" VerticalAlignment="Top" Width="147"/>
         <Image HorizontalAlignment="Left" Height="165" Margin="574,10,0,0" VerticalAlignment="Top" Width="165" Source="images/dml_logo.png"/>
-        <Button x:Name="register_button" Content="Register" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="165,630,0,0" VerticalAlignment="Top" Width="863" Height="45" Click="register_button_Click" Background="#FF00796B"/>
-        <Button x:Name="go_back_button" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1120,630,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="go_back_button_Click" Background="#FF00796B"/>
+        <Button x:Name="register_button" Content="Register" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="165,630,0,0" VerticalAlignment="Top" Width="863" Height="45" Click="register_button_Click" Background="#FF00796B" TabIndex="9"/>
+        <Button x:Name="go_back_button" Content="Go Back" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="1120,630,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="go_back_button_Click" Background="#FF00796B" TabIndex="10"/>
         <Label Content="Image" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="79" Margin="300,560,0,0"/>
         <TextBlock x:Name="equipment_image" HorizontalAlignment="Left" Height="27" Margin="538,568,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="628"/>
-        <Button x:Name="upload_image_button" Content="Choose File" HorizontalAlignment="Left" Margin="428,568,0,0" VerticalAlignment="Top" Width="103" Height="27" Click="upload_image_button_Click"/>
+        <Button x:Name="upload_image_button" Content="Choose File" HorizontalAlignment="Left" Margin="428,568,0,0" VerticalAlignment="Top" Width="103" Height="27" Click="upload_image_button_Click" TabIndex="8"/>
         <GroupBox Header="" HorizontalAlignment="Left" Height="51" Margin="416,552,0,0" VerticalAlignment="Top" Width="763" BorderBrush="Gray" IsEnabled="False"/>
         <Label Content="Last Name" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="727,353,0,0" VerticalAlignment="Top" Width="139"/>
         <Label x:Name="area_or_course" Content="Course" Style="{StaticResource ResourceKey=descriptionStyle}" HorizontalAlignment="Left" Margin="185,502,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="area_or_course_response" Text="ECT" HorizontalAlignment="Left" Height="41" Margin="416,502,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="area_or_course_response" HorizontalAlignment="Left" Height="41" Margin="416,502,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" VerticalContentAlignment="Center" TabIndex="7"/>
         <Label Content="User Type" Style="{StaticResource ResourceKey=descriptionStyle}" HorizontalAlignment="Left" Margin="727,436,0,0" VerticalAlignment="Top" Width="139"/>
-        <ComboBox x:Name="user_type" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="308" Margin="871,436,0,0" Height="41" SelectionChanged="ComboBox_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        <ComboBox x:Name="user_type" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="308" Margin="871,436,0,0" Height="41" SelectionChanged="ComboBox_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TabIndex="6">
             <ComboBoxItem>Student</ComboBoxItem>
             <ComboBoxItem>Professor</ComboBoxItem>
         </ComboBox>

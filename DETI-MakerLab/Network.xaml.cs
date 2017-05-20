@@ -227,8 +227,9 @@ namespace DETI_MakerLab
                 selectedOS
                 );
 
-            SqlCommand cmd = new SqlCommand("REQUEST_VM (@ProjectID, @IP, @PasswordHash, @DockerID, @OSID, @resID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", vm.ReqProject.ProjectID);
             cmd.Parameters.AddWithValue("@IP", vm.IP);
@@ -236,6 +237,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@DockerID", vm.DockerID);
             cmd.Parameters.AddWithValue("@DockerID", vm.UsedOS.OSID);
             cmd.Parameters.Add("@resID", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.CommandText = "dbo.REQUEST_VM";
 
             try
             {
@@ -290,11 +292,13 @@ namespace DETI_MakerLab
                 throw new Exception("Error connecting to database");
 
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("REQUEST_SOCKETS (@UnitsList, @ProjectID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toRequest);
             listParam.SqlDbType = SqlDbType.Structured;
             cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
+            cmd.CommandText = "dbo.REQUEST_SOCKETS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();
@@ -341,12 +345,15 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Error connecting to database");
 
-            SqlCommand cmd = new SqlCommand("REQUEST_WLAN (@ProjectID, @SSID, @PasswordHash, @resID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
+            cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
             cmd.Parameters.AddWithValue("@SSID", currentWLAN.SSID);
             cmd.Parameters.AddWithValue("@PasswordHash", currentWLAN.PasswordHash);
             cmd.Parameters.Add("@resID", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.CommandText = "dbo.REQUEST_WLAN";
 
             try
             {
@@ -448,8 +455,10 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Error connecting to database");
 
-            SqlCommand cmd = new SqlCommand("DELIVER_NET_RESOURCES (@UnitsList)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
+            cmd.CommandText = "dbo.DELIVER_NET_RESOURCES";
             SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toDeliver);
             listParam.SqlDbType = SqlDbType.Structured;
 
@@ -489,6 +498,5 @@ namespace DETI_MakerLab
         {
             MessageBox.Show("Delivery done with success !");
         }
-
     }
 }

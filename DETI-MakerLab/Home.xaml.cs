@@ -70,8 +70,10 @@ namespace DETI_MakerLab
                 throw new Exception("Could not connect to database");
 
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("LAST_REQUISITIONS", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
+            cmd.CommandText = "dbo.LAST_REQUISITIONS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();

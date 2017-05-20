@@ -129,12 +129,14 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            cmd = new SqlCommand("CREATE_PROJECT (@PrjName, @PrjDescription, @Class)", cn);
+            cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@PrjName", project_name.Text);
             cmd.Parameters.AddWithValue("@PrjDescription", project_description.Text);
             cmd.Parameters.Add("@ProjectID", SqlDbType.Int).Direction = ParameterDirection.Output;
-
+            cmd.CommandText = "dbo.CREATE_PROJECT";
 
             if (((Role)project_class.SelectedValue).RoleID != -1)
             {

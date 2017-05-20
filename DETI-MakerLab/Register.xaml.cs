@@ -59,9 +59,10 @@ namespace DETI_MakerLab
                     imagePath, 
                     area_or_course_response.Text
                     );
-                cmd.CommandText = "dbo.REGISTER_STUDENT";
                 cmd.Parameters.AddWithValue("@Course", area_or_course_response.Text);
-            } else
+                cmd.CommandText = "dbo.REGISTER_STUDENT";
+            }
+            else
             {
                 user = new Professor(
                     int.Parse(nmec.Text),
@@ -72,8 +73,8 @@ namespace DETI_MakerLab
                     imagePath,
                     area_or_course_response.Text
                     );
-                cmd.CommandText = "dbo.REGISTER_PROFESSOR";
                 cmd.Parameters.AddWithValue("@ScientificArea", area_or_course_response.Text);
+                cmd.CommandText = "dbo.REGISTER_PROFESSOR";
             }
 
             try
@@ -112,8 +113,8 @@ namespace DETI_MakerLab
                 System.IO.File.Copy(fileName, imagePath, true);
                 registerUser(imagePath);
                 MessageBox.Show("User successfuly registred!");
-                StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                
+                MainWindow window = (MainWindow)Window.GetWindow(this);
+                window.goToLogin();
             }
             catch (Exception ex)
             {

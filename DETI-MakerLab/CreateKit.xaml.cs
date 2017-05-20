@@ -56,8 +56,10 @@ namespace DETI_MakerLab
                 throw new Exception("Cannot connect to database");
 
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("RESOURCES_TO_REQUEST", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
+            cmd.CommandText = "dbo.RESOURCES_TO_REQUEST";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();
@@ -127,11 +129,13 @@ namespace DETI_MakerLab
                 }
             }
 
-            SqlCommand cmd = new SqlCommand("CREATE_KIT (@KitDescription, @KitID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.Add("@KitID", SqlDbType.Int).Direction = ParameterDirection.Output;
             cmd.Parameters.AddWithValue("@KitDescription", kit_name.Text);
+            cmd.CommandText = "dbo.CREATE_KIT";
             int kitID = -1;
 
             try
@@ -153,11 +157,13 @@ namespace DETI_MakerLab
 
             foreach (ElectronicUnit unit in toRequest)
             {
-                cmd = new SqlCommand("ADD_UNIT_KIT (@KitID, @ResourceID)", cn);
+                cmd = new SqlCommand();
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = cn;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@KitID", kitID);
                 cmd.Parameters.AddWithValue("@ResourceID", unit.ResourceID);
+                cmd.CommandText = "dbo.ADD_UNIT_KIT";
 
                 try
                 {

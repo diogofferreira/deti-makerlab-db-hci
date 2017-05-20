@@ -72,10 +72,12 @@ namespace DETI_MakerLab
             CultureInfo provider = CultureInfo.InvariantCulture;
 
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("USER_REQS (@UserID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@UserID", _user.NumMec);
+            cmd.CommandText = "dbo.USER_REQS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();

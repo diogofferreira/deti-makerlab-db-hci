@@ -194,10 +194,12 @@ namespace DETI_MakerLab
                 throw new Exception("Cannot connect to database");
 
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("PROJECT_ACTIVE_REQS (@projectID)", cn);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@projectID", SelectedProject.ProjectID);
-            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "dbo.PROJECT_ACTIVE_REQS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();
@@ -371,11 +373,13 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Error connecting to database");
 
-            SqlCommand cmd = new SqlCommand("REQUEST_RESOURCES (@UnitsList, @reqID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toRequest);
             listParam.SqlDbType = SqlDbType.Structured;
             cmd.Parameters.AddWithValue("@reqID", reqID);
+            cmd.CommandText = "dbo.REQUEST_RESOURCES";
 
             try
             {
@@ -402,11 +406,14 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 return reqID;
 
-            SqlCommand cmd = new SqlCommand("CREATE_REQUISITION (@ProjectID, @UserID, @RequisitionID)", cn);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.Add("@RequisitionID", SqlDbType.Int).Direction = ParameterDirection.Output;
             cmd.Parameters.AddWithValue("@ProjectID", SelectedProject.ProjectID);
             cmd.Parameters.AddWithValue("@UserID", UserID);
+            cmd.CommandText = "dbo.CREATE_REQUISITION";
 
             try
             {
@@ -464,11 +471,13 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Error connecting to database");
             
-            SqlCommand cmd = new SqlCommand("DELIVER_RESOURCES (@UnitsList, @delID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toDeliver);
             listParam.SqlDbType = SqlDbType.Structured;
             cmd.Parameters.AddWithValue("@delID", delID);
+            cmd.CommandText = "dbo.DELIVER_RESOURCES";
 
             try
             {
@@ -493,11 +502,14 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 return delID;
 
-            SqlCommand cmd = new SqlCommand("CREATE_DELIVERY (@ProjectID, @UserID, @DeliveryID)", cn);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.Add("@DeliveryID", SqlDbType.Int).Direction = ParameterDirection.Output;
             cmd.Parameters.AddWithValue("@ProjectID", SelectedProject.ProjectID);
             cmd.Parameters.AddWithValue("@UserID", UserID);
+            cmd.CommandText = "dbo.CREATE_DELIVERY";
 
             try
             {

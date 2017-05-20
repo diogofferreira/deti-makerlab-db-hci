@@ -105,8 +105,9 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("ADD_UNITS (@ProductName, @Manufacturer, @Model, @Supplier, @Units, @EmployeeID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProductName", resource.ProductName);
             cmd.Parameters.AddWithValue("@Manufacturer", resource.Manufactor);
@@ -114,6 +115,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@Supplier", supplier);
             cmd.Parameters.AddWithValue("@Units", units);
             cmd.Parameters.AddWithValue("@EmployeeID", User.EmployeeNum);
+            cmd.CommandText = "dbo.ADD_UNITS";
 
             try
             {

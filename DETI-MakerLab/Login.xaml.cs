@@ -67,6 +67,7 @@ namespace DETI_MakerLab
                         Convert.ToBase64String((byte[])userData["PasswordHash"]),
                         userData["PathToImage"].ToString()
                         );
+
                     // Check if password matches
                     if (!user.verifyPassword(password_box.Password))
                         return false;

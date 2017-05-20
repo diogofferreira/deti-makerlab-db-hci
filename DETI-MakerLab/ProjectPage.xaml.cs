@@ -51,10 +51,12 @@ namespace DETI_MakerLab
             CultureInfo provider = CultureInfo.InvariantCulture;
 
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("PROJECT_REQS (@ProjectID)", cn);
+            SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", _project.ProjectID);
+            cmd.CommandText = "dbo.PROJECT_REQS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();

@@ -69,12 +69,7 @@ namespace DETI_MakerLab
         public String PasswordHash
         {
             get { return _passwordHash; }
-            set
-            {
-                if (value == null | String.IsNullOrEmpty(value))
-                    throw new Exception("Invalid password");
-                _passwordHash = value;
-            }
+            set { _passwordHash = value; }
         }
 
         public String PathToImage

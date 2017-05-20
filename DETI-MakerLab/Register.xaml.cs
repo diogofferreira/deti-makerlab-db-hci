@@ -30,7 +30,7 @@ namespace DETI_MakerLab
             InitializeComponent();
         }
 
-        private void registerUser()
+        private void registerUser(String imagePath)
         {
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
@@ -40,36 +40,38 @@ namespace DETI_MakerLab
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
             cmd.Parameters.Clear();
-            cmd.Parameters.Add("@userID", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("@userID", int.Parse(nmec.Text));
             cmd.Parameters.AddWithValue("@FirstName", first_name.Text);
             cmd.Parameters.AddWithValue("@LastName", last_name.Text);
             cmd.Parameters.AddWithValue("@Email", email.Text);
-            cmd.Parameters.AddWithValue("@PasswordHash", DMLUser.hashPassword(password.Password));
-            cmd.Parameters.AddWithValue("@PathToImage", null);
+            cmd.Parameters.AddWithValue("@PasswordHash", Convert.FromBase64String(DMLUser.hashPassword(password.Password)));
+            cmd.Parameters.AddWithValue("@PathToImage", imagePath);
             
             if (user_type.Text.Equals("Student"))
             {
-                user = new Student(int.Parse(nmec.Text),
+                user = new Student(
+                    int.Parse(nmec.Text),
                     first_name.Text, 
                     last_name.Text, 
                     email.Text, 
-                    DMLUser.hashPassword(password.Password), 
-                    null, 
+                    DMLUser.hashPassword(password.Password),
+                    imagePath, 
                     area_or_course_response.Text
                     );
-                cmd.CommandText = "REGISTER_STUDENT (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @Couse, @reqID)";
+                cmd.CommandText = "REGISTER_STUDENT (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @Course, @userID)";
                 cmd.Parameters.AddWithValue("@Course", area_or_course_response.Text);
             } else
             {
-                user = new Professor(int.Parse(nmec.Text),
+                user = new Professor(
+                    int.Parse(nmec.Text),
                     first_name.Text,
                     last_name.Text,
                     email.Text,
                     DMLUser.hashPassword(password.Password),
-                    null,
+                    imagePath,
                     area_or_course_response.Text
                     );
-                cmd.CommandText = "REGISTER_PROFESSOR (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @ScientificArea, @reqID)";
+                cmd.CommandText = "REGISTER_PROFESSOR (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @ScientificArea, @userID)";
                 cmd.Parameters.AddWithValue("@ScientificArea", area_or_course_response.Text);
             }
 
@@ -107,13 +109,18 @@ namespace DETI_MakerLab
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + System.IO.Path.GetFileName(fileName);
                 System.IO.File.Copy(fileName, imagePath, true);
-                MessageBox.Show("Equipment has been added!");
+                registerUser(imagePath);
+                MessageBox.Show("User successfuly registred!");
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                registerUser();
+                
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException);
+                Console.WriteLine(ex.InnerException.Message);
+                MessageBox.Show(ex.InnerException.Message);
             }
         }
 
@@ -125,7 +132,7 @@ namespace DETI_MakerLab
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (user_type.Text.Equals("Student"))
+            if (!user_type.Text.Equals("Student"))
                 area_or_course.Content = "Course";
             else
                 area_or_course.Content = "Scientific Area";

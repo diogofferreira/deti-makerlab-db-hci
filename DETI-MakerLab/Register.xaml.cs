@@ -72,7 +72,7 @@ namespace DETI_MakerLab
                     imagePath,
                     area_or_course_response.Text
                     );
-                cmd.CommandText = "dbo.REGISTER_PROFESSOR (@FirstName, @LastName, @Email, @PasswordHash, @PathToImage, @ScientificArea, @userID)";
+                cmd.CommandText = "dbo.REGISTER_PROFESSOR";
                 cmd.Parameters.AddWithValue("@ScientificArea", area_or_course_response.Text);
             }
 

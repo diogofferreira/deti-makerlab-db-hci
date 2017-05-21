@@ -109,6 +109,9 @@ namespace DETI_MakerLab
             /* Compute the hash on the password the user entered */
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
+
+            Console.WriteLine(hashBytes);
+            Console.WriteLine(hash);
             /* Compare the results */
             for (int i = 0; i < 20; i++)
                 if (hashBytes[i + 16] != hash[i])

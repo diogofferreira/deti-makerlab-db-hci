@@ -151,6 +151,7 @@ namespace DETI_MakerLab
                     user.PathToImage,
                     typeData["Course"].ToString()
                     );
+                result = true;
             }
             cn.Close();
             return result;

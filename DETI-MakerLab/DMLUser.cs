@@ -20,7 +20,6 @@ namespace DETI_MakerLab
         private String _firstName;
         private String _lastName;
         private String _email;
-        private String _passwordHash;
         private String _pathToImage;
         private int _roleID;
 
@@ -66,12 +65,6 @@ namespace DETI_MakerLab
             }
         }
 
-        public String PasswordHash
-        {
-            get { return _passwordHash; }
-            set { _passwordHash = value; }
-        }
-
         public String PathToImage
         {
             get { return _pathToImage; }
@@ -99,25 +92,6 @@ namespace DETI_MakerLab
             return FullName + "(" + NumMec.ToString() + ")";
         }
 
-        public bool verifyPassword(String password)
-        {
-            /* Extract the bytes */
-            byte[] hashBytes = Convert.FromBase64String(PasswordHash);
-            /* Get the salt */
-            byte[] salt = new byte[16];
-            Array.Copy(hashBytes, 0, salt, 0, 16);
-            /* Compute the hash on the password the user entered */
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-            byte[] hash = pbkdf2.GetBytes(20);
-
-
-            /* Compare the results */
-            for (int i = 0; i < 20; i++)
-                if (hashBytes[i + 16] != hash[i])
-                    return false;
-            return true;
-        }
-
         public static String hashPassword(String password)
         {
             if (password == null | String.IsNullOrEmpty(password))
@@ -135,13 +109,12 @@ namespace DETI_MakerLab
         public DMLUser() { }
 
         public DMLUser(int NumMec, String FirstName, String LastName, 
-            String Email, String PasswordHash, String PathToImage)
+            String Email, String PathToImage)
         {
             this.NumMec = NumMec;
             this.FirstName = FirstName;
             this.LastName = LastName;
             this.Email = Email;
-            this.PasswordHash = PasswordHash;
             this.PathToImage = PathToImage;
         }
 
@@ -164,13 +137,12 @@ namespace DETI_MakerLab
         }
 
         public Professor(int NumMec, String FirstName, String LastName,
-            String Email, String PasswordHash, String PathToImage, String ScientificArea)
+            String Email, String PathToImage, String ScientificArea)
         {
             this.NumMec = NumMec;
             this.FirstName = FirstName;
             this.LastName = LastName;
             this.Email = Email;
-            this.PasswordHash = PasswordHash;
             this.PathToImage = PathToImage;
             this.ScientificArea = ScientificArea;
         }
@@ -196,13 +168,12 @@ namespace DETI_MakerLab
         }
 
         public Student(int NumMec, String FirstName, String LastName,
-            String Email, String PasswordHash, String PathToImage, String Course)
+            String Email, String PathToImage, String Course)
         {
             this.NumMec = NumMec;
             this.FirstName = FirstName;
             this.LastName = LastName;
             this.Email = Email;
-            this.PasswordHash = PasswordHash;
             this.PathToImage = PathToImage;
             this.Course = Course;
         }

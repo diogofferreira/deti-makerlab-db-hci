@@ -80,7 +80,6 @@ namespace DETI_MakerLab
                 User.FirstName = reader["FirstName"].ToString();
                 User.LastName = reader["LastName"].ToString();
                 User.Email = reader["Email"].ToString();
-                User.PasswordHash = reader["PasswordHash"].ToString();
                 User.PathToImage = reader["PathToImage"].ToString();
                 User.RoleID = -1;
 

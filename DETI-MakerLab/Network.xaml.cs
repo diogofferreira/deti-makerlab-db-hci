@@ -41,29 +41,43 @@ namespace DETI_MakerLab
             SocketsListData = new ObservableCollection<EthernetSocket>();
             ActiveRequisitionsData = new ObservableCollection<NetworkResources>();
             OSList = new ObservableCollection<OS>();
-            LoadOS();
-            LoadProjects();
-            LoadActiveRequisitions();
+            try
+            {
+                LoadOS();
+                LoadProjects(UserID);
+                LoadActiveRequisitions();
+            } catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
             projects_list.ItemsSource = ProjectsListData;
             socket_list.ItemsSource = SocketsListData;
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
         }
 
-        private void LoadProjects()
+        private void LoadProjects(int UserID)
         {
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Project", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM USER_PROJECTS (@nmec)", cn);
+            cmd.Parameters.AddWithValue("@nmec", UserID);
             SqlDataReader reader = cmd.ExecuteReader();
+            projects_list.Items.Clear();
 
             while (reader.Read())
             {
-                ProjectsListData.Add(new Project(
-                    int.Parse(reader["ProjectID"].ToString()), 
-                    reader["PrjName"].ToString(), 
-                    reader["PrjDescription"].ToString()));
+                Project prj = new Project(
+                    int.Parse(reader["ProjectID"].ToString()),
+                    reader["PrjName"].ToString(),
+                    reader["PrjDescription"].ToString(),
+                    new Class(
+                        int.Parse(reader["ClassID"].ToString()),
+                        reader["ClassName"].ToString(),
+                        reader["ClDescription"].ToString()
+                    ));
+                ProjectsListData.Add(prj);
             }
 
             cn.Close();
@@ -222,7 +236,7 @@ namespace DETI_MakerLab
                 resID,
                 (Project)projects_list.SelectedItem,
                 VirtualMachine.getIP(),
-                VirtualMachine.hashPassword(vmPassword),
+                vmPassword,
                 VirtualMachine.getDockerID(),
                 selectedOS
                 );
@@ -324,7 +338,7 @@ namespace DETI_MakerLab
                     -1,
                     selectedProject,
                     "WIFI_" + selectedProject.ProjectID.ToString(),
-                    WirelessLAN.hashPassword(wifi_password.Password)
+                    wifi_password.Password
                     );
 
                 createWLAN();
@@ -334,7 +348,7 @@ namespace DETI_MakerLab
             else
             {
                 // CHECK IF THEY ARE DIFFERENT FIRST
-                currentWLAN.PasswordHash = WirelessLAN.hashPassword(wifi_password.Password);
+                currentWLAN.PasswordHash = wifi_password.Password;
                 updateWLAN();
             }
         }

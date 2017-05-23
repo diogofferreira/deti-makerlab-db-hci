@@ -83,6 +83,7 @@ namespace DETI_MakerLab
             LoadProjects();
             LoadAvailableResources();
             LoadProjectActiveRequisitons();
+            projects_list.ItemsSource = ProjectsListData;
             equipment_list.ItemsSource = ResourcesListData;
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
         }
@@ -99,8 +100,8 @@ namespace DETI_MakerLab
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
-
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_WORKERS_INFO (@nmec)", cn);
+            Console.WriteLine(UserID);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM USER_PROJECTS (@nmec)", cn);
             cmd.Parameters.AddWithValue("@nmec", UserID);
             SqlDataReader reader = cmd.ExecuteReader();
             projects_list.Items.Clear();

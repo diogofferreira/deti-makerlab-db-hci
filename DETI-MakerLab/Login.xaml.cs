@@ -55,37 +55,30 @@ namespace DETI_MakerLab
             bool result = false;
             SqlCommand cmd;
             SqlDataReader userData;
-            DMLUser user;
+            DMLUser tmpUser;
 
             try {
                 cn = Helpers.getSGBDConnection();
                 if (!Helpers.verifySGBDConnection(cn))
                     return false;
-                cmd = new SqlCommand("SELECT * FROM DMLUser WHERE Email=@email");
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@email", email_box.Text);
-                cmd.Connection = cn;
+                cmd = new SqlCommand("SELECT * FROM CHECK_LOGIN('" + email_box.Text + "' ,'" + password_box.Password + "')", cn);
                 userData = cmd.ExecuteReader();
                 if (userData.HasRows)
                 {
                     userData.Read();
-                    user = new DMLUser(
+                    tmpUser = new DMLUser(
                         int.Parse(userData["NumMec"].ToString()),
                         userData["FirstName"].ToString(),
                         userData["LastName"].ToString(),
                         userData["Email"].ToString(),
-                        Convert.ToBase64String((byte[])userData["PasswordHash"]),
                         userData["PathToImage"].ToString()
                         );
 
-                    // Check if password matches
-                    if (!user.verifyPassword(password_box.Password))
-                        return false;
                     cn.Close();
 
                     // Check if it is professor or student
-                    if (checkProfessor(user)) { result = true; }
-                    if (!result && checkStudent(user)) { result = true; }
+                    if (checkProfessor(tmpUser)) { result = true; }
+                    if (!result && checkStudent(tmpUser)) { result = true; }
                 }
                 else
                 {
@@ -119,7 +112,6 @@ namespace DETI_MakerLab
                     user.FirstName,
                     user.LastName,
                     user.Email,
-                    user.PasswordHash,
                     user.PathToImage,
                     typeData["ScientificArea"].ToString()
                     );
@@ -129,26 +121,25 @@ namespace DETI_MakerLab
             return result;
         }
 
-        private bool checkStudent(DMLUser user)
+        private bool checkStudent(DMLUser tmpUser)
         {
             if (!Helpers.verifySGBDConnection(cn))
                 return false;
             bool result = false;
             SqlCommand cmdType = new SqlCommand("SELECT * FROM Student WHERE NumMec=@nummec");
             cmdType.Parameters.Clear();
-            cmdType.Parameters.AddWithValue("@nummec", user.NumMec);
+            cmdType.Parameters.AddWithValue("@nummec", tmpUser.NumMec);
             cmdType.Connection = cn;
             SqlDataReader typeData = cmdType.ExecuteReader();
             if (typeData.HasRows)
             {
                 typeData.Read();
                 user = new Student(
-                    user.NumMec,
-                    user.FirstName,
-                    user.LastName,
-                    user.Email,
-                    user.PasswordHash,
-                    user.PathToImage,
+                    tmpUser.NumMec,
+                    tmpUser.FirstName,
+                    tmpUser.LastName,
+                    tmpUser.Email,
+                    tmpUser.PathToImage,
                     typeData["Course"].ToString()
                     );
                 result = true;
@@ -176,10 +167,9 @@ namespace DETI_MakerLab
                     userData["FirstName"].ToString(),
                     userData["LastName"].ToString(),
                     userData["Email"].ToString(),
-                    Convert.ToBase64String((byte[])userData["PasswordHash"]),
                     userData["PathToImage"].ToString()
                     );
-                result = staff.verifyPassword(password_box.Password);
+                result = true;
             }
             cn.Close();
             return result;

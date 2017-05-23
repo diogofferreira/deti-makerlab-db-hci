@@ -59,7 +59,6 @@ namespace DETI_MakerLab
                         reader["FirstName"].ToString(),
                         reader["LastName"].ToString(),
                         reader["Email"].ToString(),
-                        null,
                         reader["StaffImage"].ToString()
                         ),
                     reader["PathToImage"].ToString()

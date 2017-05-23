@@ -55,7 +55,7 @@ namespace DETI_MakerLab
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@ProjectID", _project.ProjectID);
+            cmd.Parameters.AddWithValue("@pID", _project.ProjectID);
             cmd.CommandText = "dbo.PROJECT_REQS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);

@@ -45,7 +45,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@FirstName", first_name.Text);
             cmd.Parameters.AddWithValue("@LastName", last_name.Text);
             cmd.Parameters.AddWithValue("@Email", email.Text);
-            cmd.Parameters.AddWithValue("@PasswordHash", Convert.FromBase64String(DMLUser.hashPassword(password.Password)));
+            cmd.Parameters.AddWithValue("@PasswordHash", password.Password);
             cmd.Parameters.AddWithValue("@PathToImage", imagePath);
             
             if (user_type.Text.Equals("Student"))
@@ -55,7 +55,6 @@ namespace DETI_MakerLab
                     first_name.Text, 
                     last_name.Text, 
                     email.Text, 
-                    DMLUser.hashPassword(password.Password),
                     imagePath, 
                     area_or_course_response.Text
                     );
@@ -69,7 +68,6 @@ namespace DETI_MakerLab
                     first_name.Text,
                     last_name.Text,
                     email.Text,
-                    DMLUser.hashPassword(password.Password),
                     imagePath,
                     area_or_course_response.Text
                     );

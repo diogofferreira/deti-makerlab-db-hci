@@ -111,7 +111,6 @@ namespace DETI_MakerLab
                 User.FirstName = reader["FirstName"].ToString();
                 User.LastName = reader["LastName"].ToString();
                 User.Email = reader["Email"].ToString();
-                User.PasswordHash = reader["PasswordHash"].ToString();
                 User.PathToImage = reader["PathToImage"].ToString();
 
                 MembersListData.Add(User);
@@ -120,10 +119,10 @@ namespace DETI_MakerLab
             cn.Close();
         }
 
-        private void SubmitProject()
+        private int SubmitProject()
         {
             SqlCommand cmd;
-            int projectID;
+            int projectID = -1;
             
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
@@ -138,13 +137,14 @@ namespace DETI_MakerLab
             cmd.Parameters.Add("@ProjectID", SqlDbType.Int).Direction = ParameterDirection.Output;
             cmd.CommandText = "dbo.CREATE_PROJECT";
 
-            if (((Role)project_class.SelectedValue).RoleID != -1)
+            if (((Class)project_class.SelectedValue).ClassID != -1)
             {
-                cmd.Parameters.AddWithValue("@Class", ((Role)project_class.SelectedValue).RoleID);
+                Console.WriteLine(((Class)project_class.SelectedValue).ClassID);
+                cmd.Parameters.AddWithValue("@ClassID", ((Class)project_class.SelectedValue).ClassID);
             }
             else
             {
-                cmd.Parameters.AddWithValue("@Class", DBNull.Value);
+                cmd.Parameters.AddWithValue("@ClassID", DBNull.Value);
             }
 
             try
@@ -162,6 +162,7 @@ namespace DETI_MakerLab
                 cn.Close();
             }
 
+            return projectID;
         }
 
         private void SubmitMembers(int projectID)
@@ -211,6 +212,15 @@ namespace DETI_MakerLab
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
+            try { 
+                int projectID = SubmitProject();
+                if (projectID != -1)
+                    SubmitMembers(projectID);
+            } catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+
             MessageBox.Show("Project has been created !");
             HomeWindow window = (HomeWindow)Window.GetWindow(this);
             // TODO : create object and pass it to project page

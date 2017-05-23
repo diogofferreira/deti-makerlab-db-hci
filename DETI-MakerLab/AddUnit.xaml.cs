@@ -25,22 +25,13 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private ObservableCollection<ElectronicResources> EquipmentsListData;
-        private Staff _user;
-
-        internal Staff User
-        {
-            get { return _user; }
-            set
-            {
-                if (_user == null)
-                    throw new Exception("You need to be logged in as a Staff user");
-            }
-        }
+        private Staff User;
 
         public AddUnit(Staff user)
         {
             InitializeComponent();
-            this.User = user;
+            User = user;
+            Console.WriteLine(user);
             EquipmentsListData = new ObservableCollection<ElectronicResources>();
             LoadEquipments();
             units_list.ItemsSource = EquipmentsListData;
@@ -54,7 +45,6 @@ namespace DETI_MakerLab
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM ELECTRONIC_RESOURCES_INFO", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            units_list.Items.Clear();
 
             while (reader.Read())
             {
@@ -62,17 +52,17 @@ namespace DETI_MakerLab
                     reader["ProductName"].ToString(),
                     reader["Manufacturer"].ToString(),
                     reader["Model"].ToString(),
-                    reader["Description"].ToString(),
+                    reader["ResDescription"].ToString(),
                     new Staff (
                         int.Parse(reader["EmployeeNum"].ToString()),
                         reader["FirstName"].ToString(),
                         reader["LastName"].ToString(),
                         reader["Email"].ToString(),
-                        reader["StaffName"].ToString()
+                        reader["StaffImage"].ToString()
                         ),
                     reader["ResImage"].ToString()
                     );
-                units_list.Items.Add(Resource);
+                EquipmentsListData.Add(Resource);
             }
 
             cn.Close();

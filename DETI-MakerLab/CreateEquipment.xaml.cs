@@ -44,7 +44,7 @@ namespace DETI_MakerLab
             this.StaffID = StaffID;
         }
 
-        public void SubmitEquipment()
+        public void SubmitEquipment(String imagePath)
         {
             SqlCommand cmd;
             cn = Helpers.getSGBDConnection();
@@ -59,7 +59,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@Model", equipment_model.Text);
             cmd.Parameters.AddWithValue("@ResDescription", equipment_description.Text);
             cmd.Parameters.AddWithValue("@EmployeeNum", StaffID);
-            //cmd.Parameters.AddWithValue("@PathToImage", typeof(String).IsInstanceOfType(equipment_image) ? equipment_image.Text : "NULL");
+            cmd.Parameters.AddWithValue("@PathToImage", imagePath == null ? null : imagePath);
 
             try
             {
@@ -93,9 +93,10 @@ namespace DETI_MakerLab
             {
                 // Copy image to project file and produce its path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
-                String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + System.IO.Path.GetFileName(fileName);
+                String name = equipment_name.Text + "_" + equipment_manufacturer.Text + "_" + equipment_model.Text;
+                String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + name + System.IO.Path.GetExtension(fileName);
                 System.IO.File.Copy(fileName, imagePath, true);
-                SubmitEquipment();
+                SubmitEquipment(imagePath);
                 MessageBox.Show("Equipment has been added!");
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 // TODO : create object and pass it to equipment page

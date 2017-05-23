@@ -22,6 +22,8 @@ namespace DETI_MakerLab
     public partial class ProjectPageStatic : Page
     {
         private ObservableCollection<DMLUser> MembersListData;
+        private ObservableCollection<DMLUser> RequisitionsData;
+
         private Project _project;
 
         public ProjectPageStatic(Project project)
@@ -29,9 +31,11 @@ namespace DETI_MakerLab
             InitializeComponent();
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
+            RequisitionsData = new ObservableCollection<DMLUser>();
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
             project_members.ItemsSource = MembersListData;
+            project_last_requisitions_list.ItemsSource = RequisitionsData;
             project_members.MouseDoubleClick += new MouseButtonEventHandler(project_members_listbox_MouseDoubleClick);
         }
 

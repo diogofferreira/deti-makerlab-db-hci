@@ -90,6 +90,44 @@ namespace DETI_MakerLab
             }
 
             cn.Close();
+
+            loadUnits();
+        }
+
+        private void loadUnits()
+        {
+            foreach (Kit kit in KitsListData)
+            {
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = cn;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@KitID", kit.ResourceID);
+                cmd.CommandText = "dbo.KIT_UNITS";
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    ElectronicResources resource = new ElectronicResources(
+                        row["ProductName"].ToString(),
+                        row["Manufacturer"].ToString(),
+                        row["Model"].ToString(),
+                        row["ResDescription"].ToString(),
+                        null,
+                        row["PathToImage"].ToString()
+                        );
+
+                    ElectronicUnit unit = new ElectronicUnit(
+                        int.Parse(row["ResourceID"].ToString()),
+                        resource,
+                        row["Supplier"].ToString()
+                        );
+
+                    kit.addUnit(unit);
+                }
+            }
         }
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)

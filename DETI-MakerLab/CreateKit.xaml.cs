@@ -25,7 +25,14 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private List<ResourceItem> ResourceItems;
-        private ObservableCollection<ElectronicResources> EquipmentsListData;
+        private ObservableCollection<ListItem> EquipmentsListData;
+        private int _staffID;
+
+        internal int StaffID
+        {
+            get { return _staffID; }
+            set { _staffID = value; }
+        }
 
         private bool addResourceItemUnit(ElectronicUnit unit)
         {
@@ -40,10 +47,11 @@ namespace DETI_MakerLab
             return false;
         }
 
-        public CreateKit()
+        public CreateKit(int StaffID)
         {
             InitializeComponent();
-            EquipmentsListData = new ObservableCollection<ElectronicResources>();
+            this.StaffID = StaffID;
+            EquipmentsListData = new ObservableCollection<ListItem>();
             ResourceItems = new List<ResourceItem>();
             LoadResources();
             units_list.ItemsSource = EquipmentsListData;
@@ -68,9 +76,9 @@ namespace DETI_MakerLab
             {
                 ElectronicResources resource = new ElectronicResources(
                     row["ProductName"].ToString(),
-                    row["Manufactor"].ToString(),
+                    row["Manufacturer"].ToString(),
                     row["Model"].ToString(),
-                    row["Description"].ToString(),
+                    row["ResDescription"].ToString(),
                     null,
                     row["PathToImage"].ToString()
                     );
@@ -92,56 +100,86 @@ namespace DETI_MakerLab
             cn.Close();
 
             foreach (ResourceItem ri in ResourceItems)
-                EquipmentsListData.Add(ri.Resource);
+                EquipmentsListData.Add(ri);
         }
 
-        private void submitKitCreation()
+        private Kit submitKitCreation()
         {
-            List<ElectronicUnit> toRequest = new List<ElectronicUnit>();
+            Kit newKit = null;
+            DataTable toRequest = new DataTable();
+            toRequest.Clear();
+            toRequest.Columns.Add("ResourceID", typeof(int));
 
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            foreach (ElectronicResources resource in units_list.Items)
+            foreach (ListItem resource in units_list.Items)
             {
-                ResourceItem ri = null;          
-                foreach (ResourceItem r in ResourceItems)
-                    if (r.Resource.Equals(resource)) {
-                        ri = r;
-                        break;
-                    }
-
+                ResourceItem ri = resource as ResourceItem;
 
                 var container = units_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
-                    return;
+                    return null;
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
                 int units = int.Parse(((TextBox)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
+                if (units > ri.Units.Count)
+                    throw new Exception("You cannot request more units than available!");
                 while (units > 0)
                 {
                     ElectronicUnit unit = ri.requestUnit();
-                    toRequest.Add(unit);
+                    DataRow row = toRequest.NewRow();
+                    row["ResourceID"] = unit.ResourceID;
+                    toRequest.Rows.Add(row);
                     units--;
                 }
             }
 
+            if (toRequest.Rows.Count == 0)
+                throw new Exception("You need to select at least one unit!");
+
+            DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
             cmd.Parameters.Clear();
+            SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toRequest);
+            listParam.SqlDbType = SqlDbType.Structured;
             cmd.Parameters.Add("@KitID", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.AddWithValue("@StaffID", StaffID);
             cmd.Parameters.AddWithValue("@KitDescription", kit_name.Text);
             cmd.CommandText = "dbo.CREATE_KIT";
             int kitID = -1;
 
             try
             {
-                cmd.ExecuteNonQuery();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
                 kitID = Convert.ToInt32(cmd.Parameters["@KitID"].Value);
+                newKit = new Kit(kitID, kit_name.Text);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    ElectronicResources resource = new ElectronicResources(
+                        row["ProductName"].ToString(),
+                        row["Manufacturer"].ToString(),
+                        row["Model"].ToString(),
+                        row["ResDescription"].ToString(),
+                        null,
+                        row["PathToImage"].ToString()
+                        );
+
+                    ElectronicUnit unit = new ElectronicUnit(
+                        int.Parse(row["ResourceID"].ToString()),
+                        resource,
+                        row["Supplier"].ToString()
+                        );
+
+                    newKit.addUnit(unit);
+                }
             }
             catch (Exception ex)
             {
@@ -152,33 +190,7 @@ namespace DETI_MakerLab
                 cn.Close();
             }
 
-            if (kitID == -1)
-                throw new Exception("Error creating kit");
-
-            foreach (ElectronicUnit unit in toRequest)
-            {
-                cmd = new SqlCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Connection = cn;
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@KitID", kitID);
-                cmd.Parameters.AddWithValue("@ResourceID", unit.ResourceID);
-                cmd.CommandText = "dbo.ADD_UNIT_KIT";
-
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
-                }
-                finally
-                {
-                    cn.Close();
-                }
-            }
-
+            return newKit;
         }
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)
@@ -192,11 +204,10 @@ namespace DETI_MakerLab
         {
             try
             {
-                submitKitCreation();
+                Kit kit = submitKitCreation();
                 MessageBox.Show("Kit has been added!");
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                // TODO : create object and pass it to kit page
-                //window.goToKitPage(kit);
+                window.goToKitPage(kit);
             }
             catch (Exception ex)
             {

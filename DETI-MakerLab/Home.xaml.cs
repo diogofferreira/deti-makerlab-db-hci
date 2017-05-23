@@ -84,9 +84,9 @@ namespace DETI_MakerLab
                     int.Parse(row["ResourceID"].ToString()),
                     new ElectronicResources(
                         row["ProductName"].ToString(),
-                        row["Manufactor"].ToString(),
+                        row["Manufacturer"].ToString(),
                         row["Model"].ToString(),
-                        row["Description"].ToString(),
+                        row["ResDescription"].ToString(),
                         null,
                         row["PathToImage"].ToString()
                         ),

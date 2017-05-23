@@ -37,9 +37,9 @@ namespace DETI_MakerLab
             equipment_model.Text = _equipment.Model;
             equipment_manufacturer.Text = _equipment.Manufactor;
             equipment_description.Text = _equipment.Description;
-            equipment_image.Source = new BitmapImage(new Uri(_equipment.PathToImage, UriKind.Relative));
+            equipment_image.Source = new BitmapImage(new Uri(_equipment.PathToImage, UriKind.Absolute));
+            loadRequisitions();
             equipment_last_requisitions_list.ItemsSource = RequisitionsData;
-            //loadRequisitions();
         }
 
         private void loadRequisitions()
@@ -50,7 +50,7 @@ namespace DETI_MakerLab
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_EQUIP_REQUISITIONS (@ProductName, @Model, @Manufacturer)", cn);
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@ProductDescription", _equipment.ProductName);
+            cmd.Parameters.AddWithValue("@ProductName", _equipment.ProductName);
             cmd.Parameters.AddWithValue("@Model", _equipment.Model);
             cmd.Parameters.AddWithValue("@Manufacturer", _equipment.Manufactor);
             SqlDataReader reader = cmd.ExecuteReader();

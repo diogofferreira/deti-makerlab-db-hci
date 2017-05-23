@@ -39,6 +39,7 @@ namespace DETI_MakerLab
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
             project_members.ItemsSource = MembersListData;
+            project_last_requisitions_list.ItemsSource = RequisitionsData;
             project_members.MouseDoubleClick += new MouseButtonEventHandler(project_members_listbox_MouseDoubleClick);
         }
 

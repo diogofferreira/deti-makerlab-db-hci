@@ -97,6 +97,17 @@ namespace DETI_MakerLab
             return ProductName + " " + Model + " by " + Manufactor;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!typeof(ElectronicResources).IsInstanceOfType(obj))
+                return false;
+            ElectronicResources o = obj as ElectronicResources;
+            return ProductName == o.ProductName &&
+                Manufactor == o.Manufactor &&
+                Model == o.Model &&
+                Description == o.Description;
+        }
+
         public ElectronicResources(String ProductName, String Manufactor, String Model,
             String Description, Staff Creator, String PathToImage)
         {
@@ -205,6 +216,11 @@ namespace DETI_MakerLab
             set { _units = value; }
         }
 
+        public String MaxUnits
+        {
+            get { return Units.Count.ToString() + " available"; }
+        }
+
         public void addUnit(ElectronicUnit newUnit)
         {
             if (!Units.Contains(newUnit))
@@ -261,6 +277,11 @@ namespace DETI_MakerLab
         {
             get { return _units; }
             set { _units = value; }
+        }
+
+        public String MaxUnits
+        {
+            get { return Units.Count.ToString() + " available"; }
         }
 
         public void addUnit(Kit newUnit)

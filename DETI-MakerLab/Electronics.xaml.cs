@@ -140,9 +140,9 @@ namespace DETI_MakerLab
             {
                 ElectronicResources resource = new ElectronicResources(
                     row["ProductName"].ToString(),
-                    row["Manufactor"].ToString(),
+                    row["Manufacturer"].ToString(),
                     row["Model"].ToString(),
-                    row["Description"].ToString(),
+                    row["ResDescription"].ToString(),
                     null,
                     row["PathToImage"].ToString()
                     );
@@ -199,12 +199,11 @@ namespace DETI_MakerLab
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@projectID", SelectedProject.ProjectID);
+            cmd.Parameters.AddWithValue("@pID", SelectedProject.ProjectID);
             cmd.CommandText = "dbo.PROJECT_ACTIVE_REQS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();
-
 
             foreach (DataRow row in ds.Tables[0].Rows)
             {
@@ -212,9 +211,9 @@ namespace DETI_MakerLab
                     int.Parse(row["ResourceID"].ToString()),
                     new ElectronicResources(
                         row["ProductName"].ToString(),
-                        row["Manufactor"].ToString(),
+                        row["Manufacturer"].ToString(),
                         row["Model"].ToString(),
-                        row["Description"].ToString(),
+                        row["ResDescription"].ToString(),
                         null,
                         row["PathToImage"].ToString()
                         ),
@@ -230,98 +229,7 @@ namespace DETI_MakerLab
                     ));
             }
         }
-        /*
-        private void SubmitRequisitionResourcesv1()
-        {
-            bool createdRequisition = false;
-            int reqID = -1;
 
-            if (SelectedProject == null)
-                return;
-
-            foreach (ListItem resource in equipment_list.Items)
-            {
-                var container = equipment_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
-                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
-                if (listBoxItemCP == null)
-                    return;
-
-                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
-
-                int units = int.Parse(((TextBox)equipment_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).ToString());
-                if (units == 0)
-                    continue;
-
-                if (!createdRequisition)
-                {
-                    reqID = SubmitRequisition();
-                    createdRequisition = true;
-                }
-                if (createdRequisition && reqID == -1)
-                    throw new Exception("Error creating requisition");
-
-                cn = Helpers.getSGBDConnection();
-                if (!Helpers.verifySGBDConnection(cn))
-                    throw new Exception("Error connecting to database");
-
-                // Requisitar unidades e removê-las das disponíveis e movê-las para as ativas
-                DataSet ds = new DataSet();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = cn;
-
-                if (resource is ResourceItem)
-                {
-                    ResourceItem r = resource as ResourceItem;
-                    cmd.CommandText = "REQUEST_UNITS (@ProductName, @Manufacturer, @Model, @Units, @reqID)";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ProductName", r.Resource.ProductName);
-                    cmd.Parameters.AddWithValue("@Manufacturer", r.Resource.Manufactor);
-                    cmd.Parameters.AddWithValue("@Model", r.Resource.Model);
-                    cmd.Parameters.AddWithValue("@Units", units);
-                    cmd.Parameters.AddWithValue("@reqID", reqID);
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(ds);
-                    cn.Close();
-
-                    foreach (DataRow row in ds.Tables[0].Rows)
-                    {
-                        int resID = int.Parse(row["ResourceID"].ToString());
-                        ActiveRequisitionsData.Add(new ElectronicUnit(
-                            resID,
-                            r.Resource,
-                            row["Supplier"].ToString()
-                            ));
-                        r.requestUnitv1(resID);
-                    }
-                }
-                else if (resource is KitItem)
-                {
-                    KitItem k = resource as KitItem;
-                    cmd.CommandText = "REQUEST_KITS (@KitDescription, @Units, @reqID)";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@KitDescription", k.KitDescription);
-                    cmd.Parameters.AddWithValue("@Units", units);
-                    cmd.Parameters.AddWithValue("@reqID", reqID);
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(ds);
-                    cn.Close();
-
-                    foreach (DataRow row in ds.Tables[0].Rows)
-                    {
-                        int resID = int.Parse(row["ResourceID"].ToString());
-                        ActiveRequisitionsData.Add(new Kit(resID, k.KitDescription));
-                        k.requestUnitv1(resID);
-                    }
-                }
-                
-            }
-
-            if (!createdRequisition)
-                throw new Exception("Cannot make a requisition of none equipments!");
-        }
-        */
         private void SubmitRequisitionResources()
         {
             int reqID = -1;
@@ -343,7 +251,7 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                int units = int.Parse(((TextBox)equipment_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).ToString());
+                int units = int.Parse(((TextBox)equipment_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
                 if (units == 0)
                     continue;
 
@@ -361,6 +269,7 @@ namespace DETI_MakerLab
                 toBeRequested.Add(unit);
                 DataRow row = toRequest.NewRow();
                 row["ResourceID"] = unit.ResourceID;
+                toRequest.Rows.Add(row);
             }
 
             if (toRequest.Rows.Count == 0)
@@ -459,6 +368,7 @@ namespace DETI_MakerLab
                 toDelete.Add(resource);
                 DataRow row = toDeliver.NewRow();
                 row["ResourceID"] = resource.ResourceID;
+                toDeliver.Rows.Add(row);
             }
 
             if (toDeliver.Rows.Count == 0)
@@ -530,6 +440,7 @@ namespace DETI_MakerLab
 
         private void request_button_Click(object sender, RoutedEventArgs e)
         {
+            checkProject();
             try
             {
                 SubmitRequisitionResources();
@@ -542,6 +453,7 @@ namespace DETI_MakerLab
 
         private void deliver_button_Click(object sender, RoutedEventArgs e)
         {
+            checkProject();
             try
             {
                 SubmitDeliveryResources();
@@ -550,6 +462,36 @@ namespace DETI_MakerLab
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void checkProject()
+        {
+            foreach (Project resource in projects_list.Items)
+            {
+                var container = projects_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                RadioButton button = (RadioButton)projects_list.ItemTemplate.FindName("project_button", listBoxItemCP);
+
+                if (button.IsChecked == true)
+                    SelectedProject = resource;
+            }
+        }
+
+        private void project_button_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                checkProject();
+                LoadProjectActiveRequisitons();
+            } catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
     }

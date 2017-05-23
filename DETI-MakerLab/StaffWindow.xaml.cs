@@ -44,7 +44,8 @@ namespace DETI_MakerLab
             
             // Set user name label and image
             user_name.Content = _user.FirstName + " " + _user.LastName;
-            profile_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Relative));
+            if (!String.IsNullOrEmpty(_user.PathToImage))
+                profile_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
 
             // Show home page
             frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
@@ -74,19 +75,22 @@ namespace DETI_MakerLab
         private void add_equipment_button_Click(object sender, RoutedEventArgs e)
         {
             // Show create equipment page
-            frame.Source = new Uri("CreateEquipment.xaml", UriKind.RelativeOrAbsolute);
+            CreateEquipment page = new CreateEquipment(_user.EmployeeNum);
+            frame.Navigate(page);
         }
 
         private void add_unit_button_Click(object sender, RoutedEventArgs e)
         {
             // Show add unit page
-            frame.Source = new Uri("AddUnit.xaml", UriKind.RelativeOrAbsolute);
+            AddUnit page = new AddUnit(_user);
+            frame.Navigate(page);
         }
 
         private void add_kit_button_Click(object sender, RoutedEventArgs e)
         {
             // Show add kit page
-            frame.Source = new Uri("CreateKit.xaml", UriKind.RelativeOrAbsolute);
+            CreateKit page = new CreateKit(_user.EmployeeNum);
+            frame.Navigate(page);
         }
 
         private void Projects_Buttons_Click(object sender, RoutedEventArgs e)

@@ -107,7 +107,7 @@ namespace DETI_MakerLab
             {
                 // Copy image to project file and produce its path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
-                String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + System.IO.Path.GetFileName(fileName);
+                String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + nmec.Text + System.IO.Path.GetExtension(fileName);
                 System.IO.File.Copy(fileName, imagePath, true);
                 registerUser(imagePath);
                 MessageBox.Show("User successfuly registred!");

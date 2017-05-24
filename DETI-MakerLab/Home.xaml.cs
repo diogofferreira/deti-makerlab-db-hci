@@ -44,7 +44,6 @@ namespace DETI_MakerLab
             LastProjects();
             LoadUsers();
             LastRequisitions();
-            LoadRequisitionResources();
             last_project_list.ItemsSource = ProjectsListData;
             last_requisitions_list.ItemsSource = RequisitionsListData;
         }
@@ -161,61 +160,13 @@ namespace DETI_MakerLab
                             reader["Email"].ToString(),
                             reader["PathToImage"].ToString()
                             ),
-                        DateTime.ParseExact(reader["ReqDate"].ToString(), "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+                        Convert.ToDateTime(reader["ReqDate"])
                     ));
 
             }
             cn.Close();
         }
 
-        private void LoadRequisitionResources()
-        {
-            foreach (Requisition r in RequisitionsListData)
-            {
-                cn = Helpers.getSGBDConnection();
-                if (!Helpers.verifySGBDConnection(cn))
-                    throw new Exception("Could not connect to database");
-
-                DataSet ds = new DataSet();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Connection = cn;
-                cmd.CommandText = "dbo.REQUISITION_UNITS";
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@reqID", r.RequisitionID);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(ds);
-                cn.Close();
-
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    r.Resources.Add(new ElectronicUnit(
-                    int.Parse(row["ResourceID"].ToString()),
-                    new ElectronicResources(
-                        row["ProductName"].ToString(),
-                        row["Manufacturer"].ToString(),
-                        row["Model"].ToString(),
-                        row["ResDescription"].ToString(),
-                        null,
-                        row["PathToImage"].ToString()
-                        ),
-                    row["Supplier"].ToString()
-                    ));
-                }
-
-                foreach (DataRow row in ds.Tables[1].Rows)
-                {
-                    r.Resources.Add(new Kit(
-                        int.Parse(row["ResourceID"].ToString()),
-                        row["KitDescription"].ToString()
-                        ));
-                }
-            }
-            
-        }
-
-            
-}
 
         // REVER A QUESTÂO DO QUE MOSTRAR NAS REQUISIÇÕES
 
@@ -228,6 +179,8 @@ namespace DETI_MakerLab
                 window.goToProjectPage(project);
             } catch (Exception exc)
             {
+                MessageBox.Show(exc.Message);
+
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 window.goToProjectPage(project);
             }

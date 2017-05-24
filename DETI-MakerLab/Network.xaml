@@ -11,7 +11,7 @@
     <Page.Resources>
         <DataTemplate x:Key="ElectronicProjectItem">
             <Grid>
-                <RadioButton x:Name="project_button" GroupName="r" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="project_button" GroupName="r" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Top" Checked="project_button_Checked"/>
                 <Label x:Name="project_name" Content="{Binding Path=ProjectName}" HorizontalAlignment="Left" Margin="20,0,0,-6" VerticalAlignment="Top"/>
             </Grid>
         </DataTemplate>

@@ -33,10 +33,12 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             this._project = project;
+            Console.WriteLine(_project);
             MembersListData = new ObservableCollection<DMLUser>();
             RequisitionsData = new ObservableCollection<Requisition>();
             loadUsers();
             loadRequisitions();
+            Console.WriteLine(RequisitionsData.Count);
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
             project_members.ItemsSource = MembersListData;
@@ -50,71 +52,57 @@ namespace DETI_MakerLab
                 MembersListData.Add(worker);
         }
 
+        private Requisition getRequisition(Requisition req)
+        {
+            foreach (Requisition r in RequisitionsData)
+                if (r.Equals(req))
+                    return r;
+            return null;
+        }
+
         private void loadRequisitions()
         {
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
-                return;
+                throw new Exception("Could not connect to database");
 
-            CultureInfo provider = CultureInfo.InvariantCulture;
-
-            DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
-            cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@pID", _project.ProjectID);
-            cmd.CommandText = "dbo.PROJECT_REQS";
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(ds);
-            cn.Close();
+            cmd.CommandText = "SELECT * FROM PROJECT_REQS (@pID)";
+            SqlDataReader reader = cmd.ExecuteReader();
 
-            foreach (DataRow row in ds.Tables[0].Rows)
+            while (reader.Read())
             {
-                try
-                {
-                    Requisition r = new Requisition(
-                    int.Parse(row["RequisitionID"].ToString()),
-                    _project,
-                    null,
-                    DateTime.ParseExact(row["ReqDate"].ToString(), "yyMMddHHmm", provider)
+                Class cl = null;
+                if (reader["ClassID"] != DBNull.Value)
+                    cl = new Class(
+                        int.Parse(reader["ClassID"].ToString()),
+                        reader["ClassName"].ToString(),
+                        reader["ClDescription"].ToString()
                     );
-                    r.addResource(new ElectronicUnit(
-                        int.Parse(row["ResourceID"].ToString()),
-                        new ElectronicResources(
-                            row["ProductName"].ToString(),
-                            row["Manufactor"].ToString(),
-                            row["Model"].ToString(),
-                            row["Description"].ToString(),
-                            null,
-                            row["PathToImage"].ToString()),
-                        row["Supplier"].ToString()
-                        ));
-                    RequisitionsData.Add(r);
-                }
-                catch (Exception e)
-                {
-                    foreach (Requisition r in RequisitionsData)
-                    {
-                        if (r.RequisitionID == int.Parse(row["RequisitionID"].ToString()))
-                        {
-                            r.addResource(new ElectronicUnit(
-                                int.Parse(row["ResourceID"].ToString()),
-                                new ElectronicResources(
-                                    row["ProductName"].ToString(),
-                                    row["Manufactor"].ToString(),
-                                    row["Model"].ToString(),
-                                    row["Description"].ToString(),
-                                    null,
-                                    row["PathToImage"].ToString()),
-                                row["Supplier"].ToString()
-                            ));
-                        }
-                    }
-                }
-            }
-        }
 
+                RequisitionsData.Add(new Requisition(
+                        int.Parse(reader["RequisitionID"].ToString()),
+                        new Project(
+                            int.Parse(reader["ProjectID"].ToString()),
+                            reader["PrjName"].ToString(),
+                            reader["PrjDescription"].ToString(),
+                            cl),
+                        new DMLUser(
+                            int.Parse(reader["NumMec"].ToString()),
+                            reader["FirstName"].ToString(),
+                            reader["LastName"].ToString(),
+                            reader["Email"].ToString(),
+                            reader["PathToImage"].ToString()
+                            ),
+                        Convert.ToDateTime(reader["ReqDate"])
+                    ));
+
+            }
+            cn.Close();
+        }
+        
         private void project_members_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             if (project_members.SelectedItem != null)

@@ -57,7 +57,14 @@ namespace DETI_MakerLab
 
         public override string ToString()
         {
-            return "Requisition " + RequisitionID.ToString();
+            return "ID #" + RequisitionID.ToString() + " at " + ReqDate.ToShortDateString() + " by " + User.FullName;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!typeof(Requisition).IsInstanceOfType(obj))
+                return false;
+            return this.RequisitionID == (obj as Requisition).RequisitionID;
         }
 
         public Requisition(int RequisitionID, Project ReqProject, DMLUser User, DateTime ReqDate)

@@ -108,16 +108,20 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                Project prj = new Project(
-                    int.Parse(reader["ProjectID"].ToString()),
-                    reader["PrjName"].ToString(),
-                    reader["PrjDescription"].ToString(),
-                    new Class(
+                Class cl = null;
+                if (reader["ClassID"] != DBNull.Value)
+                    cl = new Class(
                         int.Parse(reader["ClassID"].ToString()),
                         reader["ClassName"].ToString(),
                         reader["ClDescription"].ToString()
+                    );
+
+                ProjectsListData.Add(new Project(
+                    int.Parse(reader["ProjectID"].ToString()),
+                    reader["PrjName"].ToString(),
+                    reader["PrjDescription"].ToString(),
+                    cl
                     ));
-                ProjectsListData.Add(prj);
             }
 
             cn.Close();
@@ -353,14 +357,14 @@ namespace DETI_MakerLab
 
             foreach (Resources resource in active_requisitions_list.Items)
             {
-                var container = equipment_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                var container = active_requisitions_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
                     return;
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                if (!((CheckBox)equipment_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false)
+                if (!((CheckBox)active_requisitions_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false)
                     continue;
 
                 toDelete.Add(resource);
@@ -423,7 +427,7 @@ namespace DETI_MakerLab
             try
             {
                 cmd.ExecuteNonQuery();
-                delID = Convert.ToInt32(cmd.Parameters["DeliveryID"].Value);
+                delID = Convert.ToInt32(cmd.Parameters["@DeliveryID"].Value);
             }
             catch (Exception ex)
             {

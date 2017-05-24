@@ -45,7 +45,6 @@ namespace DETI_MakerLab
             {
                 LoadOS();
                 LoadProjects(UserID);
-                LoadActiveRequisitions();
             } catch (Exception e)
             {
                 MessageBox.Show(e.Message);
@@ -68,16 +67,20 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                Project prj = new Project(
-                    int.Parse(reader["ProjectID"].ToString()),
-                    reader["PrjName"].ToString(),
-                    reader["PrjDescription"].ToString(),
-                    new Class(
+                Class cl = null;
+                if (reader["ClassID"] != DBNull.Value)
+                    cl = new Class(
                         int.Parse(reader["ClassID"].ToString()),
                         reader["ClassName"].ToString(),
                         reader["ClDescription"].ToString()
+                    );
+
+                ProjectsListData.Add(new Project(
+                    int.Parse(reader["ProjectID"].ToString()),
+                    reader["PrjName"].ToString(),
+                    reader["PrjDescription"].ToString(),
+                    cl
                     ));
-                ProjectsListData.Add(prj);
             }
 
             cn.Close();
@@ -133,9 +136,9 @@ namespace DETI_MakerLab
             cn.Close();
         }
 
-        private void LoadActiveRequisitions()
+        private void LoadProjectActiveRequisitions()
         {
-            if (projects_list.SelectedItem == null)
+            if (selectedProject == null)
                 throw new Exception("Select a project first!");
 
             loadVMs();
@@ -151,14 +154,14 @@ namespace DETI_MakerLab
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM VM_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@ProjectID", ((Project)projects_list.SelectedItem).ProjectID);
+            cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
                 ActiveRequisitionsData.Add(new VirtualMachine(
                     int.Parse(reader["NetResID"].ToString()),
-                    (Project)projects_list.SelectedItem,
+                    selectedProject,
                     reader["IP"].ToString(),
                     reader["PasswordHash"].ToString(),
                     reader["DockerID"].ToString(),
@@ -175,16 +178,16 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM SOCKET_INFO (@ProjectID)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM SOCKETS_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@ProjectID", ((Project)projects_list.SelectedItem).ProjectID);
+            cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
                 ActiveRequisitionsData.Add(new EthernetSocket(
                     int.Parse(reader["NetResID"].ToString()),
-                    (Project)projects_list.SelectedItem,
+                    selectedProject,
                     int.Parse(reader["SocketNum"].ToString())
                     ));
             }
@@ -200,7 +203,7 @@ namespace DETI_MakerLab
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM WLAN_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@ProjectID", ((Project)projects_list.SelectedItem).ProjectID);
+            cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
 
             if (reader.HasRows)
@@ -208,7 +211,7 @@ namespace DETI_MakerLab
                 reader.Read();
                 currentWLAN = new WirelessLAN(
                     int.Parse(reader["NetResID"].ToString()),
-                    (Project)projects_list.SelectedItem,
+                    selectedProject,
                     reader["SSID"].ToString(),
                     reader["PasswordHash"].ToString()
                     );
@@ -234,7 +237,7 @@ namespace DETI_MakerLab
 
             VirtualMachine vm = new VirtualMachine(
                 resID,
-                (Project)projects_list.SelectedItem,
+                selectedProject,
                 VirtualMachine.getIP(),
                 vmPassword,
                 VirtualMachine.getDockerID(),
@@ -497,9 +500,17 @@ namespace DETI_MakerLab
 
         private void request_vm_button_Click(object sender, RoutedEventArgs e)
         {
-            launchVM();
+            try
+            {
+                checkProject();
+                launchVM();
+                MessageBox.Show("VM has been launched with success!");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             // TODO : show a message with more content, like ssh command
-            MessageBox.Show("VM has been launched with success !");
         }
 
         private void request_network_button_Click(object sender, RoutedEventArgs e)
@@ -511,6 +522,37 @@ namespace DETI_MakerLab
         private void deliver_button_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Delivery done with success !");
+        }
+
+        private void checkProject()
+        {
+            foreach (Project resource in projects_list.Items)
+            {
+                var container = projects_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                RadioButton button = (RadioButton)projects_list.ItemTemplate.FindName("project_button", listBoxItemCP);
+
+                if (button.IsChecked == true)
+                    selectedProject = resource;
+            }
+        }
+
+        private void project_button_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                checkProject();
+                LoadProjectActiveRequisitions();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
     }
 }

@@ -176,8 +176,6 @@ namespace DETI_MakerLab
                 }
             }
 
-            cn.Close();
-
             foreach (ResourceItem ri in ResourceItems)
                 ResourcesListData.Add(ri);
 

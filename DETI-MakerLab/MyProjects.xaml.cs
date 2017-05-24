@@ -58,16 +58,20 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                Project prj = new Project(
-                    int.Parse(reader["ProjectID"].ToString()),
-                    reader["PrjName"].ToString(),
-                    reader["PrjDescription"].ToString(),
-                    new Class(
+                Class cl = null;
+                if (reader["ClassID"] != DBNull.Value)
+                    cl = new Class(
                         int.Parse(reader["ClassID"].ToString()),
                         reader["ClassName"].ToString(),
                         reader["ClDescription"].ToString()
+                    );
+
+                ProjectsListData.Add(new Project(
+                    int.Parse(reader["ProjectID"].ToString()),
+                    reader["PrjName"].ToString(),
+                    reader["PrjDescription"].ToString(),
+                    cl
                     ));
-                ProjectsListData.Add(prj);
             }
 
             cn.Close();

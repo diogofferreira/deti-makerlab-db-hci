@@ -35,12 +35,19 @@ namespace DETI_MakerLab
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
             RequisitionsData = new ObservableCollection<Requisition>();
+            loadUsers();
             loadRequisitions();
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
             project_members.ItemsSource = MembersListData;
             project_last_requisitions_list.ItemsSource = RequisitionsData;
             project_members.MouseDoubleClick += new MouseButtonEventHandler(project_members_listbox_MouseDoubleClick);
+        }
+
+        private void loadUsers()
+        {
+            foreach (DMLUser worker in _project.Workers)
+                MembersListData.Add(worker);
         }
 
         private void loadRequisitions()

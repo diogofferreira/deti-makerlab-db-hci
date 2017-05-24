@@ -71,7 +71,9 @@ namespace DETI_MakerLab
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM DMLUser", cn);
             SqlDataReader reader = cmd.ExecuteReader();
-            List<DMLUser> tmp = new List<DMLUser>();
+            
+            foreach (DMLUser worker in _project.Workers)
+                MembersListData.Add(worker);
 
             while (reader.Read())
             {
@@ -83,21 +85,9 @@ namespace DETI_MakerLab
                 User.PathToImage = reader["PathToImage"].ToString();
                 User.RoleID = -1;
 
-                foreach (int[] tuple in _project.Workers)
-                {
-                    if (tuple[0] == User.NumMec)
-                    {
-                        User.RoleID = tuple[1];
-                        MembersListData.Add(User);
-                    }
-
-                }
-                if (User.RoleID < 0)
-                    tmp.Add(User);
+                if (!_project.hasWorker(User))
+                    MembersListData.Add(User);
             }
-
-            foreach (DMLUser User in tmp)
-                MembersListData.Add(User);
 
             cn.Close();
         }
@@ -114,7 +104,7 @@ namespace DETI_MakerLab
             {
                 if (user_item.RoleID != -1)
                 {
-                    switch (userInProject(user_item))
+                    switch (_project.workerChanges(user_item))
                     {
                         case 1:
                             updateWorker.Add(user_item);
@@ -128,28 +118,13 @@ namespace DETI_MakerLab
                             break;
                     }
                 }
-                else if (userInProject(user_item) == 1)
+                else if (_project.workerChanges(user_item) == 1)
                     removeWorker.Add(user_item);
             }
 
             addWorkers(newWorker);
             updateWorkers(updateWorker);
             removeWorkers(removeWorker);
-        }
-
-        private int userInProject(DMLUser user_item)
-        {
-            foreach (int[] user_tuple in _project.Workers)
-            {
-                if (user_item.NumMec == user_tuple[0])
-                {
-                    if (user_item.RoleID == user_tuple[1])
-                        return 0;
-                    else
-                        return 1;
-                }
-            }
-            return 2;
         }
 
         private void addWorkers(List<DMLUser> newWorker)
@@ -251,7 +226,7 @@ namespace DETI_MakerLab
         {
             try
             {
-                //saveChanges();
+                saveChanges();
                 MessageBox.Show("The project has been changed!");
                 //HomeWindow window = (HomeWindow)Window.GetWindow(this);
                 //window.goToProjectPage(_project);

@@ -216,15 +216,17 @@ namespace DETI_MakerLab
                 int projectID = SubmitProject();
                 if (projectID != -1)
                     SubmitMembers(projectID);
-            } catch (Exception exc)
+                MessageBox.Show("Project has been created !");
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                // TODO : create object and pass it to project page
+                //window.goToProjectPage(project);
+            }
+            catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
             }
 
-            MessageBox.Show("Project has been created !");
-            HomeWindow window = (HomeWindow)Window.GetWindow(this);
-            // TODO : create object and pass it to project page
-            //window.goToProjectPage(project);
+            
         }
     }
 }

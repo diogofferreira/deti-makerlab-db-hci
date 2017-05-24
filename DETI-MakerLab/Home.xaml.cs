@@ -26,15 +26,25 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private ObservableCollection<Project> ProjectsListData;
-        private ObservableCollection<Resources> RequisitionsListData;
+        private ObservableCollection<Requisition> RequisitionsListData;
+
+        private Requisition containsReq(int ReqID)
+        {
+            foreach (Requisition r in RequisitionsListData)
+                if (r.RequisitionID == ReqID)
+                    return r;
+            return null;
+        }
 
         public Home()
         {
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
-            RequisitionsListData = new ObservableCollection<Resources>();
+            RequisitionsListData = new ObservableCollection<Requisition>();
             LastProjects();
+            LoadUsers();
             LastRequisitions();
+            LoadRequisitionResources();
             last_project_list.ItemsSource = ProjectsListData;
             last_requisitions_list.ItemsSource = RequisitionsListData;
         }
@@ -50,17 +60,69 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
+                Class cl = null;
+                if (reader["ClassID"] != DBNull.Value)
+                    cl = new Class(
+                        int.Parse(reader["ClassID"].ToString()),
+                        reader["ClassName"].ToString(),
+                        reader["ClDescription"].ToString()
+                    );
+
                 ProjectsListData.Add(new Project(
                     int.Parse(reader["ProjectID"].ToString()),
                     reader["PrjName"].ToString(),
                     reader["PrjDescription"].ToString(),
-                    new Class(
-                        int.Parse(reader["ClassID"].ToString()),
-                        reader["ClassName"].ToString(),
-                        reader["ClDescription"].ToString()
-                    )));
+                    cl
+                    ));
             }
             cn.Close();
+        }
+
+        private void LoadUsers()
+        {
+            foreach (Project proj in ProjectsListData)
+            {
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
+                    return;
+
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand("PROJECT_USERS", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@pID", proj.ProjectID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+                cn.Close();
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    Student s = new Student(
+                            int.Parse(row["NumMec"].ToString()),
+                            row["FirstName"].ToString(),
+                            row["LastName"].ToString(),
+                            row["Email"].ToString(),
+                            row["PathToImage"].ToString(),
+                            row["Course"].ToString()
+                        );
+                    s.RoleID = int.Parse(row["UserRole"].ToString());
+                    proj.addWorker(s);
+                }
+
+                foreach (DataRow row in ds.Tables[1].Rows)
+                {
+                    Professor p = new Professor(
+                            int.Parse(row["NumMec"].ToString()),
+                            row["FirstName"].ToString(),
+                            row["LastName"].ToString(),
+                            row["Email"].ToString(),
+                            row["PathToImage"].ToString(),
+                            row["ScientificArea"].ToString()
+                        );
+                    p.RoleID = int.Parse(row["UserRole"].ToString());
+                    proj.addWorker(p);
+                }
+            }
         }
 
         private void LastRequisitions()
@@ -71,16 +133,63 @@ namespace DETI_MakerLab
 
             DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
-            cmd.CommandText = "dbo.LAST_REQUISITIONS";
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(ds);
-            cn.Close();
+            cmd.CommandText = "SELECT * FROM LAST_REQUISITIONS";
+            SqlDataReader reader = cmd.ExecuteReader();
 
-            foreach (DataRow row in ds.Tables[0].Rows)
+            while (reader.Read())
             {
-                RequisitionsListData.Add(new ElectronicUnit(
+                Class cl = null;
+                if (reader["ClassID"] != DBNull.Value)
+                    cl = new Class(
+                        int.Parse(reader["ClassID"].ToString()),
+                        reader["ClassName"].ToString(),
+                        reader["ClDescription"].ToString()
+                    );
+
+                RequisitionsListData.Add(new Requisition(
+                        int.Parse(reader["RequisitionID"].ToString()),
+                        new Project(
+                            int.Parse(reader["ProjectID"].ToString()),
+                            reader["PrjName"].ToString(),
+                            reader["PrjDescription"].ToString(),
+                            cl),
+                        new DMLUser(
+                            int.Parse(reader["NumMec"].ToString()),
+                            reader["FirstName"].ToString(),
+                            reader["LastName"].ToString(),
+                            reader["Email"].ToString(),
+                            reader["PathToImage"].ToString()
+                            ),
+                        DateTime.ParseExact(reader["ReqDate"].ToString(), "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)
+                    ));
+
+            }
+            cn.Close();
+        }
+
+        private void LoadRequisitionResources()
+        {
+            foreach (Requisition r in RequisitionsListData)
+            {
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
+                    throw new Exception("Could not connect to database");
+
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = cn;
+                cmd.CommandText = "dbo.REQUISITION_UNITS";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@reqID", r.RequisitionID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+                cn.Close();
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    r.Resources.Add(new ElectronicUnit(
                     int.Parse(row["ResourceID"].ToString()),
                     new ElectronicResources(
                         row["ProductName"].ToString(),
@@ -92,16 +201,21 @@ namespace DETI_MakerLab
                         ),
                     row["Supplier"].ToString()
                     ));
-            }
+                }
 
-            foreach (DataRow row in ds.Tables[1].Rows)
-            {
-                RequisitionsListData.Add(new Kit(
-                    int.Parse(row["ResourceID"].ToString()),
-                    row["KitDescription"].ToString()
-                    ));
+                foreach (DataRow row in ds.Tables[1].Rows)
+                {
+                    r.Resources.Add(new Kit(
+                        int.Parse(row["ResourceID"].ToString()),
+                        row["KitDescription"].ToString()
+                        ));
+                }
             }
+            
         }
+
+            
+}
 
         // REVER A QUESTÂO DO QUE MOSTRAR NAS REQUISIÇÕES
 

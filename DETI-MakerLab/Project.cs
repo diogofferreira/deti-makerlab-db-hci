@@ -15,7 +15,7 @@ namespace DETI_MakerLab
         private String _miniDescription;
         private Class _class;
         private String _className;
-        private List<int[]> _workers = new List<int[]>();
+        private List<DMLUser> _workers = new List<DMLUser>();
 
 
         public int ProjectID
@@ -63,20 +63,43 @@ namespace DETI_MakerLab
             set { _className = value; }
         }
 
-        public List<int[]> Workers
+        public List<DMLUser> Workers
         {
             get { return _workers; }
         }
 
-        public void addWorker(int UserID, int RoleID)
+        public bool hasWorker(DMLUser user)
         {
-            int[] worker = { UserID, RoleID };
+            foreach (DMLUser worker in _workers)
+                if (worker.NumMec == user.NumMec)
+                    return true;
+            return false;
+        }
+
+        public int workerChanges(DMLUser user)
+        {
+            foreach (DMLUser worker in _workers)
+            {
+                if (worker.NumMec == user.NumMec)
+                {
+                    if (worker.RoleID == user.RoleID)
+                        return 0;
+                    else
+                        return 1;
+                }
+            }
+            return 2;
+        }
+
+        public void addWorker(DMLUser worker)
+        {
+            if (worker == null)
+                throw new Exception("Trying to add invalid user to project!");
             _workers.Add(worker);
         }
 
-        public bool removeWorker(int UserID, int RoleID)
+        public bool removeWorker(DMLUser worker)
         {
-            int[] worker = { UserID, RoleID };
             if (_workers.Contains(worker))
             {
                 _workers.Remove(worker);

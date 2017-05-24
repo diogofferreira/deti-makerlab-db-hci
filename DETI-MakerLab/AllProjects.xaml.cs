@@ -31,6 +31,7 @@ namespace DETI_MakerLab
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
             LoadProjects();
+            LoadUsers();
             all_projects_listbox.ItemsSource = ProjectsListData;
         }
 
@@ -56,19 +57,70 @@ namespace DETI_MakerLab
 
             while (reader.Read())
             {
-                Project prj = new Project(
-                    int.Parse(reader["ProjectID"].ToString()),
-                    reader["PrjName"].ToString(),
-                    reader["PrjDescription"].ToString(),
-                    new Class(
+                Class cl = null;
+                if (reader["ClassID"] != DBNull.Value)
+                    cl = new Class(
                         int.Parse(reader["ClassID"].ToString()),
                         reader["ClassName"].ToString(),
                         reader["ClDescription"].ToString()
+                    );
+
+                ProjectsListData.Add(new Project(
+                    int.Parse(reader["ProjectID"].ToString()),
+                    reader["PrjName"].ToString(),
+                    reader["PrjDescription"].ToString(),
+                    cl
                     ));
-                ProjectsListData.Add(prj);
             }
 
             cn.Close();
+        }
+
+        private void LoadUsers()
+        {
+            foreach (Project proj in ProjectsListData)
+            {
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
+                    return;
+
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand("PROJECT_USERS", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@pID", proj.ProjectID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+                cn.Close();
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    Student s = new Student(
+                            int.Parse(row["NumMec"].ToString()),
+                            row["FirstName"].ToString(),
+                            row["LastName"].ToString(),
+                            row["Email"].ToString(),
+                            row["PathToImage"].ToString(),
+                            row["Course"].ToString()
+                        );
+                    s.RoleID = int.Parse(row["UserRole"].ToString());
+                    proj.addWorker(s);
+                }
+
+                foreach (DataRow row in ds.Tables[1].Rows)
+                {
+                    Professor p = new Professor(
+                            int.Parse(row["NumMec"].ToString()),
+                            row["FirstName"].ToString(),
+                            row["LastName"].ToString(),
+                            row["Email"].ToString(),
+                            row["PathToImage"].ToString(),
+                            row["ScientificArea"].ToString()
+                        );
+                    p.RoleID = int.Parse(row["UserRole"].ToString());
+                    proj.addWorker(p);
+                }
+            }
         }
     }
 }

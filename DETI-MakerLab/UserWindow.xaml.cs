@@ -26,6 +26,7 @@ namespace DETI_MakerLab
         public HomeWindow(DMLUser user)
         {
             InitializeComponent();
+
             this.User = user;
 
             // Set user name label and image

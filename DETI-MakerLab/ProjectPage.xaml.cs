@@ -116,5 +116,11 @@ namespace DETI_MakerLab
             HomeWindow window = (HomeWindow)Window.GetWindow(this);
             window.goToChangeProjectPage(_project);
         }
+
+        private void go_back_button_Click(object sender, RoutedEventArgs e)
+        {
+            HomeWindow window = (HomeWindow)Window.GetWindow(this);
+            window.goBack();
+        }
     }
 }

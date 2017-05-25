@@ -94,7 +94,7 @@ namespace DETI_MakerLab
 
         public override string ToString()
         {
-            return ProductName + " " + Model + " by " + Manufactor;
+            return ProductName + " " + Model;
         }
 
         public override bool Equals(object obj)

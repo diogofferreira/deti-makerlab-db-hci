@@ -77,7 +77,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            ClassListData.Add(new Class(-1, "No Class", "None"));
+            ClassListData.Add(new Class(-1, "No Class", "Standalone Project"));
 
             SqlCommand cmd = new SqlCommand("SELECT * FROM Class", cn);
             SqlDataReader reader = cmd.ExecuteReader();

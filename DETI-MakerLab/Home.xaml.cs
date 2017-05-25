@@ -162,7 +162,6 @@ namespace DETI_MakerLab
                             ),
                         Convert.ToDateTime(reader["ReqDate"])
                     ));
-
             }
             cn.Close();
         }

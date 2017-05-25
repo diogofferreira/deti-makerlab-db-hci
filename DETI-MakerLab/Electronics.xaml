@@ -16,16 +16,17 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ElectronicsEquipmentItem">
-            <Grid Width="291" Height="30">
-                <Label x:Name="equipment_name" Content="{Binding}" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Center" Height="26" Width="220"/>
-                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="245,5,-19,5" VerticalAlignment="Center" Width="65" Click="equipment_info_Click"/>
-                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="19" Margin="348,0,-79,5" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" Width="22" RenderTransformOrigin="0.894,0.579" HorizontalContentAlignment="Center" ToolTip="Number of units you want to request"/>
+            <Grid Height="30">
+                <Label x:Name="equipment_name" Content="{Binding}" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Center" Height="26" Width="220"/>
+                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="206,5,0,5" VerticalAlignment="Center" Width="65" Click="equipment_info_Click"/>
+                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="19" Margin="289,0,0,5" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" Width="22" RenderTransformOrigin="0.894,0.579" HorizontalContentAlignment="Center" ToolTip="Number of units you want to request"/>
+                <Label x:Name="equipment_units_available" Content="{Binding Path=MaxUnits}" HorizontalAlignment="Left" Margin="327,4,0,0" VerticalAlignment="Top"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ActiveRequisitionItem">
-            <Grid Height="26" Width="310">
+            <Grid Height="26">
                 <CheckBox x:Name="active_checkbox" HorizontalAlignment="Left" Margin="10,5,0,6" VerticalAlignment="Center"/>
-                <Label x:Name="active_equipment" Content="{Binding}" HorizontalAlignment="Left" Margin="55,0,0,0" VerticalAlignment="Center" Width="205" Height="26"/>
+                <Label x:Name="active_equipment" Content="{Binding}" HorizontalAlignment="Left" Margin="55,0,0,0" VerticalAlignment="Center" Height="26"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -37,8 +38,8 @@
         <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="196,27,752,553"/>
         <Label Content="Active electronic's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,27,0,553"/>
         <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="184" Margin="54,382,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicsEquipmentItem}"/>
-        <Label Content="Project (to associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,105,0,0" VerticalAlignment="Top" Height="37" Width="218"/>
-        <Label Content="Equipment" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,330,0,0" VerticalAlignment="Top" Height="52" Width="123"/>
+        <Label Content="Project (to associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,97,0,0" VerticalAlignment="Top" Height="45" Width="218"/>
+        <Label Content="Equipment" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,334,0,0" VerticalAlignment="Top" Height="52" Width="123"/>
         <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,571,0,0" VerticalAlignment="Top" Width="455" Height="47" Click="request_button_Click"/>
         <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="675,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
     </Grid>

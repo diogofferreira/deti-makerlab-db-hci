@@ -22,12 +22,7 @@ namespace DETI_MakerLab
         public Project ReqProject
         {
             get { return _reqProject; }
-            set
-            {
-                if (value == null)
-                    throw new Exception("Invalid Project");
-                _reqProject = value;
-            }
+            set { _reqProject = value; }
         }
 
         public override string ToString()
@@ -69,7 +64,7 @@ namespace DETI_MakerLab
 
         public override string ToString()
         {
-            return "OS " + OSName;
+            return OSName;
         }
 
         public OS(int OSID, String OSName)
@@ -129,7 +124,7 @@ namespace DETI_MakerLab
 
         public override string ToString()
         {
-            return "VM #" + ResourceID + ": " + UsedOS.OSName;
+            return "VM #" + ResourceID + ": " + UsedOS.OSName + " at " + IP;
         }
 
         public static String getIP()
@@ -169,7 +164,7 @@ namespace DETI_MakerLab
             get { return _socketNum; }
             set
             {
-                if (value > 99999)
+                if (value > 20)
                     throw new Exception("Invalid SocketNum");
                 _socketNum = value;
             }
@@ -177,7 +172,7 @@ namespace DETI_MakerLab
 
         public override string ToString()
         {
-            return "Eth #" + ResourceID + ": SN " + SocketNum;
+            return "Socket #" + SocketNum;
         }
 
         public EthernetSocket(int ResourceID, Project ReqProject, int SocketNum)

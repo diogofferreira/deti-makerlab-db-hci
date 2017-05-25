@@ -45,11 +45,13 @@ namespace DETI_MakerLab
             {
                 LoadOS();
                 LoadProjects(UserID);
+                LoadAvailableSockets();
             } catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
             projects_list.ItemsSource = ProjectsListData;
+            os_list.ItemsSource = OSList;
             socket_list.ItemsSource = SocketsListData;
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
         }
@@ -121,9 +123,8 @@ namespace DETI_MakerLab
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
-
-            List<int> availableSockets = Enumerable.Range(1, 20).ToList();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM AVAILABLE_SOCKETS()", cn);
+            
+            SqlCommand cmd = new SqlCommand("SELECT * FROM AVAILABLE_SOCKETS ()", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -222,7 +223,6 @@ namespace DETI_MakerLab
             cn.Close();
         }
 
-        // Falta a saveChanges()!!!!!!!!
         private void launchVM()
         {
             int resID = -1;
@@ -234,6 +234,10 @@ namespace DETI_MakerLab
                 throw new Exception("Your Virtual Machine needs to be protected by a password!");
             if (vmPassword.Length < 8 || vmPassword.Length > 25)
                 throw new Exception("Your Virtual Machine password needs to have between 8 and 25 characters.");
+
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             VirtualMachine vm = new VirtualMachine(
                 resID,
@@ -252,15 +256,17 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@IP", vm.IP);
             cmd.Parameters.AddWithValue("@PasswordHash", vm.PasswordHash);
             cmd.Parameters.AddWithValue("@DockerID", vm.DockerID);
-            cmd.Parameters.AddWithValue("@DockerID", vm.UsedOS.OSID);
+            cmd.Parameters.AddWithValue("@OSID", vm.UsedOS.OSID);
             cmd.Parameters.Add("@resID", SqlDbType.Int).Direction = ParameterDirection.Output;
             cmd.CommandText = "dbo.REQUEST_VM";
 
             try
             {
                 cmd.ExecuteNonQuery();
-                vm.ResourceID = Convert.ToInt32(cmd.Parameters["resID"].Value);
+                vm.ResourceID = Convert.ToInt32(cmd.Parameters["@resID"].Value);
                 ActiveRequisitionsData.Add(vm);
+                os_list.SelectedIndex = 0;
+                vm_password.Clear();
             }
             catch (Exception ex)
             {
@@ -283,6 +289,7 @@ namespace DETI_MakerLab
             if (selectedProject == null)
                 throw new Exception("You have to select a project first!");
 
+            List<EthernetSocket> toRemove = new List<EthernetSocket>();
             DataTable toRequest = new DataTable();
             toRequest.Clear();
             toRequest.Columns.Add("ResourceID", typeof(int));
@@ -302,6 +309,8 @@ namespace DETI_MakerLab
                 EthernetSocket socket = resource as EthernetSocket;
                 DataRow row = toRequest.NewRow();
                 row["ResourceID"] = socket.ResourceID;
+                toRequest.Rows.Add(row);
+                toRemove.Remove(socket);
             }
 
             cn = Helpers.getSGBDConnection();
@@ -328,6 +337,9 @@ namespace DETI_MakerLab
                     int.Parse(row["SocketNum"].ToString())
                     ));
             }
+
+            foreach (EthernetSocket e in toRemove)
+                SocketsListData.Remove(e);
         }
 
         private void saveWLAN()
@@ -350,9 +362,11 @@ namespace DETI_MakerLab
                 destroyWLAN();
             else
             {
-                // CHECK IF THEY ARE DIFFERENT FIRST
-                currentWLAN.PasswordHash = wifi_password.Password;
-                updateWLAN();
+                if (currentWLAN.PasswordHash != wifi_password.Password)
+                {
+                    currentWLAN.PasswordHash = wifi_password.Password;
+                    updateWLAN();
+                }
             }
         }
 
@@ -394,9 +408,13 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Error connecting to database");
 
-            SqlCommand cmd = new SqlCommand("UPDATE WirelessLAN SET PasswordHash = @PasswordHash WHERE NetResID=@resID)", cn);
-            cmd.Parameters.AddWithValue("@PasswordHash", currentWLAN.PasswordHash);
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
+            cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@resID", currentWLAN.ResourceID);
+            cmd.Parameters.AddWithValue("@PasswordHash", currentWLAN.PasswordHash);
+            cmd.CommandText = "dbo.UPDATE_WLAN";
 
             try
             {
@@ -419,6 +437,7 @@ namespace DETI_MakerLab
                 throw new Exception("Error connecting to database");
 
             SqlCommand cmd = new SqlCommand("DELETE FROM WirelessLAN WHERE NetResID=@resID)", cn);
+            cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@resID", currentWLAN.ResourceID);
 
             try
@@ -441,6 +460,7 @@ namespace DETI_MakerLab
                 throw new Exception("You have to select a project first!");
 
             List<EthernetSocket> socketToDeliver = new List<EthernetSocket>();
+            List<NetworkResources> toRemove = new List<NetworkResources>();
             DataTable toDeliver = new DataTable();
             toDeliver.Clear();
             toDeliver.Columns.Add("ResourceID", typeof(int));
@@ -453,8 +473,8 @@ namespace DETI_MakerLab
                     return;
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
-
-                if (!((CheckBox)active_requisitions_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false)
+                
+                if (!(((CheckBox)active_requisitions_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false))
                     continue;
 
                 NetworkResources unit = resource as NetworkResources;
@@ -463,6 +483,8 @@ namespace DETI_MakerLab
 
                 DataRow row = toDeliver.NewRow();
                 row["ResourceID"] = unit.ResourceID;
+                toDeliver.Rows.Add(row);
+                toRemove.Add(unit);
             }
 
             if (toDeliver.Rows.Count == 0)
@@ -487,6 +509,8 @@ namespace DETI_MakerLab
                     socket.ReqProject = null;
                     SocketsListData.Add(socket);
                 }
+                foreach (NetworkResources r in toRemove)
+                    ActiveRequisitionsData.Remove(r);
             }
             catch (Exception ex)
             {
@@ -515,13 +539,29 @@ namespace DETI_MakerLab
 
         private void request_network_button_Click(object sender, RoutedEventArgs e)
         {
-            saveNetworkChanges();
-            MessageBox.Show("Network's requisition done with success !");
+            try
+            {
+                checkProject();
+                saveNetworkChanges();
+                MessageBox.Show("Project's network changes successfully saved!");
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void deliver_button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Delivery done with success !");
+            try
+            {
+                deliverResources();
+                MessageBox.Show("Delivery done with success!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void checkProject()

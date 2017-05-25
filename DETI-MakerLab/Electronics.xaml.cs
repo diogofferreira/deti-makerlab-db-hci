@@ -240,6 +240,7 @@ namespace DETI_MakerLab
                 throw new Exception("You have to select a project first!");
 
             List<Resources> toBeRequested = new List<Resources>();
+            List<ListItem> toBeRemoved = new List<ListItem>();
             DataTable toRequest = new DataTable();
             toRequest.Clear();
             toRequest.Columns.Add("ResourceID", typeof(int));
@@ -253,20 +254,26 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                int units = int.Parse(((TextBox)equipment_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
+                TextBox unitsTextBox = equipment_list.ItemTemplate.FindName("equipment_units", listBoxItemCP) as TextBox;
+                int units = int.Parse(unitsTextBox.Text);
                 if (units == 0)
                     continue;
+                unitsTextBox.Text = "0";
 
                 Resources unit = null;
                 if (resource is ResourceItem)
                 {
                     ResourceItem r = resource as ResourceItem;
                     unit = r.requestUnit();
+                    if (r.Units.Count == 0)
+                        toBeRemoved.Add(r);
                 }
                 else if (resource is KitItem)
                 {
                     KitItem k = resource as KitItem;
                     unit = k.requestUnit();
+                    if (k.Units.Count == 0)
+                        toBeRemoved.Add(k);
                 }
                 toBeRequested.Add(unit);
                 DataRow row = toRequest.NewRow();
@@ -298,6 +305,20 @@ namespace DETI_MakerLab
                 cmd.ExecuteNonQuery();
                 foreach (Resources resource in toBeRequested)
                     ActiveRequisitionsData.Add(resource);
+                foreach (ListItem li in toBeRemoved)
+                {
+                    ResourcesListData.Remove(li);
+                    if (typeof(ResourceItem).IsInstanceOfType(li))
+                    {
+                        ResourceItem ri = li as ResourceItem;
+                        ResourceItems.Remove(ri);
+                    }
+                    else if (typeof(KitItem).IsInstanceOfType(li))
+                    {
+                        KitItem ki = li as KitItem;
+                        KitItems.Remove(ki);
+                    }
+                }
                     
             }
             catch (Exception ex)
@@ -396,7 +417,33 @@ namespace DETI_MakerLab
             {
                 cmd.ExecuteNonQuery();
                 foreach (Resources r in toDelete)
+                {
                     ActiveRequisitionsData.Remove(r);
+                    
+                    if (typeof(ElectronicUnit).IsInstanceOfType(r))
+                    {
+                        ElectronicUnit unit = r as ElectronicUnit;
+                        if (!addResourceItemUnit(unit))
+                        {
+                            ResourceItem ri = new ResourceItem(unit.Model);
+                            ri.addUnit(unit);
+                            ResourceItems.Add(ri);
+                            ResourcesListData.Add(ri);
+                        }
+                    }
+                    else if (typeof(Kit).IsInstanceOfType(r))
+                    {
+                        Kit unit = r as Kit;
+                        if (!addKitItemUnit(unit))
+                        {
+                            KitItem ki = new KitItem(unit.Description);
+                            ki.addUnit(unit);
+                            KitItems.Add(ki);
+                            Console.WriteLine(ki);
+                            ResourcesListData.Add(ki);
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

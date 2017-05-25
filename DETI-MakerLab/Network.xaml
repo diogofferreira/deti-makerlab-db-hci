@@ -22,9 +22,9 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ActiveRequisitionItem">
-            <Grid Height="26" Width="200">
+            <Grid Height="26">
                 <CheckBox x:Name="active_checkbox" HorizontalAlignment="Left" Margin="6,4,0,0" VerticalAlignment="Center"/>
-                <Label x:Name="active_equipment" Content="{Binding}" HorizontalAlignment="Left" Margin="51,0,-133,0" VerticalAlignment="Center" Width="147"/>
+                <Label x:Name="active_equipment" Content="{Binding}" HorizontalAlignment="Left" Margin="51,0,-133,0" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -38,19 +38,13 @@
         <ListBox x:Name="socket_list" HorizontalAlignment="Left" Height="76" Margin="54,503,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource SocketItem}"/>
         <Label Content="Project (to Associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,66,0,0" VerticalAlignment="Top" Height="37" Width="231"/>
         <Label Content="Sockets Ethernet" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,465,0,0" VerticalAlignment="Top" Height="52" Width="185" ToolTip="Request an ethernet socket on room switch"/>
-        <Button x:Name="request_network_button" Content="Request" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,585,0,0" VerticalAlignment="Top" Width="166" Height="33" Click="request_network_button_Click"/>
+        <Button x:Name="request_network_button" Content="Save" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,585,0,0" VerticalAlignment="Top" Width="166" Height="33" Click="request_network_button_Click"/>
         <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="663,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
         <StackPanel Orientation="Vertical" Margin="-36,-66,623,379">
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="2" Margin="71,274,10,200" Background="#FF4DB6AC"/>
         </StackPanel>
         <Label Content="Launch Virtual Machine" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,213,0,0" VerticalAlignment="Top" Height="37" Width="250" ToolTip="Access the VM by SSH : $ ssh dockerid@IP"/>
-        <ComboBox x:Name="os_list" HorizontalAlignment="Left" SelectedIndex="0" Margin="54,249,0,0" VerticalAlignment="Top" Width="455" Height="26">
-            <ComboBoxItem>None</ComboBoxItem>
-            <ComboBoxItem>Debian</ComboBoxItem>
-            <ComboBoxItem>Ubuntu</ComboBoxItem>
-            <ComboBoxItem>Fedora</ComboBoxItem>
-            <ComboBoxItem>FreeBSD</ComboBoxItem>
-        </ComboBox>
+        <ComboBox x:Name="os_list" HorizontalAlignment="Left" SelectedIndex="0" Margin="54,249,0,0" VerticalAlignment="Top" Width="455" Height="26" />
         <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,279,0,0" VerticalAlignment="Top"/>
         <PasswordBox x:Name="vm_password" HorizontalAlignment="Left" Height="22" Margin="196,279,0,0" VerticalAlignment="Top" Width="313" VerticalContentAlignment="Center"/>
         <StackPanel Orientation="Vertical" Margin="-32,86,619,206">

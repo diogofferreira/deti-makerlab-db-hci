@@ -31,6 +31,7 @@ namespace DETI_MakerLab
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
             LoadProjects(userID);
+            LoadUsers();
             my_projects_listbox.ItemsSource = ProjectsListData;
             my_projects_listbox.MouseDoubleClick += new MouseButtonEventHandler(my_projects_listbox_MouseDoubleClick);
         }
@@ -75,6 +76,53 @@ namespace DETI_MakerLab
             }
 
             cn.Close();
+        }
+
+        private void LoadUsers()
+        {
+            foreach (Project proj in ProjectsListData)
+            {
+                cn = Helpers.getSGBDConnection();
+                if (!Helpers.verifySGBDConnection(cn))
+                    return;
+
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand("PROJECT_USERS", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@pID", proj.ProjectID);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+                cn.Close();
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    Student s = new Student(
+                            int.Parse(row["NumMec"].ToString()),
+                            row["FirstName"].ToString(),
+                            row["LastName"].ToString(),
+                            row["Email"].ToString(),
+                            row["PathToImage"].ToString(),
+                            row["Course"].ToString()
+                        );
+                    s.RoleID = int.Parse(row["UserRole"].ToString());
+                    proj.addWorker(s);
+                }
+
+                foreach (DataRow row in ds.Tables[1].Rows)
+                {
+                    Professor p = new Professor(
+                            int.Parse(row["NumMec"].ToString()),
+                            row["FirstName"].ToString(),
+                            row["LastName"].ToString(),
+                            row["Email"].ToString(),
+                            row["PathToImage"].ToString(),
+                            row["ScientificArea"].ToString()
+                        );
+                    p.RoleID = int.Parse(row["UserRole"].ToString());
+                    proj.addWorker(p);
+                }
+            }
         }
     }
 }

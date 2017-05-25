@@ -179,8 +179,6 @@ namespace DETI_MakerLab
                 window.goToProjectPage(project);
             } catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
-
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 window.goToProjectPage(project);
             }

@@ -47,7 +47,7 @@ namespace DETI_MakerLab
             user_name.Text = _user.FirstName + ' ' + _user.LastName;
             user_email.Text = _user.Email;
             user_nmec.Text = _user.NumMec.ToString();
-            user_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Relative));
+            user_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
             if (typeof(Professor).IsInstanceOfType(this.User))
             {
                 course_area.Content = "Scientific Area";

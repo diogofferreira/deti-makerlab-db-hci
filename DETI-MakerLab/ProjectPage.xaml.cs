@@ -33,12 +33,10 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             this._project = project;
-            Console.WriteLine(_project);
             MembersListData = new ObservableCollection<DMLUser>();
             RequisitionsData = new ObservableCollection<Requisition>();
             loadUsers();
             loadRequisitions();
-            Console.WriteLine(RequisitionsData.Count);
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
             project_members.ItemsSource = MembersListData;

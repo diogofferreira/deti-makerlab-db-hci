@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -34,11 +35,12 @@ namespace DETI_MakerLab
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
             RolesListData = new ObservableCollection<Role>();
-            LoadMembers();
             LoadRoles();
+            LoadMembers();
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
             project_members.ItemsSource = MembersListData;
+            project_members.ItemContainerGenerator.StatusChanged += new EventHandler(ItemContainerGenerator_StatusChanged);
         }
 
         private void LoadRoles()
@@ -90,6 +92,45 @@ namespace DETI_MakerLab
             }
 
             cn.Close();
+        }
+
+        private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
+        {
+            if (project_members.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+            {
+                SetRoles();
+            }
+        }
+
+        private void SetRoles()
+        {
+            foreach (DMLUser member in project_members.Items)
+            {
+                var container = project_members.ItemContainerGenerator.ContainerFromItem(member) as FrameworkElement;
+                if (container == null)
+                {
+                    project_members.UpdateLayout();
+                    project_members.ScrollIntoView(member);
+                    container = project_members.ItemContainerGenerator.ContainerFromItem(member) as FrameworkElement;
+                }
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                ((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedIndex = findIndexRole(member.RoleID);
+            }
+        }
+
+        private int findIndexRole(int id)
+        {
+            for (int i = 0; i < RolesListData.Count; i++)
+            {
+                if (RolesListData[i].RoleID == id)
+                    return i;
+            }
+            return 0;
         }
 
         private void saveChanges()
@@ -228,14 +269,14 @@ namespace DETI_MakerLab
             {
                 saveChanges();
                 MessageBox.Show("The project has been changed!");
-                //HomeWindow window = (HomeWindow)Window.GetWindow(this);
-                //window.goToProjectPage(_project);
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goToProjectPage(_project);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
     }
 }

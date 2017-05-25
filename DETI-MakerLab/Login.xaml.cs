@@ -76,14 +76,14 @@ namespace DETI_MakerLab
 
                     cn.Close();
 
-                    // Check if it is professor or student
+                    // Check if it is professor, student or staff
                     if (checkProfessor(tmpUser)) { result = true; }
                     if (!result && checkStudent(tmpUser)) { result = true; }
+                    if (checkStaff()) { result = true; }
                 }
                 else
                 {
-                    cn.Close();
-                    if (checkStaff()) { result = true; }
+                    throw new Exception("User does not exist!");
                 }   
             } catch (SqlException e) {
                 throw new Exception(e.Message);

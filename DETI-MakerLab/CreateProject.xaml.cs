@@ -151,7 +151,6 @@ namespace DETI_MakerLab
             {
                 cmd.ExecuteNonQuery();
                 projectID = Convert.ToInt32(cmd.Parameters["@ProjectID"].Value);
-                SubmitMembers(projectID);
             }
             catch (Exception ex)
             {
@@ -218,8 +217,8 @@ namespace DETI_MakerLab
                     SubmitMembers(projectID);
                 MessageBox.Show("Project has been created !");
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);
-                // TODO : create object and pass it to project page
-                //window.goToProjectPage(project);
+                // TODO : create project object
+                //window.goToProjectPage(_project);
             }
             catch (Exception exc)
             {

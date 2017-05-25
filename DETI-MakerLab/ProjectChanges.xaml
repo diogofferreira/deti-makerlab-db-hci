@@ -16,13 +16,7 @@
                     <ColumnDefinition Width="16*"/>
                 </Grid.ColumnDefinitions>
                 <Label x:Name="member_name" Content="{Binding Path=FullName}" Margin="290,5,-105,10" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
-                <ComboBox x:Name="member_role" SelectedIndex="0" HorizontalAlignment="Stretch" Margin="10,10,130,15" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Height="28">
-                    <ComboBoxItem>Not a Member</ComboBoxItem>
-                    <ComboBoxItem>Project Manager</ComboBoxItem>
-                    <ComboBoxItem>Documentation Manager</ComboBoxItem>
-                    <ComboBoxItem>Product Manager</ComboBoxItem>
-                    <ComboBoxItem>Developer</ComboBoxItem>
-                </ComboBox>
+                <ComboBox x:Name="member_role" ItemsSource="{Binding Path=CreateProject.RolesList}" SelectedIndex="0" HorizontalAlignment="Stretch" Margin="10,10,130,15" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Height="28"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -33,7 +27,7 @@
         <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="159,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.541,1.026" Width="109"/>
         <TextBlock x:Name="project_name" HorizontalAlignment="Left" Height="39" Margin="417,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="598" FontSize="20"/>
         <TextBox x:Name="project_description" HorizontalAlignment="Left" Height="138" Margin="417,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="598" FontSize="20"/>
-        <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="229" Margin="417,264,0,0" VerticalAlignment="Top" Width="598" FontSize="18" ItemTemplate="{DynamicResource MembersItem}"/>
+        <ListView x:Name="project_members" HorizontalAlignment="Left" Height="229" Margin="417,264,0,0" VerticalAlignment="Top" Width="598" FontSize="18" ItemTemplate="{DynamicResource MembersItem}"/>
         <Button x:Name="save_project_changes_button" Content="Save Changes" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="104,524,0,0" VerticalAlignment="Top" Width="977" Height="64" Click="save_project_changes_button_Click"/>
     </Grid>
 </Page>

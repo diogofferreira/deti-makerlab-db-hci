@@ -297,21 +297,31 @@ namespace DETI_MakerLab
             foreach (var resource in socket_list.Items)
             {
                 var container = socket_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                if (container == null)
+                {
+                    socket_list.UpdateLayout();
+                    socket_list.ScrollIntoView(resource);
+                    container = socket_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                }
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
                     return;
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                if (!((CheckBox)socket_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false)
+                if (!(((CheckBox)socket_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false))
                     continue;
 
                 EthernetSocket socket = resource as EthernetSocket;
                 DataRow row = toRequest.NewRow();
-                row["ResourceID"] = socket.ResourceID;
+                row["ResourceID"] = socket.SocketNum;
                 toRequest.Rows.Add(row);
                 toRemove.Remove(socket);
             }
+
+            Console.WriteLine(toRequest.Rows.Count);
+            if (toRequest.Rows.Count == 0)
+                return;
 
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
@@ -389,7 +399,7 @@ namespace DETI_MakerLab
             try
             {
                 cmd.ExecuteNonQuery();
-                currentWLAN.ResourceID = Convert.ToInt32(cmd.Parameters["resID"].Value);
+                currentWLAN.ResourceID = Convert.ToInt32(cmd.Parameters["@resID"].Value);
             }
             catch (Exception ex)
             {

@@ -79,7 +79,7 @@ namespace DETI_MakerLab
                     // Check if it is professor, student or staff
                     if (checkProfessor(tmpUser)) { result = true; }
                     if (!result && checkStudent(tmpUser)) { result = true; }
-                    if (checkStaff()) { result = true; }
+                    if (!result && checkStaff()) { result = true; }
                 }
                 else
                 {

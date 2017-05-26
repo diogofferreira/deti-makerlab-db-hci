@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -34,7 +35,18 @@ namespace DETI_MakerLab
             _kit = kit;
             kit_name.Text = _kit.Description;
             content_list.ItemsSource = kit.Units;
-            loadRequisitions();
+            try
+            {
+                loadRequisitions();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             equipment_last_requisitions_list.ItemsSource = RequisitionsData;
         }
 

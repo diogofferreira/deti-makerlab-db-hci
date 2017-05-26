@@ -30,8 +30,19 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
-            LoadProjects(userID);
-            LoadUsers();
+            try
+            {
+                LoadProjects(userID);
+                LoadUsers();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             my_projects_listbox.ItemsSource = ProjectsListData;
             my_projects_listbox.MouseDoubleClick += new MouseButtonEventHandler(my_projects_listbox_MouseDoubleClick);
         }

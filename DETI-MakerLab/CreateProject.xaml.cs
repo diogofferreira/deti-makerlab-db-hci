@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -36,9 +37,18 @@ namespace DETI_MakerLab
             MembersListData = new ObservableCollection<DMLUser>();
             RolesListData = new ObservableCollection<Role>();
             ClassListData = new ObservableCollection<Class>();
-            LoadRoles();
-            LoadClasses();
-            LoadMembers();
+            try
+            {
+                LoadRoles();
+                LoadClasses();
+                LoadMembers();
+            } catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            } catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             project_members.ItemsSource = MembersListData;
             project_class.ItemsSource = ClassListData;
         }
@@ -156,7 +166,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -200,7 +210,7 @@ namespace DETI_MakerLab
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                    throw ex;
                 }
                 finally
                 {
@@ -221,6 +231,9 @@ namespace DETI_MakerLab
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);
                 // TODO : create project object
                 //window.goToProjectPage(_project);
+            } catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
             }
             catch (Exception exc)
             {

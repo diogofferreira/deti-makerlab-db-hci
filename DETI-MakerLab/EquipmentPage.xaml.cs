@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -38,7 +39,19 @@ namespace DETI_MakerLab
             equipment_manufacturer.Text = _equipment.Manufactor;
             equipment_description.Text = _equipment.Description;
             equipment_image.Source = new BitmapImage(new Uri(_equipment.PathToImage, UriKind.Absolute));
-            loadRequisitions();
+            try
+            {
+                loadRequisitions();
+
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             equipment_last_requisitions_list.ItemsSource = RequisitionsData;
         }
 

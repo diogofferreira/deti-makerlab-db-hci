@@ -30,7 +30,18 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             this._requisition = requisition;
-            LoadRequisitionResources();
+            try
+            {
+                LoadRequisitionResources();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             project_name.Text = _requisition.ReqProject.ProjectName;
             content_list.ItemsSource = _requisition.Resources;
         }

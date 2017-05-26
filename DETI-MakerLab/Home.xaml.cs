@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -41,9 +42,20 @@ namespace DETI_MakerLab
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
             RequisitionsListData = new ObservableCollection<Requisition>();
-            LastProjects();
-            LoadUsers();
-            LastRequisitions();
+            try
+            {
+                LastProjects();
+                LoadUsers();
+                LastRequisitions();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             last_project_list.ItemsSource = ProjectsListData;
             last_requisitions_list.ItemsSource = RequisitionsListData;
         }
@@ -198,5 +210,4 @@ namespace DETI_MakerLab
             }
         }
     }
-
 }

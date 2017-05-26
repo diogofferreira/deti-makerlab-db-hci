@@ -46,9 +46,14 @@ namespace DETI_MakerLab
                 LoadOS();
                 LoadProjects(UserID);
                 LoadAvailableSockets();
-            } catch (Exception e)
+            }
+            catch (SqlException exc)
             {
-                MessageBox.Show(e.Message);
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
             projects_list.ItemsSource = ProjectsListData;
             os_list.ItemsSource = OSList;
@@ -270,7 +275,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -405,7 +410,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -434,7 +439,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -458,7 +463,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -528,7 +533,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -544,6 +549,10 @@ namespace DETI_MakerLab
                 launchVM();
                 MessageBox.Show("VM has been launched with success!");
             }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
@@ -558,11 +567,16 @@ namespace DETI_MakerLab
                 checkProject();
                 saveNetworkChanges();
                 MessageBox.Show("Project's network changes successfully saved!");
-            } catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
-            
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+
         }
 
         private void deliver_button_Click(object sender, RoutedEventArgs e)
@@ -572,9 +586,13 @@ namespace DETI_MakerLab
                 deliverResources();
                 MessageBox.Show("Delivery done with success!");
             }
-            catch (Exception ex)
+            catch (SqlException exc)
             {
-                MessageBox.Show(ex.Message);
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
 
@@ -600,8 +618,18 @@ namespace DETI_MakerLab
         {
             try
             {
+                // Find selected project
                 checkProject();
+
+                // Clear active requisitions data and load the active requisitions for selected project
+                ActiveRequisitionsData.Clear();
+                wifi_checkbox.IsChecked = false;
+                wifi_password.Password = "";
                 LoadProjectActiveRequisitions();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
             }
             catch (Exception exc)
             {

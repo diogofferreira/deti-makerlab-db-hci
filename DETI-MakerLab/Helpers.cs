@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -31,7 +32,7 @@ namespace DETI_MakerLab
 
         public static SqlConnection getSGBDConnection()
         {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
+            return new SqlConnection("data source= DESKTOP-GU6KNJA\\SQLSERVER;integrated security=true;initial catalog=DML");
         }
 
         public static bool verifySGBDConnection(SqlConnection cn)
@@ -43,6 +44,21 @@ namespace DETI_MakerLab
                 cn.Open();
 
             return cn.State == ConnectionState.Open;
+        }
+
+        public static void ShowCustomDialogBox(Exception ex)
+        {
+            // Create custom message box dialog
+            using (TaskDialog dialog = new TaskDialog())
+            {
+                dialog.WindowTitle = "Error";
+                dialog.MainInstruction = "Database Error";
+                dialog.Content = "An error occurred while performing a database operation. See details to analyse the specific error";
+                dialog.ExpandedInformation = ex.Message;
+                TaskDialogButton okButton = new TaskDialogButton(ButtonType.Ok);
+                dialog.Buttons.Add(okButton);
+                dialog.Show();
+            }
         }
     }
 }

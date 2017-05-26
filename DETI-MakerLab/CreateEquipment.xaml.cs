@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -67,7 +68,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -102,9 +103,13 @@ namespace DETI_MakerLab
                 // TODO : create object and pass it to equipment page
                 //window.goToEquipmentPage(equipment);
             }
-            catch (Exception ex)
+            catch (SqlException exc)
             {
-                MessageBox.Show(ex.Message);
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -80,9 +81,20 @@ namespace DETI_MakerLab
             ActiveRequisitionsData = new ObservableCollection<Resources>();
             ResourceItems = new List<ResourceItem>();
             KitItems = new List<KitItem>();
-            LoadProjects();
-            LoadAvailableResources();
-            LoadProjectActiveRequisitons();
+            try
+            {
+                LoadProjects();
+                LoadAvailableResources();
+                LoadProjectActiveRequisitons();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             projects_list.ItemsSource = ProjectsListData;
             equipment_list.ItemsSource = ResourcesListData;
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
@@ -323,7 +335,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -355,7 +367,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -447,7 +459,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -478,7 +490,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -494,9 +506,14 @@ namespace DETI_MakerLab
             {
                 SubmitRequisitionResources();
                 MessageBox.Show("Request done with success!");
-            } catch (Exception ex)
+            }
+            catch (SqlException exc)
             {
-                MessageBox.Show(ex.Message);
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
 
@@ -508,9 +525,13 @@ namespace DETI_MakerLab
                 SubmitDeliveryResources();
                 MessageBox.Show("Delivery done with success!");
             }
-            catch (Exception ex)
+            catch (SqlException exc)
             {
-                MessageBox.Show(ex.Message);
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
 
@@ -536,9 +557,18 @@ namespace DETI_MakerLab
         {
             try
             {
+                // Find selected project
                 checkProject();
+                
+                // Clear active requisitions data and load the active requisitions for selected project
+                ActiveRequisitionsData.Clear();
                 LoadProjectActiveRequisitons();
-            } catch (Exception exc)
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
             }

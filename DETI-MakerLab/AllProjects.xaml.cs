@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -30,8 +31,18 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
-            LoadProjects();
-            LoadUsers();
+            try { 
+                LoadProjects();
+                LoadUsers();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             all_projects_listbox.ItemsSource = ProjectsListData;
         }
 

@@ -66,8 +66,18 @@ namespace DETI_MakerLab
                 course_area.Content = "Course";
                 user_course_area.Text = ((Student)_user).Course;
             }
-
-            loadRequisitions();
+            try
+            {
+                loadRequisitions();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             user_last_requisitions_list.ItemsSource = RequisitionsData;
         }
 

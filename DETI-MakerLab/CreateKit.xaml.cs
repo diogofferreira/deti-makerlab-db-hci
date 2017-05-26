@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -53,7 +54,18 @@ namespace DETI_MakerLab
             this.StaffID = StaffID;
             EquipmentsListData = new ObservableCollection<ListItem>();
             ResourceItems = new List<ResourceItem>();
-            LoadResources();
+            try
+            {
+                LoadResources();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             units_list.ItemsSource = EquipmentsListData;
         }
 
@@ -181,9 +193,9 @@ namespace DETI_MakerLab
                     newKit.addUnit(unit);
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -209,11 +221,14 @@ namespace DETI_MakerLab
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 window.goToKitPage(kit);
             }
-            catch (Exception ex)
+            catch (SqlException exc)
             {
-                MessageBox.Show(ex.Message);
+                Helpers.ShowCustomDialogBox(exc);
             }
-            
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
 
         private void TextBox_TextChanged_Equipments(object sender, TextChangedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -82,7 +83,7 @@ namespace DETI_MakerLab
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                throw ex;
             }
             finally
             {
@@ -114,11 +115,13 @@ namespace DETI_MakerLab
                 MainWindow window = (MainWindow)Window.GetWindow(this);
                 window.goToLogin();
             }
-            catch (Exception ex)
+            catch (SqlException exc)
             {
-                Console.WriteLine(ex);
-                Console.WriteLine(ex.Message);
-                MessageBox.Show(ex.Message);
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
 

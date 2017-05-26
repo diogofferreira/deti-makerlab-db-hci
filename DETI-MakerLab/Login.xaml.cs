@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Data.SqlClient;
 using System.Data;
 using System.Security.Cryptography;
+using Ookii.Dialogs.Wpf;
 
 namespace DETI_MakerLab
 {
@@ -42,9 +43,13 @@ namespace DETI_MakerLab
                 else
                     MessageBox.Show("User or password wrong !");
             }
-            catch (Exception ex)
+            catch (SqlException exc)
             {
-                MessageBox.Show(ex.Message);
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
 
@@ -86,7 +91,7 @@ namespace DETI_MakerLab
                     throw new Exception("User does not exist!");
                 }   
             } catch (SqlException e) {
-                throw new Exception(e.Message);
+                throw e;
             } finally {
                 cn.Close();
             } 
@@ -161,7 +166,6 @@ namespace DETI_MakerLab
             if (userData.HasRows)
             {
                 userData.Read();
-                // Check if password matches
                 staff = new Staff(
                     int.Parse(userData["EmployeeNum"].ToString()),
                     userData["FirstName"].ToString(),

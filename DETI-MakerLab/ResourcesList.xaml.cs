@@ -32,8 +32,19 @@ namespace DETI_MakerLab
             InitializeComponent();
             EquipmentsListData = new ObservableCollection<ElectronicResources>();
             KitsListData = new ObservableCollection<Kit>();
-            LoadResources();
-            LoadKits();
+            try
+            {
+                LoadResources();
+                LoadKits();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             electronics_list.ItemsSource = EquipmentsListData;
             kits_list.ItemsSource = KitsListData;
         }

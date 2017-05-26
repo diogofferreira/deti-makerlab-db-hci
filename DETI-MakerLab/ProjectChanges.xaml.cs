@@ -35,8 +35,19 @@ namespace DETI_MakerLab
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
             RolesListData = new ObservableCollection<Role>();
-            LoadRoles();
-            LoadMembers();
+            try
+            {
+                LoadRoles();
+                LoadMembers();
+            }
+            catch (SqlException exc)
+            {
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
             project_members.ItemsSource = MembersListData;
@@ -191,7 +202,7 @@ namespace DETI_MakerLab
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                    throw ex;
                 }
                 finally
                 {
@@ -223,7 +234,7 @@ namespace DETI_MakerLab
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                    throw ex;
                 }
                 finally
                 {
@@ -254,7 +265,7 @@ namespace DETI_MakerLab
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Failed to update contact in database. \n ERROR MESSAGE: \n" + ex.Message);
+                    throw ex;
                 }
                 finally
                 {
@@ -272,9 +283,13 @@ namespace DETI_MakerLab
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);
                 window.goToProjectPage(_project);
             }
-            catch (Exception ex)
+            catch (SqlException exc)
             {
-                MessageBox.Show(ex.Message);
+                Helpers.ShowCustomDialogBox(exc);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
 
         }

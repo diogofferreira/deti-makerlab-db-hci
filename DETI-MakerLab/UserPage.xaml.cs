@@ -125,5 +125,23 @@ namespace DETI_MakerLab
             }
             
         }
+
+        private void user_last_requisitions_list_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (user_last_requisitions_list.SelectedItem != null)
+            {
+                Requisition requisition = user_last_requisitions_list.SelectedItem as Requisition;
+                try
+                {
+                    HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                    window.goToRequisitionPage(requisition);
+                } catch (Exception exc)
+                {
+                    StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                    window.goToRequisitionPage(requisition);
+                }
+                
+            }
+        }
     }
 }

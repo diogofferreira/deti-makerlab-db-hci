@@ -114,5 +114,15 @@ namespace DETI_MakerLab
             StaffWindow window = (StaffWindow)Window.GetWindow(this);
             window.goBack();
         }
+
+        private void project_last_requisitions_list_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (project_last_requisitions_list.SelectedItem != null)
+            {
+                Requisition requisition = project_last_requisitions_list.SelectedItem as Requisition;
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goToRequisitionPage(requisition);
+            }
+        }
     }
 }

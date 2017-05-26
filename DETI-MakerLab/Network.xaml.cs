@@ -594,5 +594,33 @@ namespace DETI_MakerLab
                 MessageBox.Show(exc.Message);
             }
         }
+
+        private void TextBox_TextChanged_Sockets(object sender, TextChangedEventArgs e)
+        {
+            // Filter sockets which contains writed keyword
+            if (SocketsListData.Count > 0 && !search_box_sockets.Text.Equals(""))
+            {
+                var filteredSockets = SocketsListData.Where(i => ((EthernetSocket)i).ToString().ToLower().Contains(search_box_sockets.Text.ToLower())).ToArray();
+                socket_list.ItemsSource = filteredSockets;
+            }
+            else
+            {
+                socket_list.ItemsSource = SocketsListData;
+            }
+        }
+
+        private void TextBox_TextChanged_Requisitions(object sender, TextChangedEventArgs e)
+        {
+            // Filter requisitions which contains writed keyword
+            if (ActiveRequisitionsData.Count > 0 && !search_box_requisitions.Text.Equals(""))
+            {
+                var filteredRequisitions = ActiveRequisitionsData.Where(i => ((NetworkResources)i).ToString().ToLower().Contains(search_box_requisitions.Text.ToLower())).ToArray();
+                active_requisitions_list.ItemsSource = filteredRequisitions;
+            }
+            else
+            {
+                active_requisitions_list.ItemsSource = ActiveRequisitionsData;
+            }
+        }
     }
 }

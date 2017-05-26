@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -224,8 +226,19 @@ namespace DETI_MakerLab
             {
                 MessageBox.Show(exc.Message);
             }
+        }
 
-            
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Filter users which contains writed keyword
+            if (MembersListData.Count > 0 && !search_box.Text.Equals(""))
+            {
+                var filteredUsers = MembersListData.Where(i => ((DMLUser)i).FullName.ToLower().Contains(search_box.Text.ToLower())).ToArray();
+                project_members.ItemsSource = filteredUsers;
+            } else
+            {
+                project_members.ItemsSource = MembersListData;
+            }
         }
     }
 }

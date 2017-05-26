@@ -34,13 +34,36 @@
     <Grid>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,0" />
         <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="183" Margin="54,142,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicProjectItem}"/>
-        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="424" Margin="675,142,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
+        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="396" Margin="675,170,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
         <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="196,27,752,553"/>
         <Label Content="Active electronic's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,27,0,553"/>
-        <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="184" Margin="54,382,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicsEquipmentItem}"/>
+        <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="152" Margin="54,414,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicsEquipmentItem}"/>
         <Label Content="Project (to associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,97,0,0" VerticalAlignment="Top" Height="45" Width="218"/>
         <Label Content="Equipment" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,334,0,0" VerticalAlignment="Top" Height="52" Width="123"/>
         <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,571,0,0" VerticalAlignment="Top" Width="455" Height="47" Click="request_button_Click"/>
         <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="675,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
+        <Grid Margin="54,386,687,219">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_equipments" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="455" TextChanged="TextBox_TextChanged_Equipments" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323"/>
+        </Grid>
+        <Grid Margin="675,142,62,463">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="333"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_requisitions" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="459" TextChanged="TextBox_TextChanged_Requisitions" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Grid.RowSpan="2"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323" Grid.RowSpan="2"/>
+        </Grid>
     </Grid>
 </Page>

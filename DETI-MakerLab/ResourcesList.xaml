@@ -26,9 +26,32 @@
 
     <Grid>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,4,593,0" />
-        <ListBox x:Name="electronics_list" HorizontalAlignment="Left" Height="528" Margin="60,84,0,0" VerticalAlignment="Top" Width="448" ItemTemplate="{DynamicResource EquipmentsList}"/>
-        <ListBox x:Name="kits_list" HorizontalAlignment="Left" Height="528" Margin="693,84,0,0" VerticalAlignment="Top" Width="448" ItemTemplate="{DynamicResource KitsList}" />
+        <ListBox x:Name="electronics_list" HorizontalAlignment="Left" Height="500" Margin="60,112,0,0" VerticalAlignment="Top" Width="448" ItemTemplate="{DynamicResource EquipmentsList}"/>
+        <ListBox x:Name="kits_list" HorizontalAlignment="Left" Height="500" Margin="693,112,0,0" VerticalAlignment="Top" Width="448" ItemTemplate="{DynamicResource KitsList}" />
         <Label Content="Electronics" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.538,0.406" Margin="198,24,750,554"/>
         <Label Content="Kits" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="888,24,158,554"/>
+        <Grid Margin="60,84,688,521">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_electronics" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="448" TextChanged="TextBox_TextChanged_Electronics" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323"/>
+        </Grid>
+        <Grid Margin="693,84,55,521">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="333"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_kits" Grid.Row="0" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="TextBox_TextChanged_Kits" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Grid.RowSpan="2"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="0,6,6,323" Grid.RowSpan="2" HorizontalAlignment="Right" Width="16"/>
+        </Grid>
     </Grid>
 </Page>

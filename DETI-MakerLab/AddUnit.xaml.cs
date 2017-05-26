@@ -136,5 +136,19 @@ namespace DETI_MakerLab
 
 
         }
+
+        private void TextBox_TextChanged_Equipments(object sender, TextChangedEventArgs e)
+        {
+            // Filter equipments which contains writed keyword
+            if (EquipmentsListData.Count > 0 && !search_box_equipments.Text.Equals(""))
+            {
+                var filteredRequisitions = EquipmentsListData.Where(i => ((Resources)i).ToString().ToLower().Contains(search_box_equipments.Text.ToLower())).ToArray();
+                units_list.ItemsSource = filteredRequisitions;
+            }
+            else
+            {
+                units_list.ItemsSource = EquipmentsListData;
+            }
+        }
     }
 }

@@ -39,6 +39,14 @@ namespace DETI_MakerLab
             }
         }
 
+        private Requisition getRequisition(int reqID)
+        {
+            foreach (Requisition r in RequisitionsData)
+                if (r.RequisitionID == reqID)
+                    return r;
+            return null;
+        }
+
         public UserPage(DMLUser User)
         {
             InitializeComponent();
@@ -69,65 +77,38 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            CultureInfo provider = CultureInfo.InvariantCulture;
-
-            DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
-            cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@UserID", _user.NumMec);
-            cmd.CommandText = "dbo.USER_REQS";
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(ds);
-            cn.Close();
+            cmd.Parameters.AddWithValue("@userID", User.NumMec);
+            cmd.CommandText = "SELECT * FROM USER_REQS (@userID)";
+            SqlDataReader reader = cmd.ExecuteReader();
 
-            foreach (DataRow row in ds.Tables[0].Rows)
+            while (reader.Read())
             {
-                try
-                {
-                    Requisition r = new Requisition(
-                    int.Parse(row["RequisitionID"].ToString()),
-                    new Project(
-                        int.Parse(row["ProjectID"].ToString()),
-                        row["PrjName"].ToString(),
-                        row["PrjDescription"].ToString()),
-                    null,
-                    DateTime.ParseExact(row["ReqDate"].ToString(), "yyMMddHHmm", provider)
+                Class cl = null;
+                if (reader["ClassID"] != DBNull.Value)
+                    cl = new Class(
+                        int.Parse(reader["ClassID"].ToString()),
+                        reader["ClassName"].ToString(),
+                        reader["ClDescription"].ToString()
                     );
-                    r.addResource(new ElectronicUnit(
-                        int.Parse(row["ResourceID"].ToString()),
-                        new ElectronicResources(
-                            row["ProductName"].ToString(),
-                            row["Manufactor"].ToString(),
-                            row["Model"].ToString(),
-                            row["Description"].ToString(),
-                            null,
-                            row["PathToImage"].ToString()),
-                        row["Supplier"].ToString()
-                        ));
-                    RequisitionsData.Add(r);
-                }
-                catch (Exception e)
-                {
-                    foreach (Requisition r in RequisitionsData)
-                    {
-                        if (r.RequisitionID == int.Parse(row["RequisitionID"].ToString()))
-                        {
-                            r.addResource(new ElectronicUnit(
-                                int.Parse(row["ResourceID"].ToString()),
-                                new ElectronicResources(
-                                    row["ProductName"].ToString(),
-                                    row["Manufactor"].ToString(),
-                                    row["Model"].ToString(),
-                                    row["Description"].ToString(),
-                                    null,
-                                    row["PathToImage"].ToString()),
-                                row["Supplier"].ToString()
-                            ));
-                        }
-                    }
-                }
+
+                RequisitionsData.Add(new Requisition(
+                        int.Parse(reader["RequisitionID"].ToString()),
+                        new Project(
+                            int.Parse(reader["ProjectID"].ToString()),
+                            reader["PrjName"].ToString(),
+                            reader["PrjDescription"].ToString(),
+                            cl),
+                        new DMLUser(
+                            int.Parse(reader["NumMec"].ToString()),
+                            reader["FirstName"].ToString(),
+                            reader["LastName"].ToString(),
+                            reader["Email"].ToString(),
+                            reader["PathToImage"].ToString()
+                            ),
+                        Convert.ToDateTime(reader["ReqDate"])
+                    ));
             }
         }
 

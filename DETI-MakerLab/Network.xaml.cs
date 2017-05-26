@@ -342,14 +342,17 @@ namespace DETI_MakerLab
             foreach (DataRow row in ds.Tables[0].Rows)
             {
                 ActiveRequisitionsData.Add(new EthernetSocket(
-                    int.Parse(row["ResourceID"].ToString()),
+                    int.Parse(row["NetResID"].ToString()),
                     selectedProject,
                     int.Parse(row["SocketNum"].ToString())
                     ));
             }
 
             foreach (EthernetSocket e in toRemove)
+            {
                 SocketsListData.Remove(e);
+                socket_list.UpdateLayout();
+            }
         }
 
         private void saveWLAN()
@@ -517,7 +520,9 @@ namespace DETI_MakerLab
                 foreach (EthernetSocket socket in socketToDeliver) {
                     socket.ResourceID = -1;
                     socket.ReqProject = null;
-                    SocketsListData.Add(socket);
+                    SocketsListData.Insert(socket.SocketNum, socket);
+                    active_requisitions_list.UpdateLayout();
+                    socket_list.UpdateLayout();
                 }
                 foreach (NetworkResources r in toRemove)
                     ActiveRequisitionsData.Remove(r);

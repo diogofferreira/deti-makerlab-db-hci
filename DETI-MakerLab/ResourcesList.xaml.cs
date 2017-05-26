@@ -143,5 +143,33 @@ namespace DETI_MakerLab
             StaffWindow window = (StaffWindow)Window.GetWindow(this);
             window.goToKitPage(kit);
         }
+
+        private void TextBox_TextChanged_Electronics(object sender, TextChangedEventArgs e)
+        {
+            // Filter electronics which contains writed keyword
+            if (EquipmentsListData.Count > 0 && !search_box_electronics.Text.Equals(""))
+            {
+                var filteredElectronics = EquipmentsListData.Where(i => ((Resources)i).ToString().ToLower().Contains(search_box_electronics.Text.ToLower())).ToArray();
+                electronics_list.ItemsSource = filteredElectronics;
+            }
+            else
+            {
+                electronics_list.ItemsSource = EquipmentsListData;
+            }
+        }
+
+        private void TextBox_TextChanged_Kits(object sender, TextChangedEventArgs e)
+        {
+            // Filter kits which contains writed keyword
+            if (KitsListData.Count > 0 && !search_box_kits.Text.Equals(""))
+            {
+                var filteredKits = KitsListData.Where(i => ((Kit)i).ToString().ToLower().Contains(search_box_kits.Text.ToLower())).ToArray();
+                kits_list.ItemsSource = filteredKits;
+            }
+            else
+            {
+                kits_list.ItemsSource = KitsListData;
+            }
+        }
     }
 }

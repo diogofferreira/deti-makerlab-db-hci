@@ -32,11 +32,11 @@
     <Grid>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,0" />
         <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="93" Margin="54,103,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicProjectItem}"/>
-        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="463" Margin="663,103,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
+        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="435" Margin="663,131,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
         <Label Content="Network" Style="{StaticResource titleStyle}" Margin="196,10,752,570"/>
         <Label Content="Active network's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,10,0,570"/>
         <ListBox x:Name="socket_list" HorizontalAlignment="Left" Height="76" Margin="54,503,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource SocketItem}" VirtualizingStackPanel.IsVirtualizing="False"/>
-        <Label Content="Project (to Associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,66,0,0" VerticalAlignment="Top" Height="37" Width="231"/>
+            <Label Content="Project (to Associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,66,0,0" VerticalAlignment="Top" Height="37" Width="231"/>
         <Label Content="Sockets Ethernet" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,465,0,0" VerticalAlignment="Top" Height="52" Width="185" ToolTip="Request an ethernet socket on room switch"/>
         <Button x:Name="request_network_button" Content="Save" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,585,0,0" VerticalAlignment="Top" Width="166" Height="33" Click="request_network_button_Click"/>
         <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="663,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
@@ -55,5 +55,28 @@
         <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,431,0,0" VerticalAlignment="Top"/>
         <PasswordBox x:Name="wifi_password" HorizontalAlignment="Left" Height="24" Margin="196,438,0,0" VerticalAlignment="Top" Width="313" VerticalContentAlignment="Center"/>
         <Button x:Name="request_vm_button" Content="Launch VM" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,317,0,0" VerticalAlignment="Top" Width="166" Height="34" Click="request_vm_button_Click"/>
+        <Grid Margin="54,502,687,103">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_sockets" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="455" TextChanged="TextBox_TextChanged_Sockets" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323"/>
+        </Grid>
+        <Grid Margin="663,103,74,502">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12"/>
+                <RowDefinition Height="333"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_requisitions" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="459" TextChanged="TextBox_TextChanged_Requisitions" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Grid.RowSpan="2"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323" Grid.RowSpan="2"/>
+        </Grid>
     </Grid>
 </Page>

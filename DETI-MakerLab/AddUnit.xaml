@@ -21,7 +21,18 @@
 
     <Grid>
         <Label Content="Add Units" Style="{StaticResource bigTitleStyle}" Margin="466,45,488,0"/>
-        <ListBox x:Name="units_list" Margin="148,167,160,112" ItemTemplate="{DynamicResource UnitsItem}"/>
+        <ListBox x:Name="units_list" Margin="148,219,160,112" ItemTemplate="{DynamicResource UnitsItem}"/>
         <Button x:Name="add_units_button" Content="Add units" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="148,552,0,0" VerticalAlignment="Top" Width="888" Height="66" Click="add_units_button_Click"/>
+        <Grid Margin="148,191,160,414">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_equipments" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="888" TextChanged="TextBox_TextChanged_Equipments" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323"/>
+        </Grid>
     </Grid>
 </Page>

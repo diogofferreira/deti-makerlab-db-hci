@@ -35,7 +35,7 @@
         <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="435" Margin="663,131,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
         <Label Content="Network" Style="{StaticResource titleStyle}" Margin="196,10,752,570"/>
         <Label Content="Active network's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,10,0,570"/>
-        <ListBox x:Name="socket_list" HorizontalAlignment="Left" Height="49" Margin="54,530,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource SocketItem}"/>
+        <ListBox x:Name="socket_list" VirtualizingStackPanel.IsVirtualizing="False" HorizontalAlignment="Left" Height="49" Margin="54,530,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource SocketItem}"/>
         <Label Content="Project (to Associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,66,0,0" VerticalAlignment="Top" Height="37" Width="231"/>
         <Label Content="Sockets Ethernet" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,465,0,0" VerticalAlignment="Top" Height="52" Width="185" ToolTip="Request an ethernet socket on room switch"/>
         <Button x:Name="request_network_button" Content="Save" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,585,0,0" VerticalAlignment="Top" Width="166" Height="33" Click="request_network_button_Click"/>

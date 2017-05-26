@@ -24,5 +24,6 @@
         <Button x:Name="upload_image_button" Content="Choose File" HorizontalAlignment="Left" Margin="460,493,0,0" VerticalAlignment="Top" Width="75" Height="27" Click="upload_image_button_Click"/>
         <Button x:Name="create_equipment_button" Content="Add Equipment" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="104,558,0,0" VerticalAlignment="Top" Width="977" Height="60" HorizontalContentAlignment="Center" Click="create_equipment_button_Click"/>
         <GroupBox Header="" HorizontalAlignment="Left" Height="51" Margin="451,475,0,0" VerticalAlignment="Top" Width="552" BorderBrush="Gray" IsEnabled="False"/>
+        <Label Content="* Mandatory field" Foreground="#00796B" HorizontalAlignment="Left" Margin="979,529,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

@@ -134,6 +134,12 @@ namespace DETI_MakerLab
             frame.Navigate(page);
         }
 
+        public void goToKitPage(Kit kit)
+        {
+            KitPage page = new KitPage(kit);
+            frame.Navigate(page);
+        }
+
         public void goBack()
         {
             frame.GoBack();

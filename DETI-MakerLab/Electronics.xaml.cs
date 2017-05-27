@@ -102,9 +102,16 @@ namespace DETI_MakerLab
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)
         {
-            ElectronicResources equipment = (ElectronicResources)(sender as Button).DataContext;
             HomeWindow window = (HomeWindow)Window.GetWindow(this);
-            window.goToEquipmentPage(equipment);
+            try
+            {
+                ResourceItem equipment = (ResourceItem)(sender as Button).DataContext;
+                window.goToEquipmentPage(equipment.Resource);
+            } catch (Exception exc)
+            {
+                KitItem kit = (KitItem)(sender as Button).DataContext;
+                window.goToKitPage(kit.Units[0]);
+            }
         }
 
         private void LoadProjects()

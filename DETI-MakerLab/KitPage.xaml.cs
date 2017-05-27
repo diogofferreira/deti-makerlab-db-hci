@@ -32,6 +32,7 @@ namespace DETI_MakerLab
         public KitPage(Kit kit)
         {
             InitializeComponent();
+            RequisitionsData = new ObservableCollection<Requisition>();
             _kit = kit;
             kit_name.Text = _kit.Description;
             content_list.ItemsSource = kit.Units;
@@ -115,8 +116,16 @@ namespace DETI_MakerLab
 
         private void go_back_Click(object sender, RoutedEventArgs e)
         {
-            StaffWindow window = (StaffWindow)Window.GetWindow(this);
-            window.goBack();
+            try
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goBack();
+            } catch (Exception exc)
+            {
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goBack();
+            }
+            
         }
     }
 }

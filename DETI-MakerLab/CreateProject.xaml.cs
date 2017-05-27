@@ -30,10 +30,12 @@ namespace DETI_MakerLab
         private ObservableCollection<DMLUser> MembersListData;
         private ObservableCollection<Class> ClassListData;
         private static ObservableCollection<Role> RolesListData;
+        private int _userID;
 
-        public CreateProject()
+        public CreateProject(int userID)
         {
             InitializeComponent();
+            this._userID = userID;
             MembersListData = new ObservableCollection<DMLUser>();
             RolesListData = new ObservableCollection<Role>();
             ClassListData = new ObservableCollection<Class>();
@@ -51,12 +53,45 @@ namespace DETI_MakerLab
             }
             project_members.ItemsSource = MembersListData;
             project_class.ItemsSource = ClassListData;
+            project_members.ItemContainerGenerator.StatusChanged += new EventHandler(ItemContainerGenerator_StatusChanged);
         }
 
         public ObservableCollection<Role> RolesList 
         {
             get {
                 return RolesListData;
+            }
+        }
+
+        private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
+        {
+            if (project_members.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+            {
+                SetMyRole();
+            }
+        }
+
+        private void SetMyRole()
+        {
+            foreach (DMLUser member in project_members.Items)
+            {
+                if (member.NumMec != _userID)
+                    continue;
+                var container = project_members.ItemContainerGenerator.ContainerFromItem(member) as FrameworkElement;
+                if (container == null)
+                {
+                    project_members.UpdateLayout();
+                    project_members.ScrollIntoView(member);
+                    container = project_members.ItemContainerGenerator.ContainerFromItem(member) as FrameworkElement;
+                }
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null) 
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                // Set me as Project Manager by default
+                ((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedIndex = 5;
             }
         }
 
@@ -151,7 +186,6 @@ namespace DETI_MakerLab
 
             if (((Class)project_class.SelectedValue).ClassID != -1)
             {
-                Console.WriteLine(((Class)project_class.SelectedValue).ClassID);
                 cmd.Parameters.AddWithValue("@ClassID", ((Class)project_class.SelectedValue).ClassID);
             }
             else
@@ -190,9 +224,8 @@ namespace DETI_MakerLab
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
                 Role r = (Role)((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedItem;
-                if (r.RoleID == -1)
+                if (r == null || r.RoleID == -1)
                     continue;
-
                 cn = Helpers.getSGBDConnection();
                 if (!Helpers.verifySGBDConnection(cn))
                     throw new Exception("Cannot connect to database");
@@ -217,13 +250,19 @@ namespace DETI_MakerLab
                     cn.Close();
                 }
             }
-            
-            
+        }
+
+        private void checkMandatoryFields()
+        {
+            if (String.IsNullOrEmpty(project_name.Text) || String.IsNullOrEmpty(project_description.Text)
+                || project_class.SelectedIndex < 0 )
+                throw new Exception("Please fill the mandatory fields!");
         }
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
-            try { 
+            try {
+                checkMandatoryFields();
                 int projectID = SubmitProject();
                 if (projectID != -1)
                     SubmitMembers(projectID);

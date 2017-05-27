@@ -145,7 +145,7 @@ namespace DETI_MakerLab
 
         public override string ToString()
         {
-            return Model.ProductName + " " + Model.Model + " by " + Model.Manufactor + " #" + ResourceID.ToString();
+            return Model.ProductName + " " + Model.Model + " #" + ResourceID.ToString();
         }
 
         public ElectronicUnit(int ResourceID, ElectronicResources Model, String Supplier)

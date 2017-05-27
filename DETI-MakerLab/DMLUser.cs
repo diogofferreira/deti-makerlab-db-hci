@@ -15,7 +15,7 @@ namespace DETI_MakerLab
     [Serializable()]
     public class DMLUser
     {
-        private static CreateProject createProject = new CreateProject();
+        private static CreateProject createProject = new CreateProject(-1);
         private int _numMec;
         private String _firstName;
         private String _lastName;

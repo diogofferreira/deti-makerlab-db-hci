@@ -10,11 +10,11 @@
       Title="CreateKit">
     <Page.Resources>
         <DataTemplate x:Key="KitItem">
-            <Grid Width="630" Height="42">
-                <Label Content="{Binding}" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="372,7,0,0" VerticalAlignment="Top" Click="equipment_info_Click" Width="60"/>
-                <TextBox x:Name="equipment_units"  HorizontalAlignment="Left" Margin="540,9,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="48" HorizontalContentAlignment="Center" ToolTip="Number of units of this kit you want to add"/>
-                <Label Content="{Binding Path=MaxUnits}" HorizontalAlignment="Left" Margin="627,5,0,0" VerticalAlignment="Top" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Grid Width="630">
+                <Label Content="{Binding}" HorizontalAlignment="Left" Margin="16,10,0,0" VerticalAlignment="Center"/>
+                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="322,9,0,0" VerticalAlignment="Center" Click="equipment_info_Click" Width="60"/>
+                <TextBox x:Name="equipment_units"  HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="31" HorizontalContentAlignment="Center" ToolTip="Number of units of this kit you want to add"/>
+                <Label Content="{Binding Path=MaxUnits}" Margin="476,14,-476,5" VerticalAlignment="Center" />
             </Grid>
         </DataTemplate>
     </Page.Resources>

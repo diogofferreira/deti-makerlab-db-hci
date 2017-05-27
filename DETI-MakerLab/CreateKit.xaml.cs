@@ -115,6 +115,12 @@ namespace DETI_MakerLab
                 EquipmentsListData.Add(ri);
         }
 
+        private void checkMandatoryFields()
+        {
+            if (String.IsNullOrEmpty(kit_name.Text))
+                throw new Exception("Please fill the mandatory fields!");
+        }
+
         private Kit submitKitCreation()
         {
             Kit newKit = null;
@@ -207,15 +213,16 @@ namespace DETI_MakerLab
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)
         {
-            ElectronicResources equipment = (ElectronicResources)(sender as Button).DataContext;
+            ResourceItem equipment = (ResourceItem)(sender as Button).DataContext;
             StaffWindow window = (StaffWindow) Window.GetWindow(this);
-            window.goToEquipmentPage(equipment);
+            window.goToEquipmentPage(equipment.Resource);
         }
 
         private void create_kit_button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                checkMandatoryFields();
                 Kit kit = submitKitCreation();
                 MessageBox.Show("Kit has been added!");
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);

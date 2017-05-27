@@ -25,7 +25,8 @@ namespace DETI_MakerLab
     public partial class AddUnit : Page
     {
         private SqlConnection cn;
-        private ObservableCollection<ElectronicResources> EquipmentsListData;
+        private List<ResourceItem> ResourceItems;
+        private ObservableCollection<ResourceItem> EquipmentsListData;
         private Staff User;
 
         public AddUnit(Staff user)
@@ -33,7 +34,8 @@ namespace DETI_MakerLab
             InitializeComponent();
             User = user;
             Console.WriteLine(user);
-            EquipmentsListData = new ObservableCollection<ElectronicResources>();
+            ResourceItems = new List<ResourceItem>();
+            EquipmentsListData = new ObservableCollection<ResourceItem>();
             try
             {
                 LoadEquipments();
@@ -49,40 +51,69 @@ namespace DETI_MakerLab
             units_list.ItemsSource = EquipmentsListData;
         }
 
+        private bool addResourceItemUnit(ElectronicUnit unit)
+        {
+            foreach (ResourceItem item in ResourceItems)
+            {
+                if (item.Resource.Equals(unit.Model))
+                {
+                    item.addUnit(unit);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void LoadEquipments()
         {
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM ELECTRONIC_RESOURCES_INFO", cn);
-            SqlDataReader reader = cmd.ExecuteReader();
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
+            cmd.CommandText = "dbo.RESOURCES_TO_REQUEST";
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            cn.Close();
 
-            while (reader.Read())
+            foreach (DataRow row in ds.Tables[0].Rows)
             {
-                ElectronicResources Resource = new ElectronicResources (
-                    reader["ProductName"].ToString(),
-                    reader["Manufacturer"].ToString(),
-                    reader["Model"].ToString(),
-                    reader["ResDescription"].ToString(),
-                    new Staff (
-                        int.Parse(reader["EmployeeNum"].ToString()),
-                        reader["FirstName"].ToString(),
-                        reader["LastName"].ToString(),
-                        reader["Email"].ToString(),
-                        reader["StaffImage"].ToString()
-                        ),
-                    reader["ResImage"].ToString()
+                ElectronicResources resource = new ElectronicResources(
+                    row["ProductName"].ToString(),
+                    row["Manufacturer"].ToString(),
+                    row["Model"].ToString(),
+                    row["ResDescription"].ToString(),
+                    null,
+                    row["PathToImage"].ToString()
                     );
-                EquipmentsListData.Add(Resource);
+
+                ElectronicUnit unit = new ElectronicUnit(
+                    int.Parse(row["ResourceID"].ToString()),
+                    resource,
+                    row["Supplier"].ToString()
+                    );
+
+                if (!addResourceItemUnit(unit))
+                {
+                    ResourceItem ri = new ResourceItem(resource);
+                    ri.addUnit(unit);
+                    ResourceItems.Add(ri);
+                }
             }
 
             cn.Close();
+
+            foreach (ResourceItem ri in ResourceItems)
+                EquipmentsListData.Add(ri);
         }
 
         private void UpdateUnits()
         {
-            foreach (ElectronicResources resource in units_list.Items)
+            Boolean added = false;
+            foreach (ResourceItem resource in units_list.Items)
             {
                 var container = units_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
@@ -96,15 +127,20 @@ namespace DETI_MakerLab
                 {
                     String supplier = ((TextBox)units_list.ItemTemplate.FindName("equipment_supplier", listBoxItemCP)).Text;
                     UpdateSingleEquipment(resource, units, supplier);
+                    added = true;
                 }
-            }            
+            }
+            if (!added)
+                throw new Exception("You need to select at least one unit!");
         }
 
-        private void UpdateSingleEquipment(ElectronicResources resource, int units, String supplier)
+        private void UpdateSingleEquipment(ResourceItem resourceItem, int units, String supplier)
         {
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
+
+            ElectronicResources resource = resourceItem.Resource;
 
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
@@ -141,9 +177,12 @@ namespace DETI_MakerLab
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 // TODO : create object and pass it to kit page
                 //window.goToKitPage(kit);
-            } catch (Exception ex)
+            } catch (SqlException ex)
             {
                 Helpers.ShowCustomDialogBox(ex);
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -152,13 +191,20 @@ namespace DETI_MakerLab
             // Filter equipments which contains writed keyword
             if (EquipmentsListData.Count > 0 && !search_box_equipments.Text.Equals(""))
             {
-                var filteredEquipments = EquipmentsListData.Where(i => ((Resources)i).ToString().ToLower().Contains(search_box_equipments.Text.ToLower())).ToArray();
+                var filteredEquipments = EquipmentsListData.Where(i => ((ResourceItem)i).ToString().ToLower().Contains(search_box_equipments.Text.ToLower())).ToArray();
                 units_list.ItemsSource = filteredEquipments;
             }
             else
             {
                 units_list.ItemsSource = EquipmentsListData;
             }
+        }
+
+        private void equipment_info_Click(object sender, RoutedEventArgs e)
+        {
+            ResourceItem equipment = (ResourceItem)(sender as Button).DataContext;
+            StaffWindow window = (StaffWindow)Window.GetWindow(this);
+            window.goToEquipmentPage(equipment.Resource);
         }
     }
 }

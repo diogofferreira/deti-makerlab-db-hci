@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>dml_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ookii.Dialogs.Wpf">
       <HintPath>..\..\Ookii.Dialogs\Ookii.Dialogs.Wpf.dll</HintPath>
@@ -296,6 +299,15 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="dml_logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="dml_logo_white.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="dml_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

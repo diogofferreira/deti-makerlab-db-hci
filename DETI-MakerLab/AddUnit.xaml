@@ -12,8 +12,10 @@
         <DataTemplate x:Key="UnitsItem">
             <Grid Height="51" Width="870">
                 <Label x:Name="equipment_name" Content="{Binding}" HorizontalAlignment="Left" Margin="27,10,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="equipment_supplier" HorizontalAlignment="Left" Height="23" Margin="487,14,0,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top" Width="145" ToolTip="Unit's supplier"/>
-                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="23" Margin="792,14,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="24" ToolTip="Number of units you want to request"/>
+                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="322,15,0,16" VerticalAlignment="Center" Click="equipment_info_Click" Width="60"/>
+                <TextBox x:Name="equipment_supplier" HorizontalAlignment="Left" Height="23" Margin="415,14,0,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top" Width="145" ToolTip="Unit's supplier"/>
+                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="23" Margin="635,14,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="24" ToolTip="Number of units you want to request" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label x:Name="equipmentAvailable" Content="{Binding Path=MaxUnits}" Margin="678,0,-678,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
             </Grid>
         </DataTemplate>
     </Page.Resources>

@@ -91,6 +91,15 @@ namespace DETI_MakerLab
             }
         }
 
+        private void checkMandatoryFields()
+        {
+            if (String.IsNullOrEmpty(email.Text) || String.IsNullOrEmpty(password.Password)
+                || String.IsNullOrEmpty(first_name.Text) || String.IsNullOrEmpty(last_name.Text)
+                || String.IsNullOrEmpty(nmec.Text) || user_type.SelectedIndex < 0
+                || String.IsNullOrEmpty(area_or_course_response.Text) || String.IsNullOrEmpty(user_image.Text))
+                throw new Exception("Please fill the mandatory fields!");
+        }
+
         private void upload_image_button_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -98,7 +107,7 @@ namespace DETI_MakerLab
             if (dlg.ShowDialog() == true)
             {
                 fileName = dlg.FileName;
-                equipment_image.Text = fileName.ToString();
+                user_image.Text = fileName.ToString();
             }
         }
 
@@ -106,6 +115,7 @@ namespace DETI_MakerLab
         {
             try
             {
+                checkMandatoryFields();
                 // Copy image to project file and produce its path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + nmec.Text + System.IO.Path.GetExtension(fileName);

@@ -82,7 +82,9 @@ namespace DETI_MakerLab
         private void Create_Project_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show create project page
-            frame.Source = new Uri("CreateProject.xaml", UriKind.RelativeOrAbsolute);
+            // Show home page
+            CreateProject page = new CreateProject(_user.NumMec);
+            frame.Navigate(page);
         }
 
         private void My_Projects_Button_Click(object sender, RoutedEventArgs e)

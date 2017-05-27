@@ -60,7 +60,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@Model", equipment_model.Text);
             cmd.Parameters.AddWithValue("@ResDescription", equipment_description.Text);
             cmd.Parameters.AddWithValue("@EmployeeNum", StaffID);
-            cmd.Parameters.AddWithValue("@PathToImage", imagePath == null ? null : imagePath);
+            cmd.Parameters.AddWithValue("@PathToImage", imagePath);
 
             try
             {
@@ -75,6 +75,13 @@ namespace DETI_MakerLab
                 cn.Close();
             }
             
+        }
+
+        private void checkMandatoryFields()
+        {
+            if (String.IsNullOrEmpty(equipment_name.Text) || String.IsNullOrEmpty(equipment_model.Text)
+                || String.IsNullOrEmpty(equipment_manufacturer.Text) || String.IsNullOrEmpty(equipment_image.Text))
+                throw new Exception("Please fill the mandatory fields!");
         }
 
         private void upload_image_button_Click(object sender, RoutedEventArgs e)
@@ -92,6 +99,7 @@ namespace DETI_MakerLab
         {
             try
             {
+                checkMandatoryFields();
                 // Copy image to project file and produce its path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String name = equipment_name.Text + "_" + equipment_manufacturer.Text + "_" + equipment_model.Text;

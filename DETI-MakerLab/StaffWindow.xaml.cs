@@ -55,7 +55,8 @@ namespace DETI_MakerLab
         private void Home_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show home page
-            frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
+            Home page = new Home(StaffUser.EmployeeNum);
+            frame.Navigate(page);
 
             // Hide collapsed submenus
             this.resources_menu.Visibility = Visibility.Collapsed;

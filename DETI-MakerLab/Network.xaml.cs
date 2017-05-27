@@ -232,6 +232,8 @@ namespace DETI_MakerLab
         {
             int resID = -1;
             OS selectedOS = os_list.SelectedItem as OS;
+            if (selectedProject == null)
+                throw new Exception("You have to select a project first!");
             if (selectedOS.OSID == -1)
                 throw new Exception("You need to select an Operating System to the Virtual Machine!");
             String vmPassword = vm_password.Password;

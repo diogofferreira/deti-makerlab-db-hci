@@ -25,7 +25,7 @@
         <Label Content="New Project" Style="{StaticResource bigTitleStyle}" Margin="455,10,443,0" Width="298" HorizontalAlignment="Left"/>
         <Label Content="Project Name (*)"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="167,115,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="40"/>
         <Label Content="Description (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="189,189,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="41"/>
-        <Label Content="Members (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="207,315,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="40"/>
+        <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="240,315,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="40"/>
         <Label Content="Class (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="253,500,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="50"/>
         <TextBox x:Name="project_name" HorizontalAlignment="Left" Height="40" Margin="410,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="16" VerticalContentAlignment="Center"/>
         <TextBox x:Name="project_description" HorizontalAlignment="Left" Height="92" Margin="410,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" FontSize="16"/>

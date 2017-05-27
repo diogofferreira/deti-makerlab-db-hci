@@ -15,7 +15,7 @@
         <Label Content="Model (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="233,167,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678"/>
         <Label Content="Manufacturer (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="159,234,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678"/>
         <Label Content="Description" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="217,297,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678"/>
-        <Label Content="Image" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Margin="269,485,0,0"/>
+        <Label Content="Image (*)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Margin="233,485,0,0"/>
         <TextBox x:Name="equipment_name" HorizontalAlignment="Left" Height="39" Margin="451,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20" VerticalContentAlignment="Center"/>
         <TextBox x:Name="equipment_model" HorizontalAlignment="Left" Height="39" Margin="451,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20" VerticalContentAlignment="Center"/>
         <TextBox x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="39" Margin="451,234,0,0" VerticalAlignment="Top" Width="552" FontSize="20" VerticalContentAlignment="Center"/>

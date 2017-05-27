@@ -142,7 +142,6 @@ namespace DETI_MakerLab
                     cl
                     ));
             }
-
             cn.Close();
         }
 
@@ -277,12 +276,15 @@ namespace DETI_MakerLab
                 int units = int.Parse(unitsTextBox.Text);
                 if (units == 0)
                     continue;
+                
                 unitsTextBox.Text = "0";
 
                 Resources unit = null;
                 if (resource is ResourceItem)
                 {
                     ResourceItem r = resource as ResourceItem;
+                    if (units > r.Units.Count)
+                        throw new Exception("You cannot request more units than available!");
                     unit = r.requestUnit();
                     if (r.Units.Count == 0)
                         toBeRemoved.Add(r);
@@ -290,6 +292,8 @@ namespace DETI_MakerLab
                 else if (resource is KitItem)
                 {
                     KitItem k = resource as KitItem;
+                    if (units > k.Units.Count)
+                        throw new Exception("You cannot request more units than available!");
                     unit = k.requestUnit();
                     if (k.Units.Count == 0)
                         toBeRemoved.Add(k);

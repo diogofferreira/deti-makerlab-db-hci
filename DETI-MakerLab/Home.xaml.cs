@@ -29,6 +29,7 @@ namespace DETI_MakerLab
         private ObservableCollection<Project> ProjectsListData;
         private ObservableCollection<Requisition> RequisitionsListData;
 
+        private int _userID;
         private Requisition containsReq(int ReqID)
         {
             foreach (Requisition r in RequisitionsListData)
@@ -37,8 +38,9 @@ namespace DETI_MakerLab
             return null;
         }
 
-        public Home()
+        public Home(int userID)
         {
+            this._userID = userID;
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
             RequisitionsListData = new ObservableCollection<Requisition>();
@@ -187,7 +189,16 @@ namespace DETI_MakerLab
             try
             {
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);
-                window.goToProjectPage(project);
+                Boolean isMember = false;
+                foreach (DMLUser user in project.Workers)
+                {
+                    if (user.NumMec == _userID)
+                        isMember = true;
+                }
+                if (isMember)
+                    window.goToProjectPage(project);
+                else
+                    window.goToProjectStaticPage(project);
             } catch (Exception exc)
             {
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);

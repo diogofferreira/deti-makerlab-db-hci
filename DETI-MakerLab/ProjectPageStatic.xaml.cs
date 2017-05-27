@@ -122,8 +122,15 @@ namespace DETI_MakerLab
 
         private void go_back_button_Click(object sender, RoutedEventArgs e)
         {
-            StaffWindow window = (StaffWindow)Window.GetWindow(this);
-            window.goBack();
+            try
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goBack();
+            } catch (Exception ex)
+            {
+                StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                window.goBack();
+            }
         }
 
         private void project_last_requisitions_list_MouseDoubleClick(object sender, MouseButtonEventArgs e)

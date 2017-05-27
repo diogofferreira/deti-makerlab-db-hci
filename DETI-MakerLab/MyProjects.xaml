@@ -19,6 +19,17 @@
 
     <Grid>
         <Label Content="My Projects" Style="{StaticResource bigTitleStyle}" Margin="443,33,463,0" Width="290"/>
-        <ListBox x:Name="my_projects_listbox" Margin="114,161,114,68" HorizontalContentAlignment="Center" BorderBrush="Transparent" ItemTemplate="{DynamicResource ProjectsItem}" MouseDoubleClick="my_projects_listbox_MouseDoubleClick" />
+        <ListBox x:Name="my_projects_listbox" Margin="114,186,114,68" HorizontalContentAlignment="Center" BorderBrush="Transparent" ItemTemplate="{DynamicResource ProjectsItem}" MouseDoubleClick="my_projects_listbox_MouseDoubleClick" />
+        <Grid Margin="131,158,134,447">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_projects" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="931" TextChanged="TextBox_TextChanged_Projects" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323"/>
+        </Grid>
     </Grid>
 </Page>

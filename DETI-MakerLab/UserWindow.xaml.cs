@@ -34,14 +34,16 @@ namespace DETI_MakerLab
             profile_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
 
             // Show home page
-            frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
+            Home page = new Home(_user.NumMec);
+            frame.Navigate(page);
         }
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)
         {
             // Show home page
-            frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
-            
+            Home page = new Home(_user.NumMec);
+            frame.Navigate(page);
+
             // Hide collapsed submenus
             this.resources_menu.Visibility = this.projects_menu.Visibility =  Visibility.Collapsed;
         }
@@ -96,6 +98,12 @@ namespace DETI_MakerLab
             frame.Navigate(page);
         }
 
+        public void goToProjectStaticPage(Project proj)
+        {
+            ProjectPageStatic page = new ProjectPageStatic(proj);
+            frame.Navigate(page);
+        }
+
         public void goToChangeProjectPage(Project proj)
         {
             ProjectChanges page = new ProjectChanges(proj);
@@ -137,6 +145,16 @@ namespace DETI_MakerLab
             login.Show();
             login.goToLogin();
             Window.GetWindow(this).Hide();
+        }
+
+        private void user_name_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            goToUserPage(User);
+        }
+
+        private void profile_image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            goToUserPage(User);
         }
     }
 }

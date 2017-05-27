@@ -48,7 +48,8 @@ namespace DETI_MakerLab
                 profile_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
 
             // Show home page
-            frame.Source = new Uri("Home.xaml", UriKind.RelativeOrAbsolute);
+            Home page = new Home(StaffUser.EmployeeNum);
+            frame.Navigate(page);
         }
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)

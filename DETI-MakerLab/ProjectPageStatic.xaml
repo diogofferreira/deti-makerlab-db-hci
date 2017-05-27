@@ -10,9 +10,15 @@
       Title="ProjectPageStatic">
     <Page.Resources>
         <DataTemplate x:Key="MembersFrontItem">
-            <Grid Height="50" Width="288" ToolTip="Click to see user profile">
-                <Image x:Name="user_image" Source="{Binding Path=PathToImage}" HorizontalAlignment="Left" Height="40" Margin="18,4,0,0" VerticalAlignment="Top" Width="40" RenderTransformOrigin="0.65,0.45"/>
-                <Label x:Name="user_name" Content="{Binding Path=FullName}" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="130" Height="30"/>
+            <Grid Height="50" Width="580" ToolTip="Click to see user profile">
+                <Image x:Name="user_image" Source="{Binding Path=PathToImage}" HorizontalAlignment="Left" Height="40" Margin="42,0,0,0" VerticalAlignment="Top" Width="40" RenderTransformOrigin="0.65,0.45"/>
+                <Label x:Name="user_name" Content="{Binding Path=FullName}" HorizontalAlignment="Left" Margin="178,10,0,0" VerticalAlignment="Top" Width="130" Height="30"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ReqsFrontItem">
+            <Grid Height="50" Width="765" ToolTip="Click to see requisition">
+                <Label Content="{Binding}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -23,12 +29,12 @@
         <Label Content="Members" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="104,169,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="120" Height="46"/>
         <TextBlock x:Name="project_name" HorizontalAlignment="Left" Height="30" Margin="326,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
         <TextBlock x:Name="project_description" HorizontalAlignment="Left" Height="79" Margin="326,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
-        <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="134" Margin="326,169,0,0" VerticalAlignment="Top" Width="624" FontSize="18" ItemTemplate="{DynamicResource MembersFrontItem}"/>
+        <ListBox x:Name="project_members" HorizontalAlignment="Left" Height="134" Margin="326,169,0,0" VerticalAlignment="Top" Width="624" ItemTemplate="{DynamicResource MembersFrontItem}"/>
         <StackPanel Orientation="Vertical" Margin="-10,74,10,-74">
             <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
         </StackPanel>
         <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="275,364,320,0" Width="601" Height="79" />
-        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="170" Margin="182,443,0,0" VerticalAlignment="Top" Width="788" MouseDoubleClick="project_last_requisitions_list_MouseDoubleClick"/>
+        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="170" Margin="182,443,0,0" VerticalAlignment="Top" Width="788" MouseDoubleClick="project_last_requisitions_list_MouseDoubleClick" ItemTemplate="{DynamicResource ReqsFrontItem}"/>
         <Button x:Name="go_back_button" Content="Go Back" Style="{StaticResource goBackStyle}" Margin="990,564,26,15" Click="go_back_button_Click"/>
     </Grid>
 </Page>

@@ -69,8 +69,8 @@
             </Grid.RowDefinitions>
             <Rectangle Grid.Row="0" Fill="#FF00796B"/>
             <Frame x:Name="frame" Grid.Row="1" NavigationUIVisibility="Hidden" Foreground="White" Margin="0,0,10,32"/>
-            <Image x:Name="profile_image" HorizontalAlignment="Left" Height="65" Margin="883,5,0,0" VerticalAlignment="Top" Width="60"/>
-            <Label x:Name="user_name" HorizontalAlignment="Center" Margin="948,26,110,0" VerticalAlignment="Top" Width="148" Foreground="White" FontSize="15" Height="44"/>
+            <Image x:Name="profile_image" HorizontalAlignment="Left" Height="65" Margin="883,5,0,0" VerticalAlignment="Top" Width="60" MouseLeftButtonDown="profile_image_MouseLeftButtonDown"/>
+            <Label x:Name="user_name" HorizontalAlignment="Center" Margin="948,26,110,0" VerticalAlignment="Top" Width="148" Foreground="White" FontSize="15" Height="44" MouseLeftButtonDown="user_name_MouseLeftButtonDown"/>
             <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1101,21,0,0" VerticalAlignment="Top" Width="75" Height="44" Background="#FF4DB6AC" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="White" Click="logout_button_Click"/>
         </Grid>
     </Grid>

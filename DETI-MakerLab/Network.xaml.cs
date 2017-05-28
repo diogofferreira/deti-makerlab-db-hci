@@ -509,7 +509,7 @@ namespace DETI_MakerLab
             try
             {
                 cmd.ExecuteNonQuery();
-                /*foreach (EthernetSocket socket in socketToDeliver) {
+                foreach (EthernetSocket socket in socketToDeliver) {
                     socket.ResourceID = -1;
                     socket.ReqProject = null;
                     SocketsListData.Insert(socket.SocketNum, socket);
@@ -518,9 +518,6 @@ namespace DETI_MakerLab
                 }
                 foreach (NetworkResources r in toRemove)
                     ActiveRequisitionsData.Remove(r);
-                    */
-                LoadProjectActiveRequisitions();
-                LoadAvailableSockets();
             }
             catch (Exception ex)
             {

@@ -115,6 +115,7 @@ namespace DETI_MakerLab
                 // Copy image to project file and produce its path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String name = equipment_name.Text + "_" + equipment_manufacturer.Text + "_" + equipment_model.Text;
+                name.Replace(" ", "");
                 String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + name + System.IO.Path.GetExtension(fileName);
 
                 MessageBoxResult confirm = MessageBox.Show(

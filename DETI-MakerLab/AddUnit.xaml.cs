@@ -68,7 +68,6 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             User = user;
-            Console.WriteLine(user);
             ResourceItems = new List<ResourceItem>();
             EquipmentsListData = new ObservableCollection<ResourceItem>();
             Units = new List<UnitsHelper>();
@@ -227,9 +226,6 @@ namespace DETI_MakerLab
                 {
                     AddUnits();
                     MessageBox.Show("Units have been successfully added!");
-                    StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                    // TODO : create object and pass it to kit page
-                    //window.goToKitPage(kit);
                 }
 
             } catch (SqlException exc)

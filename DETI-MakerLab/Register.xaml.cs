@@ -91,13 +91,24 @@ namespace DETI_MakerLab
             }
         }
 
-        private void checkMandatoryFields()
+        private bool checkMandatoryFields()
         {
             if (String.IsNullOrEmpty(email.Text) || String.IsNullOrEmpty(password.Password)
                 || String.IsNullOrEmpty(first_name.Text) || String.IsNullOrEmpty(last_name.Text)
                 || String.IsNullOrEmpty(nmec.Text) || user_type.SelectedIndex < 0
                 || String.IsNullOrEmpty(area_or_course_response.Text) || String.IsNullOrEmpty(user_image.Text))
-                throw new Exception("Please fill in the mandatory fields!");
+                return true;
+            return false;
+        }
+
+        private bool isEmpty()
+        {
+            if (!String.IsNullOrEmpty(email.Text) || !String.IsNullOrEmpty(password.Password)
+                || !String.IsNullOrEmpty(first_name.Text) || !String.IsNullOrEmpty(last_name.Text)
+                || !String.IsNullOrEmpty(nmec.Text)
+                || !String.IsNullOrEmpty(area_or_course_response.Text) || !String.IsNullOrEmpty(user_image.Text))
+                return false;
+            return true;
         }
 
         private void upload_image_button_Click(object sender, RoutedEventArgs e)
@@ -115,7 +126,8 @@ namespace DETI_MakerLab
         {
             try
             {
-                checkMandatoryFields();
+                if (checkMandatoryFields())
+                    throw new Exception("Please fill in the mandatory fields!");
                 // Copy image to project file and produce its path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + nmec.Text + System.IO.Path.GetExtension(fileName);
@@ -131,14 +143,23 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void go_back_button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow window = (MainWindow)Window.GetWindow(this);
-            window.goToLogin();
+            if (!isEmpty()) {
+                var result = MessageBox.Show("Really want to go back? All changes will be lost", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes) { 
+                    MainWindow window = (MainWindow)Window.GetWindow(this);
+                    window.goToLogin();
+                }
+            } else
+            {
+                MainWindow window = (MainWindow)Window.GetWindow(this);
+                window.goToLogin();
+            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -21,7 +21,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for Network.xaml
     /// </summary>
-    public partial class Network : Page
+    public partial class Network : Page, DMLPages
     {
         private ObservableCollection<Project> ProjectsListData;
         private ObservableCollection<EthernetSocket> SocketsListData;
@@ -53,7 +53,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             projects_list.ItemsSource = ProjectsListData;
             os_list.ItemsSource = OSList;
@@ -571,7 +571,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -598,7 +598,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -627,7 +627,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -677,7 +677,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -731,6 +731,12 @@ namespace DETI_MakerLab
         private void os_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             vm_password.IsEnabled = os_list.SelectedIndex != 0;
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

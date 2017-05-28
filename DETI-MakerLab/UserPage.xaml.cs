@@ -22,7 +22,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for UserPage.xaml
     /// </summary>
-    public partial class UserPage : Page
+    public partial class UserPage : Page, DMLPages
     {
         private DMLUser _user;
         private SqlConnection cn;
@@ -77,7 +77,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             user_last_requisitions_list.ItemsSource = RequisitionsData;
         }
@@ -153,6 +153,12 @@ namespace DETI_MakerLab
                 }
                 
             }
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

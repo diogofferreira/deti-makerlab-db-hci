@@ -23,7 +23,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for KitPage.xaml
     /// </summary>
-    public partial class KitPage : Page
+    public partial class KitPage : Page, DMLPages
     {
         private Kit _kit;
         private SqlConnection cn;
@@ -46,7 +46,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             equipment_last_requisitions_list.ItemsSource = RequisitionsData;
         }
@@ -126,6 +126,12 @@ namespace DETI_MakerLab
                 window.goBack();
             }
             
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

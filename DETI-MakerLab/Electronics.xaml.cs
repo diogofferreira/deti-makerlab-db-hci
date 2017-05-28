@@ -22,7 +22,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for Electronics.xaml
     /// </summary>
-    public partial class Electronics : Page
+    public partial class Electronics : Page, DMLPages
     {
         SqlConnection cn;
         private int _userID;
@@ -93,7 +93,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             projects_list.ItemsSource = ProjectsListData;
             equipment_list.ItemsSource = ResourcesListData;
@@ -534,7 +534,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -561,7 +561,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -606,7 +606,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -650,6 +650,12 @@ namespace DETI_MakerLab
             {
                 projects_list.ItemsSource = ProjectsListData;
             }
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

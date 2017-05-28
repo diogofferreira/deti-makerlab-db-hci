@@ -20,7 +20,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for ProjectPageStatic.xaml
     /// </summary>
-    public partial class ProjectPageStatic : Page
+    public partial class ProjectPageStatic : Page, DMLPages
     {
         private SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
@@ -47,7 +47,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
@@ -177,6 +177,12 @@ namespace DETI_MakerLab
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 window.goToRequisitionPage(requisition);
             }
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

@@ -19,7 +19,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ReqsFrontItem">
-            <Grid Height="50" Width="765" ToolTip="Click to see requisition">
+            <Grid Height="50" Width="750" ToolTip="Click to see requisition">
                 <Label Content="{Binding}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>

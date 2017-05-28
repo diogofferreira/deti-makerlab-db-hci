@@ -23,7 +23,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
-    public partial class Home : Page
+    public partial class Home : Page, DMLPages
     {
         private SqlConnection cn;
         private ObservableCollection<Project> ProjectsListData;
@@ -56,7 +56,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             last_project_list.ItemsSource = ProjectsListData;
             last_requisitions_list.ItemsSource = RequisitionsListData;
@@ -219,6 +219,12 @@ namespace DETI_MakerLab
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 window.goToRequisitionPage(requisition);
             }
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

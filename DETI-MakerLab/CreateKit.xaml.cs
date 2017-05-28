@@ -22,7 +22,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for CreateKit.xaml
     /// </summary>
-    public partial class CreateKit : Page
+    public partial class CreateKit : Page, DMLPages
     {
         private SqlConnection cn;
         private List<ResourceItem> ResourceItems;
@@ -64,7 +64,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             units_list.ItemsSource = EquipmentsListData;
         }
@@ -119,6 +119,13 @@ namespace DETI_MakerLab
         {
             if (String.IsNullOrEmpty(kit_name.Text))
                 throw new Exception("Please fill the mandatory fields!");
+        }
+
+        public bool isEmpty()
+        {
+            if (!String.IsNullOrEmpty(kit_name.Text))
+                return false;
+            return true;
         }
 
         private Kit submitKitCreation()
@@ -234,7 +241,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

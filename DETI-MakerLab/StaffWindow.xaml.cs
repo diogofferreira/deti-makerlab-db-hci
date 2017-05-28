@@ -54,12 +54,17 @@ namespace DETI_MakerLab
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Show home page
-            Home page = new Home(StaffUser.EmployeeNum);
-            frame.Navigate(page);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show home page
+                Home page = new Home(StaffUser.EmployeeNum);
+                frame.Navigate(page);
 
-            // Hide collapsed submenus
-            this.resources_menu.Visibility = Visibility.Collapsed;
+                // Hide collapsed submenus
+                this.resources_menu.Visibility = Visibility.Collapsed;
+            }
+
         }
 
         private void Resources_Button_Click(object sender, RoutedEventArgs e)
@@ -70,38 +75,58 @@ namespace DETI_MakerLab
 
         private void resources_list_button_Click(object sender, RoutedEventArgs e)
         {
-            // Show resources list page
-            frame.Source = new Uri("ResourcesList.xaml", UriKind.RelativeOrAbsolute);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show resources list page
+                frame.Source = new Uri("ResourcesList.xaml", UriKind.RelativeOrAbsolute);
+            }
         }
 
         private void add_equipment_button_Click(object sender, RoutedEventArgs e)
         {
-            // Show create equipment page
-            CreateEquipment page = new CreateEquipment(_user.EmployeeNum);
-            frame.Navigate(page);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show create equipment page
+                CreateEquipment page = new CreateEquipment(_user.EmployeeNum);
+                frame.Navigate(page);
+            }
         }
 
         private void add_unit_button_Click(object sender, RoutedEventArgs e)
         {
-            // Show add unit page
-            AddUnit page = new AddUnit(_user);
-            frame.Navigate(page);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show add unit page
+                AddUnit page = new AddUnit(_user);
+                frame.Navigate(page);
+            }
         }
 
         private void add_kit_button_Click(object sender, RoutedEventArgs e)
         {
-            // Show add kit page
-            CreateKit page = new CreateKit(_user.EmployeeNum);
-            frame.Navigate(page);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show add kit page
+                CreateKit page = new CreateKit(_user.EmployeeNum);
+                frame.Navigate(page);
+            }
         }
 
         private void Projects_Buttons_Click(object sender, RoutedEventArgs e)
         {
-            // Show projects page
-            frame.Source = new Uri("AllProjects.xaml", UriKind.RelativeOrAbsolute);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show projects page
+                frame.Source = new Uri("AllProjects.xaml", UriKind.RelativeOrAbsolute);
 
-            // Hide collapsed submenus
-            this.resources_menu.Visibility = Visibility.Collapsed;
+                // Hide collapsed submenus
+                this.resources_menu.Visibility = Visibility.Collapsed;
+            }
         }
 
         public void goToEquipmentPage(ElectronicResources equipment)
@@ -145,6 +170,18 @@ namespace DETI_MakerLab
             login.Show();
             login.goToLogin();
             Window.GetWindow(this).Hide();
+        }
+
+        private bool unsavedInfos()
+        {
+            DMLPages page = (DMLPages) frame.Content;
+            if (!page.isEmpty())
+            {
+                var result = MessageBox.Show("Really want to go back? All changes will be lost", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.No)
+                    return true;
+            }
+            return false;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for ResourcesList.xaml
     /// </summary>
-    public partial class ResourcesList : Page
+    public partial class ResourcesList : Page, DMLPages
     {
         private ObservableCollection<ElectronicResources> EquipmentsListData;
         private ObservableCollection<Kit> KitsListData;
@@ -43,7 +43,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             electronics_list.ItemsSource = EquipmentsListData;
             kits_list.ItemsSource = KitsListData;
@@ -181,6 +181,12 @@ namespace DETI_MakerLab
             {
                 kits_list.ItemsSource = KitsListData;
             }
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

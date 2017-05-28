@@ -22,7 +22,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for CreateEquipment.xaml
     /// </summary>
-    public partial class CreateEquipment : Page
+    public partial class CreateEquipment : Page, DMLPages
     {
         private SqlConnection cn;
         private String fileName;
@@ -84,6 +84,15 @@ namespace DETI_MakerLab
                 throw new Exception("Please fill the mandatory fields!");
         }
 
+        public bool isEmpty()
+        {
+            if (!String.IsNullOrEmpty(equipment_name.Text) || !String.IsNullOrEmpty(equipment_model.Text)
+                || !String.IsNullOrEmpty(equipment_description.Text)
+                || !String.IsNullOrEmpty(equipment_manufacturer.Text) || !String.IsNullOrEmpty(equipment_image.Text))
+                return false;
+            return true;
+        }
+
         private void upload_image_button_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -117,7 +126,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

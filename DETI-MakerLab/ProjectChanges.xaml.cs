@@ -22,7 +22,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for ProjectPage.xaml
     /// </summary>
-    public partial class ProjectChanges : Page
+    public partial class ProjectChanges : Page, DMLPages
     {
         private SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
@@ -46,7 +46,8 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error
+                    );
             }
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
@@ -306,6 +307,14 @@ namespace DETI_MakerLab
                 throw new Exception("Please fill the mandatory fields!");
         }
 
+        public bool isEmpty()
+        {
+            // Check if there are unsaved fields
+            if (!String.IsNullOrEmpty(project_name.Text) || !String.IsNullOrEmpty(project_description.Text))
+                return false;
+            return true;
+        }
+
         private void save_project_changes_button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -331,9 +340,8 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
     }
 }

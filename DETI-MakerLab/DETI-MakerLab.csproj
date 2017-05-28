@@ -75,6 +75,7 @@
       <DependentUpon>CreateKit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Delivery.cs" />
+    <Compile Include="DMLPages.cs" />
     <Compile Include="EquipmentPage.xaml.cs">
       <DependentUpon>EquipmentPage.xaml</DependentUpon>
     </Compile>

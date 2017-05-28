@@ -40,12 +40,17 @@ namespace DETI_MakerLab
 
         private void Home_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Show home page
-            Home page = new Home(_user.NumMec);
-            frame.Navigate(page);
 
-            // Hide collapsed submenus
-            this.resources_menu.Visibility = this.projects_menu.Visibility =  Visibility.Collapsed;
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show home page
+                Home page = new Home(_user.NumMec);
+                frame.Navigate(page);
+
+                // Hide collapsed submenus
+                this.resources_menu.Visibility = this.projects_menu.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Resources_Button_Click(object sender, RoutedEventArgs e)
@@ -59,15 +64,23 @@ namespace DETI_MakerLab
 
         private void Electronics_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Show electronics page
-            goToElectronicsPage();
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show electronics page
+                goToElectronicsPage();
+            }
         }
 
         private void Network_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Show network page
-            Network page = new Network(_user.NumMec);
-            frame.Navigate(page);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show network page
+                Network page = new Network(_user.NumMec);
+                frame.Navigate(page);
+            }
         }
 
         private void Projects_Buttons_Click(object sender, RoutedEventArgs e)
@@ -81,17 +94,24 @@ namespace DETI_MakerLab
 
         private void Create_Project_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Show create project page
-            // Show home page
-            CreateProject page = new CreateProject(_user.NumMec);
-            frame.Navigate(page);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show create project page
+                CreateProject page = new CreateProject(_user.NumMec);
+                frame.Navigate(page);
+            }
         }
 
         private void My_Projects_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Show my projects page
-            MyProjects page = new MyProjects(_user.NumMec);
-            frame.Navigate(page);
+            // Check if last page has unsaved infos
+            if (!unsavedInfos())
+            {
+                // Show my projects page
+                MyProjects page = new MyProjects(_user.NumMec);
+                frame.Navigate(page);
+            }
         }
 
         public void goToProjectPage(Project proj)
@@ -163,6 +183,18 @@ namespace DETI_MakerLab
         private void profile_image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             goToUserPage(User);
+        }
+
+        private bool unsavedInfos()
+        {
+            DMLPages page = (DMLPages)frame.Content;
+            if (!page.isEmpty())
+            {
+                var result = MessageBox.Show("Really want to go back? All changes will be lost", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.No)
+                    return true;
+            }
+            return false;
         }
     }
 }

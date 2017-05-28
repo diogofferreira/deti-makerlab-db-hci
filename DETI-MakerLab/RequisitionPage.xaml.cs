@@ -21,7 +21,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for RequisitionPage.xaml
     /// </summary>
-    public partial class RequisitionPage : Page
+    public partial class RequisitionPage : Page, DMLPages
     {
         private Requisition _requisition;
         private SqlConnection cn;
@@ -40,7 +40,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             requisition_id.Text = _requisition.RequisitionID.ToString();
             content_list.ItemsSource = _requisition.Resources;
@@ -103,6 +103,12 @@ namespace DETI_MakerLab
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 window.goBack();
             }
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

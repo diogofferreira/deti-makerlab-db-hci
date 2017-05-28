@@ -22,7 +22,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for AddUnit.xaml
     /// </summary>
-    public partial class AddUnit : Page
+    public partial class AddUnit : Page, DMLPages
     {
         private SqlConnection cn;
         private List<ResourceItem> ResourceItems;
@@ -46,7 +46,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             units_list.ItemsSource = EquipmentsListData;
         }
@@ -177,12 +177,12 @@ namespace DETI_MakerLab
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 // TODO : create object and pass it to kit page
                 //window.goToKitPage(kit);
-            } catch (SqlException ex)
+            } catch (SqlException exc)
             {
-                Helpers.ShowCustomDialogBox(ex);
-            } catch (Exception ex)
+                Helpers.ShowCustomDialogBox(exc);
+            } catch (Exception exc)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -205,6 +205,12 @@ namespace DETI_MakerLab
             ResourceItem equipment = (ResourceItem)(sender as Button).DataContext;
             StaffWindow window = (StaffWindow)Window.GetWindow(this);
             window.goToEquipmentPage(equipment.Resource);
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

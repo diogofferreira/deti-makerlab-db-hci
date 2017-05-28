@@ -24,7 +24,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for CreateProject.xaml
     /// </summary>
-    public partial class CreateProject : Page
+    public partial class CreateProject : Page, DMLPages
     {
         SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
@@ -50,7 +50,7 @@ namespace DETI_MakerLab
                 Helpers.ShowCustomDialogBox(exc);
             } catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             project_members.ItemsSource = MembersListData;
             project_class.ItemsSource = ClassListData;
@@ -273,7 +273,7 @@ namespace DETI_MakerLab
         private void checkMandatoryFields()
         {
             if (String.IsNullOrEmpty(project_name.Text) || String.IsNullOrEmpty(project_description.Text)
-                || project_class.SelectedIndex < 0 )
+                || project_class.SelectedIndex < 0)
                 throw new Exception("Please fill the mandatory fields!");
             foreach (DMLUser checkedMember in project_members.Items)
             {
@@ -288,6 +288,14 @@ namespace DETI_MakerLab
                 if (checkedMember.NumMec == _userID && r.RoleID == -1)
                     throw new Exception("You must belong to a project you create!");
             }
+        }
+
+        public bool isEmpty()
+        {
+            if (!String.IsNullOrEmpty(project_name.Text) || !String.IsNullOrEmpty(project_description.Text)
+                || !(project_class.SelectedIndex < 0))
+                return false;
+            return true;
         }
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)
@@ -315,7 +323,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

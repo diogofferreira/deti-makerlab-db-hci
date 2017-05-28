@@ -21,7 +21,7 @@ namespace DETI_MakerLab
     /// <summary>
     /// Interaction logic for MyProjects.xaml
     /// </summary>
-    public partial class MyProjects : Page
+    public partial class MyProjects : Page, DMLPages
     {
         private ObservableCollection<Project> ProjectsListData;
         private SqlConnection cn;
@@ -41,7 +41,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             my_projects_listbox.ItemsSource = ProjectsListData;
             my_projects_listbox.MouseDoubleClick += new MouseButtonEventHandler(my_projects_listbox_MouseDoubleClick);
@@ -148,6 +148,12 @@ namespace DETI_MakerLab
             {
                 my_projects_listbox.ItemsSource = ProjectsListData;
             }
+        }
+
+        public bool isEmpty()
+        {
+            // There are no fields to check
+            return true;
         }
     }
 }

@@ -37,7 +37,7 @@
         <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="396" Margin="675,170,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
         <Label Content="Electronics" Style="{StaticResource titleStyle}" Margin="196,27,752,553"/>
         <Label Content="Active electronic's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,27,0,553"/>
-        <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="152" Margin="54,414,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicsEquipmentItem}"/>
+        <ListBox x:Name="equipment_list" IsEnabled="False" HorizontalAlignment="Left" Height="152" Margin="54,414,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicsEquipmentItem}"/>
         <Label Content="Project (to associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,97,0,0" VerticalAlignment="Top" Height="45" Width="218"/>
         <Label Content="Equipment" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,334,0,0" VerticalAlignment="Top" Height="52" Width="123"/>
         <Button x:Name="request_button" IsEnabled="False" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,571,0,0" VerticalAlignment="Top" Width="455" Height="47" Click="request_button_Click"/>

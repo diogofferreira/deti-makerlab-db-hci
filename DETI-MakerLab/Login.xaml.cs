@@ -163,7 +163,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
             bool result = false;
-            SqlCommand cmd = new SqlCommand("SELECT * FROM CHECK_LOGIN (@email, @password)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM CHECK_STAFF_LOGIN (@email, @password)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@email", email_box.Text);
             cmd.Parameters.AddWithValue("@password", password_box.Password);

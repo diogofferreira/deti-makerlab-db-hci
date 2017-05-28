@@ -339,21 +339,12 @@ namespace DETI_MakerLab
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();
-
-            foreach (DataRow row in ds.Tables[0].Rows)
-            {
-                ActiveRequisitionsData.Add(new EthernetSocket(
-                    int.Parse(row["NetResID"].ToString()),
-                    selectedProject,
-                    int.Parse(row["SocketNum"].ToString())
-                    ));
-            }
-
-            foreach (EthernetSocket e in toRemove)
-            {
-                SocketsListData.Remove(e);
-                socket_list.UpdateLayout();
-            }
+            
+            // Reload sockets and active requisitions lists
+            SocketsListData.Clear();
+            ActiveRequisitionsData.Clear();
+            LoadAvailableSockets();
+            LoadProjectActiveRequisitions();
         }
 
         private void saveWLAN()
@@ -518,7 +509,7 @@ namespace DETI_MakerLab
             try
             {
                 cmd.ExecuteNonQuery();
-                foreach (EthernetSocket socket in socketToDeliver) {
+                /*foreach (EthernetSocket socket in socketToDeliver) {
                     socket.ResourceID = -1;
                     socket.ReqProject = null;
                     SocketsListData.Insert(socket.SocketNum, socket);
@@ -527,6 +518,9 @@ namespace DETI_MakerLab
                 }
                 foreach (NetworkResources r in toRemove)
                     ActiveRequisitionsData.Remove(r);
+                    */
+                LoadProjectActiveRequisitions();
+                LoadAvailableSockets();
             }
             catch (Exception ex)
             {

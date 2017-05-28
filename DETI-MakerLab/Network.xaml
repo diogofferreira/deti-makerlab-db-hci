@@ -31,7 +31,7 @@
 
     <Grid>
         <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="594,0" />
-        <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="93" Margin="54,103,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicProjectItem}"/>
+        <ListBox x:Name="projects_list" HorizontalAlignment="Left" Height="60" Margin="54,136,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicProjectItem}"/>
         <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="435" Margin="663,131,0,0" VerticalAlignment="Top" Width="459" ItemTemplate="{DynamicResource ActiveRequisitionItem}"/>
         <Label Content="Network" Style="{StaticResource titleStyle}" Margin="196,10,752,570"/>
         <Label Content="Active network's requisitions" Style="{StaticResource titleStyle}" RenderTransformOrigin="0.5,0.5" Margin="674,10,0,570"/>
@@ -77,6 +77,17 @@
             </Grid.RowDefinitions>
             <TextBox x:Name="search_box_requisitions" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="459" TextChanged="TextBox_TextChanged_Requisitions" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Grid.RowSpan="2"/>
             <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323" Grid.RowSpan="2"/>
+        </Grid>
+        <Grid Margin="54,108,687,497">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="search_box_projects" Grid.Row="0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="455" TextChanged="TextBox_TextChanged_Projects" Grid.ColumnSpan="2" VerticalContentAlignment="Center"/>
+            <Image Stretch="Fill" Grid.Row="0" Grid.Column="1" Source="/DETI-MakerLab;component/images/iconsearch.png" Margin="18,6,6,323"/>
         </Grid>
     </Grid>
 </Page>

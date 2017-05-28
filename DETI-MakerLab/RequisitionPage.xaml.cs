@@ -42,8 +42,11 @@ namespace DETI_MakerLab
             {
                 MessageBox.Show(exc.Message);
             }
-            project_name.Text = _requisition.ReqProject.ProjectName;
+            requisition_id.Text = _requisition.RequisitionID.ToString();
             content_list.ItemsSource = _requisition.Resources;
+            requisition_user.Text = _requisition.User.FullName;
+            requisition_project.Text = _requisition.ReqProject.ProjectName;
+            requisition_date.Text = _requisition.ReqDate.ToShortDateString();
         }
 
         private void LoadRequisitionResources()

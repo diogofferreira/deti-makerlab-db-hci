@@ -55,8 +55,6 @@ namespace DETI_MakerLab
             set
             {
                 var addr = new System.Net.Mail.MailAddress(value);
-                Console.WriteLine(addr.Address);
-                Console.WriteLine(value);
                 if (addr.Address != value)
                     throw new Exception("Invalid email");
                 if (!EmailValidator.IsMatch(value))

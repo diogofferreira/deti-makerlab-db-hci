@@ -709,6 +709,20 @@ namespace DETI_MakerLab
             }
         }
 
+        private void TextBox_TextChanged_Projects(object sender, TextChangedEventArgs e)
+        {
+            // Filter projects which contains writed keyword
+            if (ProjectsListData.Count > 0 && !search_box_projects.Text.Equals(""))
+            {
+                var filteredProjects = ProjectsListData.Where(i => ((Project)i).ProjectName.ToLower().Contains(search_box_projects.Text.ToLower())).ToArray();
+                projects_list.ItemsSource = filteredProjects;
+            }
+            else
+            {
+                projects_list.ItemsSource = ProjectsListData;
+            }
+        }
+
         private void wifi_checkbox_Click(object sender, RoutedEventArgs e)
         {
             wifi_password.IsEnabled = wifi_checkbox.IsChecked ?? false;

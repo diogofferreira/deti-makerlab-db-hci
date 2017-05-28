@@ -20,7 +20,7 @@
 
         <DataTemplate x:Key="ActiveReqsFrontItem">
             <Grid Height="50" Width="465">
-                <Label Content="{Binding}" HorizontalAlignment="Center" Margin="38,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="{Binding}" HorizontalAlignment="Center" Margin="25,10,0,0" VerticalAlignment="Top"/>
             </Grid>
         </DataTemplate>
 

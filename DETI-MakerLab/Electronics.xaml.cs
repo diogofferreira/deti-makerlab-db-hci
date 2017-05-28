@@ -512,11 +512,21 @@ namespace DETI_MakerLab
 
         private void request_button_Click(object sender, RoutedEventArgs e)
         {
-            checkProject();
             try
             {
-                SubmitRequisitionResources();
-                MessageBox.Show("Request done with success!");
+                checkProject();
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you confirm this requisition?",
+                    "Requisition Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    SubmitRequisitionResources();
+                    MessageBox.Show("Requisition done with success!");
+                }
+                
             }
             catch (SqlException exc)
             {
@@ -530,11 +540,20 @@ namespace DETI_MakerLab
 
         private void deliver_button_Click(object sender, RoutedEventArgs e)
         {
-            checkProject();
             try
             {
-                SubmitDeliveryResources();
-                MessageBox.Show("Delivery done with success!");
+                checkProject();
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you confirm this requisition?",
+                    "Requisition Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    SubmitDeliveryResources();
+                    MessageBox.Show("Delivery done with success!");
+                }
             }
             catch (SqlException exc)
             {
@@ -570,6 +589,10 @@ namespace DETI_MakerLab
             {
                 // Find selected project
                 checkProject();
+
+                // Enable buttons
+                request_button.IsEnabled = true;
+                deliver_button.IsEnabled = true;
                 
                 // Clear active requisitions data and load the active requisitions for selected project
                 ActiveRequisitionsData.Clear();

@@ -31,6 +31,7 @@ namespace DETI_MakerLab
         private ObservableCollection<Class> ClassListData;
         private static ObservableCollection<Role> RolesListData;
         private int _userID;
+        private Project _project;
 
         public CreateProject(int userID)
         {
@@ -58,17 +59,13 @@ namespace DETI_MakerLab
 
         public ObservableCollection<Role> RolesList 
         {
-            get {
-                return RolesListData;
-            }
+            get { return RolesListData; }
         }
 
         private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
         {
             if (project_members.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
-            {
                 SetMyRole();
-            }
         }
 
         private void SetMyRole()
@@ -197,6 +194,13 @@ namespace DETI_MakerLab
             {
                 cmd.ExecuteNonQuery();
                 projectID = Convert.ToInt32(cmd.Parameters["@ProjectID"].Value);
+                _project = new Project(
+                    projectID,
+                    project_name.Text,
+                    project_description.Text
+                    );
+                if (((Class)project_class.SelectedValue).ClassID != -1)
+                    _project.ProjectClass = ((Class)project_class.SelectedValue);
             }
             catch (Exception ex)
             {
@@ -212,8 +216,11 @@ namespace DETI_MakerLab
 
         private void SubmitMembers(int projectID)
         {
-            SqlCommand cmd;
-            
+            DataTable members = new DataTable();
+            members.Clear();
+            members.Columns.Add("UserID", typeof(decimal));
+            members.Columns.Add("RoleID", typeof(int));
+
             foreach (DMLUser checkedMember in project_members.Items)
             {
                 var container = project_members.ItemContainerGenerator.ContainerFromItem(checkedMember) as FrameworkElement;
@@ -224,31 +231,42 @@ namespace DETI_MakerLab
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
                 Role r = (Role)((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedItem;
+                if (checkedMember.NumMec == _userID && r.RoleID == -1)
+                    throw new Exception("You must belong to a project you create!");
+
                 if (r == null || r.RoleID == -1)
                     continue;
-                cn = Helpers.getSGBDConnection();
-                if (!Helpers.verifySGBDConnection(cn))
-                    throw new Exception("Cannot connect to database");
 
-                cmd = new SqlCommand("INSERT INTO WorksOn (UserNMec, ProjectID, UserRole) " +
-                    "VALUES (@UserNMec, @ProjectID, @UserRole)", cn);
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@UserNmec", checkedMember.NumMec);
-                cmd.Parameters.AddWithValue("@ProjectID", projectID);
-                cmd.Parameters.AddWithValue("@UserRole", r.RoleID);
+                DataRow row = members.NewRow();
+                row["UserID"] = checkedMember.NumMec;
+                row["RoleID"] = r.RoleID;
+                members.Rows.Add(row);
+                checkedMember.RoleID = r.RoleID;
+                _project.addWorker(checkedMember);
+            }
 
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    cn.Close();
-                }
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
+
+            SqlCommand cmd = new SqlCommand("ADD_PROJECT_USERS", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@projectID", projectID);
+            SqlParameter listParam = cmd.Parameters.AddWithValue("@WorkersList", members);
+            listParam.SqlDbType = SqlDbType.Structured;
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                cn.Close();
             }
         }
 
@@ -257,19 +275,40 @@ namespace DETI_MakerLab
             if (String.IsNullOrEmpty(project_name.Text) || String.IsNullOrEmpty(project_description.Text)
                 || project_class.SelectedIndex < 0 )
                 throw new Exception("Please fill the mandatory fields!");
+            foreach (DMLUser checkedMember in project_members.Items)
+            {
+                var container = project_members.ItemContainerGenerator.ContainerFromItem(checkedMember) as FrameworkElement;
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                Role r = (Role)((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedItem;
+                if (checkedMember.NumMec == _userID && r.RoleID == -1)
+                    throw new Exception("You must belong to a project you create!");
+            }
         }
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
             try {
                 checkMandatoryFields();
-                int projectID = SubmitProject();
-                if (projectID != -1)
-                    SubmitMembers(projectID);
-                MessageBox.Show("Project has been created !");
-                HomeWindow window = (HomeWindow)Window.GetWindow(this);
-                // TODO : create project object
-                //window.goToProjectPage(_project);
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you want to submit this project?", 
+                    "Submission Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    int projectID = SubmitProject();
+                    if (projectID != -1)
+                        SubmitMembers(projectID);
+                    MessageBox.Show("Project has been created!");
+                    HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                    window.goToProjectPage(_project);
+                }
             } catch (SqlException exc)
             {
                 Helpers.ShowCustomDialogBox(exc);

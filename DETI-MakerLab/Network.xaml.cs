@@ -623,6 +623,10 @@ namespace DETI_MakerLab
                 // Find selected project
                 checkProject();
 
+                request_vm_button.IsEnabled = true;
+                request_network_button.IsEnabled = true;
+                deliver_button.IsEnabled = true;
+
                 // Clear active requisitions data and load the active requisitions for selected project
                 ActiveRequisitionsData.Clear();
                 wifi_checkbox.IsChecked = false;

@@ -97,7 +97,7 @@ namespace DETI_MakerLab
                 || String.IsNullOrEmpty(first_name.Text) || String.IsNullOrEmpty(last_name.Text)
                 || String.IsNullOrEmpty(nmec.Text) || user_type.SelectedIndex < 0
                 || String.IsNullOrEmpty(area_or_course_response.Text) || String.IsNullOrEmpty(user_image.Text))
-                throw new Exception("Please fill the mandatory fields!");
+                throw new Exception("Please fill in the mandatory fields!");
         }
 
         private void upload_image_button_Click(object sender, RoutedEventArgs e)
@@ -119,8 +119,8 @@ namespace DETI_MakerLab
                 // Copy image to project file and produce its path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + nmec.Text + System.IO.Path.GetExtension(fileName);
-                System.IO.File.Copy(fileName, imagePath, true);
                 registerUser(imagePath);
+                System.IO.File.Copy(fileName, imagePath, true);
                 MessageBox.Show("User successfuly registred!");
                 MainWindow window = (MainWindow)Window.GetWindow(this);
                 window.goToLogin();

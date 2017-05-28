@@ -38,7 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ookii.Dialogs.Wpf">
-      <HintPath>..\..\Ookii.Dialogs\Ookii.Dialogs.Wpf.dll</HintPath>
+      <HintPath>C:\Users\Pedro\Downloads\Ookii.Dialogs\Ookii.Dialogs.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -299,12 +299,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="dml_logo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="dml_logo_white.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="dml_icon.ico" />

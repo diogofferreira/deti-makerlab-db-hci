@@ -27,6 +27,7 @@ namespace DETI_MakerLab
         private SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
         private ObservableCollection<Requisition> RequisitionsData;
+        private List<Role> Roles;
         private Project _project;
 
         public ProjectPage(Project project)
@@ -35,8 +36,10 @@ namespace DETI_MakerLab
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
             RequisitionsData = new ObservableCollection<Requisition>();
+            Roles = new List<Role>();
             try
             {
+                LoadRoles();
                 loadUsers();
                 loadRequisitions();
             }
@@ -55,10 +58,43 @@ namespace DETI_MakerLab
             project_members.MouseDoubleClick += new MouseButtonEventHandler(project_members_listbox_MouseDoubleClick);
         }
 
+        private void LoadRoles()
+        {
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
+
+            Roles.Add(new Role(-1, "Not a Member"));
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Roles", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Roles.Add(new Role(
+                    int.Parse(reader["RoleID"].ToString()),
+                    reader["RoleDescription"].ToString())
+                    );
+            }
+
+            cn.Close();
+        }
+
+        private String getRoleDescription(int roleID)
+        {
+            foreach (Role r in Roles)
+                if (r.RoleID == roleID)
+                    return r.RoleDescription;
+            return "Not a member";
+        }
+
         private void loadUsers()
         {
             foreach (DMLUser worker in _project.Workers)
+            {
+                worker.RoleDescription = getRoleDescription(worker.RoleID);
                 MembersListData.Add(worker);
+            }
         }
 
         private Requisition getRequisition(Requisition req)

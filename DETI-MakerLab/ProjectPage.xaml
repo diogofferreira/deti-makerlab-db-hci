@@ -10,9 +10,11 @@
       Title="ProjectPage">
     <Page.Resources>
         <DataTemplate x:Key="MembersFrontItem">
-            <Grid Height="50" Width="288" ToolTip="Click to see user profile">
+            <Grid Height="50" Width="588" ToolTip="Click to see user profile">
                 <Image x:Name="user_image" Source="{Binding Path=PathToImage}" HorizontalAlignment="Left" Height="40" Margin="18,4,0,0" VerticalAlignment="Top" Width="40" RenderTransformOrigin="0.65,0.45"/>
-                <Label x:Name="user_name" Content="{Binding Path=FullName}" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="user_nmec" Content="{Binding Path=NumMec}" HorizontalAlignment="Left" Margin="70,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="user_name" Content="{Binding Path=FullName}" HorizontalAlignment="Left" Margin="140,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="user_role" Content="{Binding Path=RoleDescription}" HorizontalAlignment="Left" Margin="310,10,0,0" VerticalAlignment="Top"/>
             </Grid>
         </DataTemplate>
 

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DETI_MakerLab
@@ -22,6 +23,8 @@ namespace DETI_MakerLab
         private String _email;
         private String _pathToImage;
         private int _roleID;
+        private String _roleDescription;
+        private Regex EmailValidator = new Regex(@"[\w]+@ua.pt", RegexOptions.IgnoreCase);
 
         public int NumMec
         {
@@ -51,17 +54,14 @@ namespace DETI_MakerLab
             get { return _email; }
             set
             {
-                try
-                {
-                    var addr = new System.Net.Mail.MailAddress(value);
-                    if (addr.Address != value)
-                        throw new Exception("Invalid email");
-                    _email = value;
-                }
-                catch
-                {
+                var addr = new System.Net.Mail.MailAddress(value);
+                Console.WriteLine(addr.Address);
+                Console.WriteLine(value);
+                if (addr.Address != value)
                     throw new Exception("Invalid email");
-                }
+                if (!EmailValidator.IsMatch(value))
+                    throw new Exception("You must use an UA email account!");
+                _email = value;
             }
         }
 
@@ -75,6 +75,12 @@ namespace DETI_MakerLab
         {
             get { return _roleID; }
             set { _roleID = value; }
+        }
+
+        public String RoleDescription
+        {
+            get { return _roleDescription; }
+            set { _roleDescription = value; }
         }
 
         public String FullName

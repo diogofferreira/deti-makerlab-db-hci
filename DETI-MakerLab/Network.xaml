@@ -38,8 +38,8 @@
         <ListBox x:Name="socket_list" HorizontalAlignment="Left" Height="49" Margin="54,530,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource SocketItem}" VirtualizingStackPanel.IsVirtualizing="False"/>
         <Label Content="Project (to Associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,66,0,0" VerticalAlignment="Top" Height="37" Width="231"/>
         <Label Content="Sockets Ethernet" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,465,0,0" VerticalAlignment="Top" Height="52" Width="185" ToolTip="Request an ethernet socket on room switch"/>
-        <Button x:Name="request_network_button" Content="Save" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,585,0,0" VerticalAlignment="Top" Width="166" Height="33" Click="request_network_button_Click"/>
-        <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="663,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
+        <Button x:Name="request_network_button" IsEnabled="False" Content="Save" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,585,0,0" VerticalAlignment="Top" Width="166" Height="33" Click="request_network_button_Click"/>
+        <Button x:Name="deliver_button" IsEnabled="False" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="663,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
         <StackPanel Orientation="Vertical" Margin="-36,-66,623,379">
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="2" Margin="71,274,10,200" Background="#FF4DB6AC"/>
         </StackPanel>
@@ -54,7 +54,7 @@
         <CheckBox x:Name="wifi_checkbox" Content="Active" HorizontalAlignment="Left" Margin="64,406,0,0" VerticalAlignment="Top" Foreground="#00796B" FontFamily="HP Simplified Light" FontSize="18"/>
         <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,431,0,0" VerticalAlignment="Top"/>
         <PasswordBox x:Name="wifi_password" HorizontalAlignment="Left" Height="24" Margin="196,438,0,0" VerticalAlignment="Top" Width="313" VerticalContentAlignment="Center"/>
-        <Button x:Name="request_vm_button" Content="Launch VM" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,317,0,0" VerticalAlignment="Top" Width="166" Height="34" Click="request_vm_button_Click"/>
+        <Button x:Name="request_vm_button" IsEnabled="False" Content="Launch VM" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,317,0,0" VerticalAlignment="Top" Width="166" Height="34" Click="request_vm_button_Click"/>
         <Grid Margin="54,502,687,103">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

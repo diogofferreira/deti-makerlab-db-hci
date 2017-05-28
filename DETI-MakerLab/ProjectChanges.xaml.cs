@@ -152,26 +152,50 @@ namespace DETI_MakerLab
             List<DMLUser> updateWorker = new List<DMLUser>();
             List<DMLUser> removeWorker = new List<DMLUser>();
 
-            foreach (DMLUser user_item in project_members.Items)
+
+            foreach (DMLUser member in project_members.Items)
             {
-                if (user_item.RoleID != -1)
+                var container = project_members.ItemContainerGenerator.ContainerFromItem(member) as FrameworkElement;
+                if (container == null)
                 {
-                    switch (_project.workerChanges(user_item))
+                    project_members.UpdateLayout();
+                    project_members.ScrollIntoView(member);
+                    container = project_members.ItemContainerGenerator.ContainerFromItem(member) as FrameworkElement;
+                }
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    return;
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                // Set me as Project Manager by default
+                Role r = ((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedItem as Role;
+                //member.RoleID = r.RoleID;
+
+                Console.WriteLine(member);
+                Console.WriteLine(_project.workerChanges(member.NumMec, r.RoleID));
+
+                if (r.RoleID != -1)
+                {
+                    switch (_project.workerChanges(member.NumMec, r.RoleID))
                     {
                         case 1:
-                            updateWorker.Add(user_item);
+                            updateWorker.Add(member);
                             break;
 
                         case 2:
-                            newWorker.Add(user_item);
+                            newWorker.Add(member);
                             break;
 
                         default:
                             break;
                     }
                 }
-                else if (_project.workerChanges(user_item) == 1)
-                    removeWorker.Add(user_item);
+                else if (_project.workerChanges(member.NumMec, r.RoleID) == 1)
+                    removeWorker.Add(member);
+                    
+
+                member.RoleID = r.RoleID;
             }
 
             addWorkers(newWorker);
@@ -199,6 +223,7 @@ namespace DETI_MakerLab
                 try
                 {
                     cmd.ExecuteNonQuery();
+                    _project.addWorker(user);
                 }
                 catch (Exception ex)
                 {
@@ -262,6 +287,7 @@ namespace DETI_MakerLab
                 try
                 {
                     cmd.ExecuteNonQuery();
+                    _project.removeWorker(user);
                 }
                 catch (Exception ex)
                 {
@@ -274,14 +300,30 @@ namespace DETI_MakerLab
             }
         }
 
+        private void checkMandatoryFields()
+        {
+            if (String.IsNullOrEmpty(project_name.Text) || String.IsNullOrEmpty(project_description.Text))
+                throw new Exception("Please fill the mandatory fields!");
+        }
+
         private void save_project_changes_button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                saveChanges();
-                MessageBox.Show("The project has been changed!");
-                HomeWindow window = (HomeWindow)Window.GetWindow(this);
-                window.goToProjectPage(_project);
+                checkMandatoryFields();
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you to confirm these changes?",
+                    "Changes Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    saveChanges();
+                    MessageBox.Show("The project has been changed!");
+                    HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                    window.goToProjectPage(_project);
+                }
             }
             catch (SqlException exc)
             {

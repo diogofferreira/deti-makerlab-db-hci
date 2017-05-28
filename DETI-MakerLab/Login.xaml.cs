@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Security.Cryptography;
 using Ookii.Dialogs.Wpf;
+using System.Text.RegularExpressions;
 
 namespace DETI_MakerLab
 {
@@ -65,8 +66,11 @@ namespace DETI_MakerLab
             try {
                 cn = Helpers.getSGBDConnection();
                 if (!Helpers.verifySGBDConnection(cn))
-                    return false;
-                cmd = new SqlCommand("SELECT * FROM CHECK_LOGIN('" + email_box.Text + "' ,'" + password_box.Password + "')", cn);
+                    throw new Exception("Cannot connect to database");
+                cmd = new SqlCommand("SELECT * FROM CHECK_LOGIN (@email, @password)", cn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@email", email_box.Text);
+                cmd.Parameters.AddWithValue("@password", password_box.Password);
                 userData = cmd.ExecuteReader();
                 if (userData.HasRows)
                 {
@@ -84,12 +88,11 @@ namespace DETI_MakerLab
                     // Check if it is professor, student or staff
                     if (checkProfessor(tmpUser)) { result = true; }
                     if (!result && checkStudent(tmpUser)) { result = true; }
-                    if (!result && checkStaff()) { result = true; }
                 }
-                else
-                {
-                    throw new Exception("User does not exist!");
-                }   
+                else if (!checkStaff())
+                    throw new Exception("User and/or password are incorrect!");
+                result = true;
+
             } catch (SqlException e) {
                 throw e;
             } finally {
@@ -102,7 +105,7 @@ namespace DETI_MakerLab
         private bool checkProfessor(DMLUser user)
         {
             if (!Helpers.verifySGBDConnection(cn))
-                return false;
+                throw new Exception("Cannot connect to database.");
             bool result = false;
             SqlCommand cmdType = new SqlCommand("SELECT * FROM Professor WHERE NumMec=@nummec");
             cmdType.Parameters.Clear();
@@ -129,7 +132,7 @@ namespace DETI_MakerLab
         private bool checkStudent(DMLUser tmpUser)
         {
             if (!Helpers.verifySGBDConnection(cn))
-                return false;
+                throw new Exception("Cannot connect to database.");
             bool result = false;
             SqlCommand cmdType = new SqlCommand("SELECT * FROM Student WHERE NumMec=@nummec");
             cmdType.Parameters.Clear();
@@ -155,13 +158,15 @@ namespace DETI_MakerLab
 
         private bool checkStaff()
         {
+            cn.Close();
+            cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
-                return false;
+                throw new Exception("Cannot connect to database");
             bool result = false;
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Staff WHERE Email=@email");
+            SqlCommand cmd = new SqlCommand("SELECT * FROM CHECK_LOGIN (@email, @password)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@email", email_box.Text);
-            cmd.Connection = cn;
+            cmd.Parameters.AddWithValue("@password", password_box.Password);
             SqlDataReader userData = cmd.ExecuteReader();
             if (userData.HasRows)
             {

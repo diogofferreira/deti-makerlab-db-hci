@@ -76,13 +76,13 @@ namespace DETI_MakerLab
             return false;
         }
 
-        public int workerChanges(DMLUser user)
+        public int workerChanges(int numMec, int roleID)
         {
             foreach (DMLUser worker in _workers)
             {
-                if (worker.NumMec == user.NumMec)
+                if (worker.NumMec == numMec)
                 {
-                    if (worker.RoleID == user.RoleID)
+                    if (worker.RoleID == roleID)
                         return 0;
                     else
                         return 1;

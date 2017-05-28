@@ -40,8 +40,8 @@
         <ListBox x:Name="equipment_list" HorizontalAlignment="Left" Height="152" Margin="54,414,0,0" VerticalAlignment="Top" Width="455" ItemTemplate="{DynamicResource ElectronicsEquipmentItem}"/>
         <Label Content="Project (to associate)" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,97,0,0" VerticalAlignment="Top" Height="45" Width="218"/>
         <Label Content="Equipment" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,334,0,0" VerticalAlignment="Top" Height="52" Width="123"/>
-        <Button x:Name="request_button" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,571,0,0" VerticalAlignment="Top" Width="455" Height="47" Click="request_button_Click"/>
-        <Button x:Name="deliver_button" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="675,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
+        <Button x:Name="request_button" IsEnabled="False" Content="Request" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="54,571,0,0" VerticalAlignment="Top" Width="455" Height="47" Click="request_button_Click"/>
+        <Button x:Name="deliver_button" IsEnabled="False" Content="Deliver" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="675,571,0,0" VerticalAlignment="Top" Width="459" Height="47" Click="deliver_button_Click"/>
         <Grid Margin="54,386,687,219">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

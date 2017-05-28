@@ -31,10 +31,12 @@ namespace DETI_MakerLab
         private List<Role> Roles;
         private Project _project;
 
-        public ProjectPage(Project project)
+        public ProjectPage(Project project, bool created = false)
         {
             InitializeComponent();
             this._project = project;
+            if (created)
+                go_back_button.Visibility = Visibility.Hidden;
             MembersListData = new ObservableCollection<DMLUser>();
             ActiveRequisitionsData = new ObservableCollection<Resources>();
             RequisitionsData = new ObservableCollection<Requisition>();

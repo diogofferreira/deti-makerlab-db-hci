@@ -129,15 +129,15 @@ namespace DETI_MakerLab
             }
         }
 
-        public void goToEquipmentPage(ElectronicResources equipment)
+        public void goToEquipmentPage(ElectronicResources equipment, bool created = false)
         {
-            EquipmentPage page = new EquipmentPage(equipment);
+            EquipmentPage page = new EquipmentPage(equipment, created);
             frame.Navigate(page);
         }
 
-        public void goToKitPage(Kit kit)
+        public void goToKitPage(Kit kit, bool created = false)
         {
-            KitPage page = new KitPage(kit);
+            KitPage page = new KitPage(kit, created);
             frame.Navigate(page);
         }
 

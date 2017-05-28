@@ -129,7 +129,7 @@ namespace DETI_MakerLab
                     System.IO.File.Copy(fileName, imagePath, true);
                     MessageBox.Show("Equipment has been successfully added!");
                     StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                    window.goToEquipmentPage(_equipment);
+                    window.goToEquipmentPage(_equipment, true);
                 }
             }
             catch (SqlException exc)

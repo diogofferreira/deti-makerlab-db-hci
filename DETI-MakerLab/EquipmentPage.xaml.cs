@@ -29,9 +29,11 @@ namespace DETI_MakerLab
         private ElectronicResources _equipment;
         private ObservableCollection<Requisition> RequisitionsData;
 
-        public EquipmentPage(ElectronicResources equipment)
+        public EquipmentPage(ElectronicResources equipment, bool created = false)
         {
             InitializeComponent();
+            if (created)
+                go_back.Visibility = Visibility.Hidden;
             RequisitionsData = new ObservableCollection<Requisition>();
             this._equipment = equipment;
             equipment_name.Text = _equipment.ProductName;

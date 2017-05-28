@@ -29,9 +29,11 @@ namespace DETI_MakerLab
         private SqlConnection cn;
         private ObservableCollection<Requisition> RequisitionsData;
 
-        public KitPage(Kit kit)
+        public KitPage(Kit kit, bool created = false)
         {
             InitializeComponent();
+            if (created)
+                go_back.Visibility = Visibility.Hidden;
             RequisitionsData = new ObservableCollection<Requisition>();
             _kit = kit;
             kit_name.Text = _kit.Description;

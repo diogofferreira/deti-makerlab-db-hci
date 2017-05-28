@@ -114,9 +114,9 @@ namespace DETI_MakerLab
             }
         }
 
-        public void goToProjectPage(Project proj)
+        public void goToProjectPage(Project proj, bool created = false)
         {
-            ProjectPage page = new ProjectPage(proj);
+            ProjectPage page = new ProjectPage(proj, created);
             frame.Navigate(page);
         }
 

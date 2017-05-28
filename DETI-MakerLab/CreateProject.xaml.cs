@@ -315,7 +315,7 @@ namespace DETI_MakerLab
                         SubmitMembers(projectID);
                     MessageBox.Show("Project has been created!");
                     HomeWindow window = (HomeWindow)Window.GetWindow(this);
-                    window.goToProjectPage(_project);
+                    window.goToProjectPage(_project, true);
                 }
             } catch (SqlException exc)
             {

@@ -249,7 +249,7 @@ namespace DETI_MakerLab
                     Kit kit = submitKitCreation(toRequest);
                     MessageBox.Show("Kit has been succesfully created!");
                     StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                    window.goToKitPage(kit);
+                    window.goToKitPage(kit, true);
                 }
             }
             catch (SqlException exc)

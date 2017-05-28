@@ -10,10 +10,16 @@
       Title="RequisitionPage">
 
     <Grid>
-        <Label Content="Associated to"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="75,481,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="144" Height="45"/>
-        <Label Content="Requisition Content"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="32,77,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="215" Height="36"/>
-        <TextBlock x:Name="project_name" HorizontalAlignment="Left" Height="31" Margin="273,487,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
-        <ListBox x:Name="content_list" HorizontalAlignment="Left" Height="285" Margin="273,77,0,0" VerticalAlignment="Top" Width="690"/>
+        <Label Content="Made by"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="180,359,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="50"/>
+        <Label Content="Requisition Content"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="70,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="49"/>
+        <TextBlock x:Name="requisition_user" HorizontalAlignment="Left" Margin="311,369,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5" Height="33"/>
+        <ListBox x:Name="content_list" HorizontalAlignment="Left" Height="213" Margin="311,116,0,0" VerticalAlignment="Top" Width="690"/>
         <Button x:Name="go_back" Content="Go Back" Style="{StaticResource goBackStyle}" Margin="990,569,26,10" Click="go_back_Click"/>
+        <Label Content="Requisition ID" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="130,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="50"/>
+        <TextBlock x:Name="requisition_id" HorizontalAlignment="Left" Margin="311,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5" Height="32"/>
+        <Label Content="Associated to"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="134,425,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="49"/>
+        <TextBlock x:Name="requisition_project" HorizontalAlignment="Left" Margin="311,432,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5" Height="33"/>
+        <Label Content="Requisition Date"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="104,496,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="50"/>
+        <TextBlock x:Name="requisition_date" HorizontalAlignment="Left" Margin="311,506,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5" Height="32"/>
     </Grid>
 </Page>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private ObservableCollection<DMLUser> MembersListData;
+        private ObservableCollection<Resources> ActiveRequisitionsData;
         private ObservableCollection<Requisition> RequisitionsData;
         private List<Role> Roles;
         private Project _project;
@@ -33,12 +35,14 @@ namespace DETI_MakerLab
             InitializeComponent();
             this._project = project;
             MembersListData = new ObservableCollection<DMLUser>();
+            ActiveRequisitionsData = new ObservableCollection<Resources>();
             RequisitionsData = new ObservableCollection<Requisition>();
             Roles = new List<Role>();
             try
             {
                 LoadRoles();
                 loadUsers();
+                LoadProjectActiveRequisitons();
                 loadRequisitions();
             }
             catch (SqlException exc)
@@ -52,6 +56,7 @@ namespace DETI_MakerLab
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
             project_members.ItemsSource = MembersListData;
+            active_requisitions_list.ItemsSource = ActiveRequisitionsData;
             project_last_requisitions_list.ItemsSource = RequisitionsData;
             project_members.MouseDoubleClick += new MouseButtonEventHandler(project_members_listbox_MouseDoubleClick);
         }
@@ -144,6 +149,48 @@ namespace DETI_MakerLab
 
             }
             cn.Close();
+        }
+
+        private void LoadProjectActiveRequisitons()
+        {
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
+
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@pID", _project.ProjectID);
+            cmd.CommandText = "dbo.PROJECT_ACTIVE_REQS";
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            cn.Close();
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                ActiveRequisitionsData.Add(new ElectronicUnit(
+                    int.Parse(row["ResourceID"].ToString()),
+                    new ElectronicResources(
+                        row["ProductName"].ToString(),
+                        row["Manufacturer"].ToString(),
+                        row["Model"].ToString(),
+                        row["ResDescription"].ToString(),
+                        null,
+                        row["PathToImage"].ToString()
+                        ),
+                    row["Supplier"].ToString()
+                    ));
+            }
+
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                ActiveRequisitionsData.Add(new Kit(
+                    int.Parse(row["ResourceID"].ToString()),
+                    row["KitDescription"].ToString()
+                    ));
+            }
         }
 
         private void project_members_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)

@@ -89,7 +89,7 @@ namespace DETI_MakerLab
             if (!unsavedInfos())
             {
                 // Show create equipment page
-                CreateEquipment page = new CreateEquipment(_user.EmployeeNum);
+                CreateEquipment page = new CreateEquipment(_user);
                 frame.Navigate(page);
             }
         }

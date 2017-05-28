@@ -26,23 +26,18 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private String fileName;
-        private int _staffID;
-
-        public int StaffID
-        {
-            get { return _staffID; }
-            set { _staffID = value; }
-        }
+        private Staff _staff;
+        private ElectronicResources _equipment;
 
         public CreateEquipment()
         {
             InitializeComponent();
         }
 
-        public CreateEquipment(int StaffID)
+        public CreateEquipment(Staff staff)
         {
             InitializeComponent();
-            this.StaffID = StaffID;
+            this._staff = staff;
         }
 
         public void SubmitEquipment(String imagePath)
@@ -59,12 +54,20 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@Manufacturer", equipment_manufacturer.Text);
             cmd.Parameters.AddWithValue("@Model", equipment_model.Text);
             cmd.Parameters.AddWithValue("@ResDescription", equipment_description.Text);
-            cmd.Parameters.AddWithValue("@EmployeeNum", StaffID);
+            cmd.Parameters.AddWithValue("@EmployeeNum", _staff.EmployeeNum);
             cmd.Parameters.AddWithValue("@PathToImage", imagePath);
 
             try
             {
                 cmd.ExecuteNonQuery();
+                _equipment = new ElectronicResources(
+                    equipment_name.Text,
+                    equipment_manufacturer.Text,
+                    equipment_model.Text,
+                    equipment_description.Text,
+                    _staff,
+                    imagePath
+                    );
             }
             catch (Exception ex)
             {
@@ -113,12 +116,21 @@ namespace DETI_MakerLab
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String name = equipment_name.Text + "_" + equipment_manufacturer.Text + "_" + equipment_model.Text;
                 String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + name + System.IO.Path.GetExtension(fileName);
-                System.IO.File.Copy(fileName, imagePath, true);
-                SubmitEquipment(imagePath);
-                MessageBox.Show("Equipment has been added!");
-                StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                // TODO : create object and pass it to equipment page
-                //window.goToEquipmentPage(equipment);
+
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you confirm the creation of the equipment?",
+                    "Equipment Creation Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    SubmitEquipment(imagePath);
+                    System.IO.File.Copy(fileName, imagePath, true);
+                    MessageBox.Show("Equipment has been successfully added!");
+                    StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                    window.goToEquipmentPage(_equipment);
+                }
             }
             catch (SqlException exc)
             {

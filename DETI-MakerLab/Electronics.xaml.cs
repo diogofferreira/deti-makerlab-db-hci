@@ -544,8 +544,8 @@ namespace DETI_MakerLab
             {
                 checkProject();
                 MessageBoxResult confirm = MessageBox.Show(
-                    "Do you confirm this requisition?",
-                    "Requisition Confirmation",
+                    "Do you confirm this delivery?",
+                    "Delivery Confirmation",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question
                     );
@@ -593,6 +593,8 @@ namespace DETI_MakerLab
                 // Enable buttons
                 request_button.IsEnabled = true;
                 deliver_button.IsEnabled = true;
+
+                equipment_list.IsEnabled = true;
                 
                 // Clear active requisitions data and load the active requisitions for selected project
                 ActiveRequisitionsData.Clear();

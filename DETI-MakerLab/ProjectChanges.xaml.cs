@@ -312,7 +312,7 @@ namespace DETI_MakerLab
             {
                 checkMandatoryFields();
                 MessageBoxResult confirm = MessageBox.Show(
-                    "Do you to confirm these changes?",
+                    "Do you confirm these changes?",
                     "Changes Confirmation",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question

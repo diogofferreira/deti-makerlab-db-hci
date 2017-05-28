@@ -228,19 +228,12 @@ namespace DETI_MakerLab
             cn.Close();
         }
 
-        private void launchVM()
+        private String launchVM()
         {
+            String ip = null;
             int resID = -1;
             OS selectedOS = os_list.SelectedItem as OS;
-            if (selectedProject == null)
-                throw new Exception("You have to select a project first!");
-            if (selectedOS.OSID == -1)
-                throw new Exception("You need to select an Operating System to the Virtual Machine!");
             String vmPassword = vm_password.Password;
-            if (String.IsNullOrEmpty(vmPassword))
-                throw new Exception("Your Virtual Machine needs to be protected by a password!");
-            if (vmPassword.Length < 8 || vmPassword.Length > 25)
-                throw new Exception("Your Virtual Machine password needs to have between 8 and 25 characters.");
 
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
@@ -274,6 +267,7 @@ namespace DETI_MakerLab
                 ActiveRequisitionsData.Add(vm);
                 os_list.SelectedIndex = 0;
                 vm_password.Clear();
+                ip = vm.IP;
             }
             catch (Exception ex)
             {
@@ -283,6 +277,7 @@ namespace DETI_MakerLab
             {
                 cn.Close();
             }
+            return ip;
         }
 
         private void saveNetworkChanges()
@@ -548,8 +543,27 @@ namespace DETI_MakerLab
             try
             {
                 checkProject();
-                launchVM();
-                MessageBox.Show("VM has been launched with success!");
+                OS selectedOS = os_list.SelectedItem as OS;
+                if (selectedOS.OSID == -1)
+                    throw new Exception("You need to select an Operating System to the Virtual Machine!");
+                String vmPassword = vm_password.Password;
+                if (String.IsNullOrEmpty(vmPassword))
+                    throw new Exception("Your Virtual Machine needs to be protected by a password!");
+                if (vmPassword.Length < 8 || vmPassword.Length > 25)
+                    throw new Exception("Your Virtual Machine password needs to have between 8 and 25 characters.");
+
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you confirm launching a VM running " + selectedOS.OSName + " ?",
+                    "VM Launch Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    String ip = launchVM();
+                    MessageBox.Show("VM has been launched with success!\nType to access: ssh dmluser@" + ip);
+                }
+                
             }
             catch (SqlException exc)
             {
@@ -559,7 +573,6 @@ namespace DETI_MakerLab
             {
                 MessageBox.Show(exc.Message);
             }
-            // TODO : show a message with more content, like ssh command
         }
 
         private void request_network_button_Click(object sender, RoutedEventArgs e)
@@ -567,8 +580,17 @@ namespace DETI_MakerLab
             try
             {
                 checkProject();
-                saveNetworkChanges();
-                MessageBox.Show("Project's network changes successfully saved!");
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you confirm these changes?",
+                    "Changes Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    saveNetworkChanges();
+                    MessageBox.Show("Project's network changes successfully saved!");
+                }
             }
             catch (SqlException exc)
             {
@@ -585,8 +607,19 @@ namespace DETI_MakerLab
         {
             try
             {
-                deliverResources();
-                MessageBox.Show("Delivery done with success!");
+                checkProject();
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you to deliver the selected resources?",
+                    "Delivery Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    deliverResources();
+                    MessageBox.Show("Delivery done with success!");
+                }
+                
             }
             catch (SqlException exc)
             {
@@ -626,6 +659,11 @@ namespace DETI_MakerLab
                 request_vm_button.IsEnabled = true;
                 request_network_button.IsEnabled = true;
                 deliver_button.IsEnabled = true;
+
+                os_list.IsEnabled = true;
+
+                wifi_checkbox.IsEnabled = true;
+                socket_list.IsEnabled = true;
 
                 // Clear active requisitions data and load the active requisitions for selected project
                 ActiveRequisitionsData.Clear();
@@ -683,6 +721,16 @@ namespace DETI_MakerLab
             {
                 projects_list.ItemsSource = ProjectsListData;
             }
+        }
+
+        private void wifi_checkbox_Click(object sender, RoutedEventArgs e)
+        {
+            wifi_password.IsEnabled = wifi_checkbox.IsChecked ?? false;
+        }
+
+        private void os_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vm_password.IsEnabled = os_list.SelectedIndex != 0;
         }
     }
 }

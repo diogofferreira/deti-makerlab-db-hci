@@ -18,9 +18,15 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate x:Key="ActiveReqsFrontItem">
+            <Grid Height="50" Width="465">
+                <Label Content="{Binding}" HorizontalAlignment="Center" Margin="38,10,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </DataTemplate>
+
         <DataTemplate x:Key="ReqsFrontItem">
-            <Grid Height="50" Width="765" ToolTip="Click to see requisition">
-                <Label Content="{Binding}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Grid Height="50" Width="465" ToolTip="Click to see requisition">
+                <Label Content="{Binding}" HorizontalAlignment="Center" Margin="38,10,0,0" VerticalAlignment="Top"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -35,8 +41,10 @@
         <StackPanel Orientation="Vertical" Margin="-10,74,10,-74">
             <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
         </StackPanel>
-        <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="275,364,320,0" Width="601" Height="79" />
-        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="170" Margin="182,443,0,0" VerticalAlignment="Top" Width="788" MouseDoubleClick="project_last_requisitions_list_MouseDoubleClick" ItemTemplate="{DynamicResource ReqsFrontItem}"/>
+        <Label Content="Last Project Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="687,355,81,0" Width="428" Height="59" FontSize="36" />
+        <ListBox x:Name="project_last_requisitions_list" HorizontalAlignment="Left" Height="137" Margin="640,419,0,0" VerticalAlignment="Top" Width="500" ItemTemplate="{DynamicResource ReqsFrontItem}" MouseDoubleClick="project_last_requisitions_list_MouseDoubleClick"/>
+        <Label Content="Active Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="187,355,673,0" Width="336" Height="59" FontSize="36" />
+        <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="137" Margin="104,419,0,0" VerticalAlignment="Top" Width="505" ItemTemplate="{DynamicResource ActiveReqsFrontItem}"/>
         <Button x:Name="go_back_button" Content="Go Back" Style="{StaticResource goBackStyle}" Margin="990,564,26,15" Click="go_back_button_Click"/>
     </Grid>
 </Page>

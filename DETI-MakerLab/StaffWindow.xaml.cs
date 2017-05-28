@@ -77,7 +77,7 @@ namespace DETI_MakerLab
         private void add_equipment_button_Click(object sender, RoutedEventArgs e)
         {
             // Show create equipment page
-            CreateEquipment page = new CreateEquipment(_user.EmployeeNum);
+            CreateEquipment page = new CreateEquipment(_user);
             frame.Navigate(page);
         }
 

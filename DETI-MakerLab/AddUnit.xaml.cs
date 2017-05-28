@@ -19,6 +19,38 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
+    public class UnitsHelper
+    {
+        private ResourceItem _resource;
+        private int _units;
+        private String _supplier;
+
+        public ResourceItem Resource
+        {
+            get { return _resource; }
+            set { _resource = value; }
+        }
+
+        public int Units
+        {
+            get { return _units; }
+            set { _units = value; }
+        }
+
+        public String Supplier
+        {
+            get { return _supplier; }
+            set { _supplier = value; }
+        }
+
+        public UnitsHelper(ResourceItem Resource, int Units, String Supplier)
+        {
+            this.Resource = Resource;
+            this.Units = Units;
+            this.Supplier = Supplier;
+        }
+    }
+
     /// <summary>
     /// Interaction logic for AddUnit.xaml
     /// </summary>
@@ -28,6 +60,9 @@ namespace DETI_MakerLab
         private List<ResourceItem> ResourceItems;
         private ObservableCollection<ResourceItem> EquipmentsListData;
         private Staff User;
+        private List<UnitsHelper> Units;
+
+        
 
         public AddUnit(Staff user)
         {
@@ -36,6 +71,7 @@ namespace DETI_MakerLab
             Console.WriteLine(user);
             ResourceItems = new List<ResourceItem>();
             EquipmentsListData = new ObservableCollection<ResourceItem>();
+            Units = new List<UnitsHelper>();
             try
             {
                 LoadEquipments();
@@ -110,7 +146,7 @@ namespace DETI_MakerLab
                 EquipmentsListData.Add(ri);
         }
 
-        private void UpdateUnits()
+        private void ReadUnitsList()
         {
             Boolean added = false;
             foreach (ResourceItem resource in units_list.Items)
@@ -126,12 +162,20 @@ namespace DETI_MakerLab
                 if (units > 0)
                 {
                     String supplier = ((TextBox)units_list.ItemTemplate.FindName("equipment_supplier", listBoxItemCP)).Text;
-                    UpdateSingleEquipment(resource, units, supplier);
+                    if (String.IsNullOrEmpty(supplier) || supplier.Equals("Supplier"))
+                        throw new Exception("Invalid supplier for " + resource + " units!");
+                    Units.Add(new UnitsHelper(resource, units, supplier));
                     added = true;
                 }
             }
             if (!added)
                 throw new Exception("You need to select at least one unit!");
+        }
+
+        private void AddUnits()
+        {
+            foreach (UnitsHelper helper in Units)
+                UpdateSingleEquipment(helper.Resource, helper.Units, helper.Supplier);
         }
 
         private void UpdateSingleEquipment(ResourceItem resourceItem, int units, String supplier)
@@ -172,11 +216,20 @@ namespace DETI_MakerLab
         {
             try
             {
-                UpdateUnits();
-                MessageBox.Show("Unit has been added!");
-                StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                // TODO : create object and pass it to kit page
-                //window.goToKitPage(kit);
+                ReadUnitsList();
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you confirm the addition of the selected units?",
+                    "Units Addition Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    AddUnits();
+                    MessageBox.Show("Units have been successfully added!");
+                    StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                }
+
             } catch (SqlException ex)
             {
                 Helpers.ShowCustomDialogBox(ex);

@@ -118,19 +118,14 @@ namespace DETI_MakerLab
         private void checkMandatoryFields()
         {
             if (String.IsNullOrEmpty(kit_name.Text))
-                throw new Exception("Please fill the mandatory fields!");
+                throw new Exception("Please fill in the mandatory fields!");
         }
 
-        private Kit submitKitCreation()
+        private DataTable verifyUnits()
         {
-            Kit newKit = null;
             DataTable toRequest = new DataTable();
             toRequest.Clear();
             toRequest.Columns.Add("ResourceID", typeof(int));
-
-            cn = Helpers.getSGBDConnection();
-            if (!Helpers.verifySGBDConnection(cn))
-                throw new Exception("Cannot connect to database");
 
             foreach (ListItem resource in units_list.Items)
             {
@@ -139,13 +134,13 @@ namespace DETI_MakerLab
                 var container = units_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
-                    return null;
+                    throw new Exception("Invalid item");
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
                 int units = int.Parse(((TextBox)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
                 if (units > ri.Units.Count)
-                    throw new Exception("You cannot request more units than available!");
+                    throw new Exception("You cannot request more units than the available!");
                 while (units > 0)
                 {
                     ElectronicUnit unit = ri.requestUnit();
@@ -158,6 +153,17 @@ namespace DETI_MakerLab
 
             if (toRequest.Rows.Count == 0)
                 throw new Exception("You need to select at least one unit!");
+
+            return toRequest;
+        }
+
+
+        private Kit submitKitCreation(DataTable toRequest)
+        {
+            Kit newKit = null;
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
 
             DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand();
@@ -223,10 +229,21 @@ namespace DETI_MakerLab
             try
             {
                 checkMandatoryFields();
-                Kit kit = submitKitCreation();
-                MessageBox.Show("Kit has been added!");
-                StaffWindow window = (StaffWindow)Window.GetWindow(this);
-                window.goToKitPage(kit);
+                DataTable toRequest = verifyUnits();
+
+                MessageBoxResult confirm = MessageBox.Show(
+                    "Do you confirm the kit creation?",
+                    "Kit Creation Confirmation",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                    );
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    Kit kit = submitKitCreation(toRequest);
+                    MessageBox.Show("Kit has been succesfully created!");
+                    StaffWindow window = (StaffWindow)Window.GetWindow(this);
+                    window.goToKitPage(kit);
+                }
             }
             catch (SqlException exc)
             {

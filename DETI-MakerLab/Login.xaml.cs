@@ -184,16 +184,18 @@ namespace DETI_MakerLab
             return result;
         }
 
-        private void Ellipse_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            MainWindow window = (MainWindow) Window.GetWindow(this);
-            window.goToFAQ();
-        }
-
         private void Label_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            // Go to register page
             MainWindow window = (MainWindow)Window.GetWindow(this);
             window.goToRegister();
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // Go to FAQ page
+            MainWindow window = (MainWindow)Window.GetWindow(this);
+            window.goToFAQ();
         }
     }
 }

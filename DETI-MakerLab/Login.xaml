@@ -19,8 +19,8 @@
         <PasswordBox x:Name="password_box" HorizontalAlignment="Left" Margin="487,32,0,0" VerticalAlignment="Top" Width="529" Height="62" FontSize="24" FontFamily="HP Simplified" Grid.Row="1" VerticalContentAlignment="Center" TabIndex="1"/>
         <Button x:Name="button" IsDefault="True"  Content="Login" HorizontalAlignment="Left" Height="51" Margin="525,131,0,0" VerticalAlignment="Top" Width="270" Click="button_Click" Foreground="#FF00796B" FontFamily="HP Simplified" FontSize="36" Grid.Row="1" HorizontalContentAlignment="Center" TabIndex="2"/>
         <Image x:Name="image" Source="/DETI-MakerLab;component/images/dml_logo.png" HorizontalAlignment="Left" Height="251" Margin="548,10,0,0" VerticalAlignment="Top" Width="217"/>
-        <Ellipse Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="68" Margin="1229,192,0,0" Stroke="Black" VerticalAlignment="Top" Width="77" Grid.Row="1" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown" Visibility="Hidden"/>
-        <Label x:Name="label1" Content="Help" HorizontalAlignment="Left" Margin="1251,198,0,0" VerticalAlignment="Top" Foreground="#FF00796B" Grid.Row="1" Height="35" Width="77" Visibility="Hidden"/>
+        <Label Content="Help" HorizontalAlignment="Left" Margin="1173,248,0,0" VerticalAlignment="Top" Foreground="#FF00796B" Grid.Row="1" Height="35" Width="77"/>
         <Label Content="Don't have an account? Click Here !" HorizontalAlignment="Left" Margin="515,216,0,0" Grid.Row="1" VerticalAlignment="Top" MouseLeftButtonDown="Label_MouseLeftButtonDown" Foreground="White" FontFamily="Calibri Light" FontSize="20" TabIndex="3"/>
+        <Image HorizontalAlignment="Left" Height="68" Margin="1159,192,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Source="images/question_window.png" MouseLeftButtonDown="Image_MouseLeftButtonDown" />
     </Grid>
 </Page>

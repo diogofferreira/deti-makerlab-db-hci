@@ -36,6 +36,11 @@
             <Setter Property="FontSize" Value="25"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
+        <Style x:Key="mainWindowDmlButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="#FF00796B"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontFamily" Value="Calibri Light"/>
+        </Style>
         <Style x:Key="goBackStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource dmlButtonStyle}">
             <Setter Property="Width" Value="180"/>
             <Setter Property="Height" Value="49"/>
@@ -46,6 +51,23 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontFamily" Value="Roboto"/>
             <Setter Property="Height" Value="36"/>
+        </Style>
+        <!-- Style to put a textbox like a textblock -->
+        <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Application.Resources>
 </Application>

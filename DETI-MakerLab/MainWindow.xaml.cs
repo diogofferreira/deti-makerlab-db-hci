@@ -19,7 +19,16 @@ namespace DETI_MakerLab
 
         public void goToFAQ()
         {
-            frame.Source = new Uri("FAQ.xaml", UriKind.RelativeOrAbsolute);
+            // Open FAQ section coming from this window
+            FAQ page = new FAQ();
+            frame.Navigate(page);
+        }
+
+        public void goToFAQSection()
+        {
+            // Open FAQ section coming from HomeWindow
+            FAQ page = new FAQ(false);
+            frame.Navigate(page);
         }
 
         public void goToRegister()

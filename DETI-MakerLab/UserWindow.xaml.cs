@@ -196,5 +196,13 @@ namespace DETI_MakerLab
             }
             return false;
         }
+
+        private void Image_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // Open main window with FAQ section
+            MainWindow window = new MainWindow();
+            window.Show();
+            window.goToFAQ();
+        }
     }
 }

@@ -37,6 +37,7 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             this._userID = UserID;
+            see_more.Visibility = Visibility.Hidden;
             ProjectsListData = new ObservableCollection<Project>();
             SocketsListData = new ObservableCollection<EthernetSocket>();
             ActiveRequisitionsData = new ObservableCollection<NetworkResources>();
@@ -451,6 +452,7 @@ namespace DETI_MakerLab
             {
                 cmd.ExecuteNonQuery();
                 wifi_password.Clear();
+                wifi_ssid.Content = "";
             }
             catch (Exception ex)
             {
@@ -659,6 +661,7 @@ namespace DETI_MakerLab
                 wifi_checkbox.IsChecked = false;
                 see_more.Visibility = Visibility.Hidden;
                 wifi_password.Password = "";
+                wifi_ssid.Content = "";
                 LoadProjectActiveRequisitions();
                 loadWLANs();
             }

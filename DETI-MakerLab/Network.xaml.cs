@@ -645,6 +645,8 @@ namespace DETI_MakerLab
                 // Find selected project
                 checkProject();
 
+                currentWLAN = null;
+
                 request_vm_button.IsEnabled = true;
                 request_network_button.IsEnabled = true;
                 deliver_button.IsEnabled = true;

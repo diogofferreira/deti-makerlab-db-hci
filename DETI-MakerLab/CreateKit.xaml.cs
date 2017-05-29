@@ -26,6 +26,7 @@ namespace DETI_MakerLab
     {
         private SqlConnection cn;
         private List<ResourceItem> ResourceItems;
+        private ObservableCollection<Kit> KitsListData;
         private ObservableCollection<ListItem> EquipmentsListData;
         private int _staffID;
 
@@ -52,10 +53,12 @@ namespace DETI_MakerLab
         {
             InitializeComponent();
             this.StaffID = StaffID;
+            KitsListData = new ObservableCollection<Kit>();
             EquipmentsListData = new ObservableCollection<ListItem>();
             ResourceItems = new List<ResourceItem>();
             try
             {
+                LoadKits();
                 LoadResources();
             }
             catch (SqlException exc)
@@ -66,8 +69,76 @@ namespace DETI_MakerLab
             {
                 MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            available_kits.ItemsSource = KitsListData;
             units_list.ItemsSource = EquipmentsListData;
         }
+
+
+        private void LoadKits()
+        {
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Kit", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            KitsListData.Add(new Kit(-1, "None")); // Dummy kit
+
+            while (reader.Read())
+            {
+                Kit Resource = new Kit(
+                    int.Parse(reader["ResourceID"].ToString()),
+                    reader["KitDescription"].ToString()
+                    );
+
+                KitsListData.Add(Resource);
+            }
+
+            cn.Close();
+
+            LoadUnits();
+        }
+
+        private void LoadUnits()
+        {
+            foreach (Kit kit in KitsListData)
+            {
+                if (kit.ResourceID == -1)
+                    continue;
+
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = cn;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@KitID", kit.ResourceID);
+                cmd.CommandText = "dbo.KIT_UNITS";
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(ds);
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    ElectronicResources resource = new ElectronicResources(
+                        row["ProductName"].ToString(),
+                        row["Manufacturer"].ToString(),
+                        row["Model"].ToString(),
+                        row["ResDescription"].ToString(),
+                        null,
+                        row["PathToImage"].ToString()
+                        );
+
+                    ElectronicUnit unit = new ElectronicUnit(
+                        int.Parse(row["ResourceID"].ToString()),
+                        resource,
+                        row["Supplier"].ToString()
+                        );
+
+                    kit.addUnit(unit);
+                }
+            }
+        }
+
 
         private void LoadResources()
         {
@@ -113,6 +184,33 @@ namespace DETI_MakerLab
 
             foreach (ResourceItem ri in ResourceItems)
                 EquipmentsListData.Add(ri);
+        }
+
+        private void SelectKit(Kit kit)
+        {
+            kit_name.Text = kit.ResourceID == -1 ? "" : kit.Description;
+
+            foreach (ListItem resource in units_list.Items)
+            {
+                ResourceItem ri = resource as ResourceItem;
+                int toAdd = 0;
+                
+                if (kit.ResourceID != -1)
+                    foreach (ElectronicUnit unit in kit.Units)
+                        if (ri.Resource.Equals(unit.Model))
+                            toAdd++;
+
+                var container = units_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
+                if (listBoxItemCP == null)
+                    throw new Exception("Invalid item");
+
+                DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
+
+                TextBox unitsTextBox = (TextBox)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP);
+                int units = kit.ResourceID == -1 ? 0 : toAdd;
+                unitsTextBox.Text = units.ToString();
+            }
         }
 
         private void checkMandatoryFields()
@@ -274,6 +372,12 @@ namespace DETI_MakerLab
             {
                 units_list.ItemsSource = EquipmentsListData;
             }
+        }
+
+        private void available_kits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Kit k = available_kits.SelectedItem as Kit;
+            SelectKit(k);
         }
     }
 }

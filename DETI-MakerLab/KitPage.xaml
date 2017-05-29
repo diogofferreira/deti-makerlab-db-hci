@@ -10,9 +10,11 @@
       Title="KitPage">
 
     <Grid>
-        <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,32,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="45"/>
-        <Label Content="Content"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="36"/>
-        <TextBlock x:Name="kit_name" HorizontalAlignment="Left" Height="31" Margin="273,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <Label Content="Name" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="45"/>
+        <Label Content="ID" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,64,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="45"/>
+        <Label Content="Content" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="114" Height="36"/>
+        <TextBlock x:Name="kit_name" HorizontalAlignment="Left" Height="31" Margin="273,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
+        <TextBlock x:Name="kit_id" HorizontalAlignment="Left" Height="31" Margin="273,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="690" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
         <ListBox x:Name="content_list" HorizontalAlignment="Left" Height="157" Margin="273,123,0,0" VerticalAlignment="Top" Width="690"/>
         <StackPanel Orientation="Vertical" Margin="-10,31,10,-31">
             <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />

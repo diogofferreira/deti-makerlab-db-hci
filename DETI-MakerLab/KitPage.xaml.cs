@@ -37,6 +37,7 @@ namespace DETI_MakerLab
             RequisitionsData = new ObservableCollection<Requisition>();
             _kit = kit;
             kit_name.Text = _kit.Description;
+            kit_id.Text = _kit.ResourceID.ToString();
             content_list.ItemsSource = kit.Units;
             try
             {

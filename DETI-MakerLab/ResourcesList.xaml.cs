@@ -102,10 +102,10 @@ namespace DETI_MakerLab
 
             cn.Close();
 
-            loadUnits();
+            LoadUnits();
         }
 
-        private void loadUnits()
+        private void LoadUnits()
         {
             foreach (Kit kit in KitsListData)
             {

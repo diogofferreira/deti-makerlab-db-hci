@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
+      xmlns:wpfTool="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
@@ -13,7 +14,7 @@
             <Grid Width="630">
                 <Label Content="{Binding}" HorizontalAlignment="Left" Margin="16,10,0,0" VerticalAlignment="Center"/>
                 <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="322,9,0,0" VerticalAlignment="Center" Click="equipment_info_Click" Width="60"/>
-                <TextBox x:Name="equipment_units"  HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="31" HorizontalContentAlignment="Center" ToolTip="Number of units of this kit you want to add"/>
+                <wpfTool:DecimalUpDown x:Name="equipment_units" Height="23" Margin="404,18,171,10" Value="0" Increment="1" Minimum="0" Maximum="{Binding Path=MaxUnitsValue}" ToolTip="Number of units you want to add"/>
                 <Label Content="{Binding Path=MaxUnits}" Margin="476,14,-476,5" VerticalAlignment="Center" />
             </Grid>
         </DataTemplate>

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DETI_MakerLab"
+      xmlns:wpfTool="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="628" d:DesignWidth="1196"
       Background="White"
@@ -16,11 +17,11 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ElectronicsEquipmentItem">
-            <Grid Height="30">
+            <Grid Height="30" Width="420">
                 <Label x:Name="equipment_name" Content="{Binding}" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Center" Height="26" Width="220"/>
-                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="206,5,0,5" VerticalAlignment="Center" Width="65" Click="equipment_info_Click"/>
-                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="19" Margin="289,0,0,5" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" Width="22" RenderTransformOrigin="0.894,0.579" HorizontalContentAlignment="Center" ToolTip="Number of units you want to request"/>
-                <Label x:Name="equipment_units_available" Content="{Binding Path=MaxUnits}" HorizontalAlignment="Left" Margin="327,4,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="206,4,0,6" VerticalAlignment="Center" Width="65" Click="equipment_info_Click"/>
+                <wpfTool:DecimalUpDown x:Name="equipment_units" Height="Auto" Margin="276,4,100,6" Value="0" Increment="1" Minimum="0" Maximum="{Binding Path=MaxUnitsValue}" ToolTip="Number of units you want to request"/>
+                <Label x:Name="equipment_units_available" Content="{Binding Path=MaxUnits}" HorizontalAlignment="Left" Margin="325,0,0,0" VerticalContentAlignment="Center"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ActiveRequisitionItem">

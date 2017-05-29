@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit;
 
 namespace DETI_MakerLab
 {
@@ -79,7 +80,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             units_list.ItemsSource = EquipmentsListData;
         }
@@ -156,7 +157,7 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                int units = int.Parse(((TextBox)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
+                int units = int.Parse(((DecimalUpDown)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
                 if (units > 0)
                 {
                     String supplier = ((TextBox)units_list.ItemTemplate.FindName("equipment_supplier", listBoxItemCP)).Text;
@@ -215,7 +216,7 @@ namespace DETI_MakerLab
             try
             {
                 ReadUnitsList();
-                MessageBoxResult confirm = MessageBox.Show(
+                MessageBoxResult confirm = System.Windows.MessageBox.Show(
                     "Do you confirm the addition of the selected units?",
                     "Units Addition Confirmation",
                     MessageBoxButton.YesNo,
@@ -227,7 +228,7 @@ namespace DETI_MakerLab
                     ResourceItems.Clear();
                     EquipmentsListData.Clear();
                     LoadResources();
-                    MessageBox.Show("Units have been successfully added!");
+                    System.Windows.MessageBox.Show("Units have been successfully added!");
                 }
 
             } catch (SqlException exc)
@@ -235,7 +236,7 @@ namespace DETI_MakerLab
                 Helpers.ShowCustomDialogBox(exc);
             } catch (Exception exc)
             {
-                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

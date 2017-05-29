@@ -226,6 +226,11 @@ namespace DETI_MakerLab
             get { return Units.Count.ToString() + " inserted"; }
         }
 
+        public int MaxUnitsValue
+        {
+            get { return Units.Count; }
+        }
+
         public void addUnit(ElectronicUnit newUnit)
         {
             if (!Units.Contains(newUnit))
@@ -287,6 +292,11 @@ namespace DETI_MakerLab
         public String MaxUnits
         {
             get { return Units.Count.ToString() + " available"; }
+        }
+
+        public int MaxUnitsValue
+        {
+            get { return Units.Count; }
         }
 
         public void addUnit(Kit newUnit)

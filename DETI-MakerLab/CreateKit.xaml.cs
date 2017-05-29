@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit;
 
 namespace DETI_MakerLab
 {
@@ -67,7 +68,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             available_kits.ItemsSource = KitsListData;
             units_list.ItemsSource = EquipmentsListData;
@@ -207,9 +208,9 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                TextBox unitsTextBox = (TextBox)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP);
+                DecimalUpDown unitsTextBox = (DecimalUpDown)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP);
                 int units = kit.ResourceID == -1 ? 0 : toAdd;
-                unitsTextBox.Text = units.ToString();
+                unitsTextBox.Value = units;
             }
         }
 
@@ -243,7 +244,7 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                int units = int.Parse(((TextBox)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
+                int units = int.Parse(((DecimalUpDown)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
                 if (units > ri.Units.Count)
                     throw new Exception("You cannot request more units than the available!");
                 while (units > 0)
@@ -336,7 +337,7 @@ namespace DETI_MakerLab
                 checkMandatoryFields();
                 DataTable toRequest = verifyUnits();
 
-                MessageBoxResult confirm = MessageBox.Show(
+                MessageBoxResult confirm = System.Windows.MessageBox.Show(
                     "Do you confirm the kit creation?",
                     "Kit Creation Confirmation",
                     MessageBoxButton.YesNo,
@@ -345,7 +346,7 @@ namespace DETI_MakerLab
                 if (confirm == MessageBoxResult.Yes)
                 {
                     Kit kit = submitKitCreation(toRequest);
-                    MessageBox.Show("Kit has been succesfully created!");
+                    System.Windows.MessageBox.Show("Kit has been succesfully created!");
                     StaffWindow window = (StaffWindow)Window.GetWindow(this);
                     window.goToKitPage(kit, true);
                 }
@@ -356,7 +357,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

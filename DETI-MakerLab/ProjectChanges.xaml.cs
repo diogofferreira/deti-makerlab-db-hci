@@ -51,6 +51,7 @@ namespace DETI_MakerLab
             }
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
+            project_class.Text = _project.ProjectClass.ClassName;
             project_members.ItemsSource = MembersListData;
             project_members.ItemContainerGenerator.StatusChanged += new EventHandler(ItemContainerGenerator_StatusChanged);
         }

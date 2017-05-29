@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
       xmlns:local="clr-namespace:DETI_MakerLab"
       mc:Ignorable="d" 
       d:DesignHeight="628" d:DesignWidth="1196"
@@ -14,7 +15,7 @@
                 <Label x:Name="equipment_name" Content="{Binding}" HorizontalAlignment="Left" Margin="27,10,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="equipment_info" Content="More Info" HorizontalAlignment="Left" Margin="322,15,0,16" VerticalAlignment="Center" Click="equipment_info_Click" Width="60"/>
                 <TextBox x:Name="equipment_supplier" HorizontalAlignment="Left" Height="23" Margin="415,14,0,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top" Width="145" ToolTip="Unit's supplier"/>
-                <TextBox x:Name="equipment_units" HorizontalAlignment="Left" Height="23" Margin="635,14,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="24" ToolTip="Number of units you want to request" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <wpfTool:DecimalUpDown x:Name="equipment_units" Height="23" Margin="595,14,201,14" Value="0" Increment="1" Minimum="0" ToolTip="Number of units you want to request"/>
                 <Label x:Name="equipmentAvailable" Content="{Binding Path=Inserted}" Margin="678,0,-678,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
             </Grid>
         </DataTemplate>

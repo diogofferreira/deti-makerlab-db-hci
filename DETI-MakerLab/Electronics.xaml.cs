@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit;
 
 namespace DETI_MakerLab
 {
@@ -93,7 +94,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             projects_list.ItemsSource = ProjectsListData;
             equipment_list.ItemsSource = ResourcesListData;
@@ -270,12 +271,12 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                TextBox unitsTextBox = equipment_list.ItemTemplate.FindName("equipment_units", listBoxItemCP) as TextBox;
+                DecimalUpDown unitsTextBox = equipment_list.ItemTemplate.FindName("equipment_units", listBoxItemCP) as DecimalUpDown;
                 int units = int.Parse(unitsTextBox.Text);
                 if (units == 0)
                     continue;
                 
-                unitsTextBox.Text = "0";
+                unitsTextBox.Value = 0;
 
                 while(units > 0) { 
                     Resources unit = null;
@@ -497,7 +498,7 @@ namespace DETI_MakerLab
             try
             {
                 checkProject();
-                MessageBoxResult confirm = MessageBox.Show(
+                MessageBoxResult confirm = System.Windows.MessageBox.Show(
                     "Do you confirm this requisition?",
                     "Requisition Confirmation",
                     MessageBoxButton.YesNo,
@@ -506,7 +507,7 @@ namespace DETI_MakerLab
                 if (confirm == MessageBoxResult.Yes)
                 {
                     SubmitRequisitionResources();
-                    MessageBox.Show("Requisition done with success!");
+                    System.Windows.MessageBox.Show("Requisition done with success!");
                 }
                 
             }
@@ -516,7 +517,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -525,7 +526,7 @@ namespace DETI_MakerLab
             try
             {
                 checkProject();
-                MessageBoxResult confirm = MessageBox.Show(
+                MessageBoxResult confirm = System.Windows.MessageBox.Show(
                     "Do you confirm this delivery?",
                     "Delivery Confirmation",
                     MessageBoxButton.YesNo,
@@ -534,7 +535,7 @@ namespace DETI_MakerLab
                 if (confirm == MessageBoxResult.Yes)
                 {
                     SubmitDeliveryResources();
-                    MessageBox.Show("Delivery done with success!");
+                    System.Windows.MessageBox.Show("Delivery done with success!");
                 }
             }
             catch (SqlException exc)
@@ -543,7 +544,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -588,7 +589,7 @@ namespace DETI_MakerLab
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

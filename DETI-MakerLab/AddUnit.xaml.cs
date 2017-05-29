@@ -62,8 +62,6 @@ namespace DETI_MakerLab
         private Staff User;
         private List<UnitsHelper> Units;
 
-        
-
         public AddUnit(Staff user)
         {
             InitializeComponent();
@@ -226,6 +224,9 @@ namespace DETI_MakerLab
                 if (confirm == MessageBoxResult.Yes)
                 {
                     AddUnits();
+                    ResourceItems.Clear();
+                    EquipmentsListData.Clear();
+                    LoadResources();
                     MessageBox.Show("Units have been successfully added!");
                 }
 

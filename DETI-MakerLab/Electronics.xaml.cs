@@ -257,8 +257,6 @@ namespace DETI_MakerLab
             if (SelectedProject == null)
                 throw new Exception("You have to select a project first!");
 
-            List<Resources> toBeRequested = new List<Resources>();
-            List<ListItem> toBeRemoved = new List<ListItem>();
             DataTable toRequest = new DataTable();
             toRequest.Clear();
             toRequest.Columns.Add("ResourceID", typeof(int));
@@ -279,29 +277,27 @@ namespace DETI_MakerLab
                 
                 unitsTextBox.Text = "0";
 
-                Resources unit = null;
-                if (resource is ResourceItem)
-                {
-                    ResourceItem r = resource as ResourceItem;
-                    if (units > r.Units.Count)
-                        throw new Exception("You cannot request more units than available!");
-                    unit = r.requestUnit();
-                    if (r.Units.Count == 0)
-                        toBeRemoved.Add(r);
+                while(units > 0) { 
+                    Resources unit = null;
+                    if (resource is ResourceItem)
+                    {
+                        ResourceItem r = resource as ResourceItem;
+                        if (units > r.Units.Count)
+                            throw new Exception("You cannot request more units than available!");
+                        unit = r.requestUnit();
+                    }
+                    else if (resource is KitItem)
+                    {
+                        KitItem k = resource as KitItem;
+                        if (units > k.Units.Count)
+                            throw new Exception("You cannot request more units than available!");
+                        unit = k.requestUnit();
+                    }
+                    DataRow row = toRequest.NewRow();
+                    row["ResourceID"] = unit.ResourceID;
+                    toRequest.Rows.Add(row);
+                    units--;
                 }
-                else if (resource is KitItem)
-                {
-                    KitItem k = resource as KitItem;
-                    if (units > k.Units.Count)
-                        throw new Exception("You cannot request more units than available!");
-                    unit = k.requestUnit();
-                    if (k.Units.Count == 0)
-                        toBeRemoved.Add(k);
-                }
-                toBeRequested.Add(unit);
-                DataRow row = toRequest.NewRow();
-                row["ResourceID"] = unit.ResourceID;
-                toRequest.Rows.Add(row);
             }
 
             if (toRequest.Rows.Count == 0)
@@ -326,23 +322,10 @@ namespace DETI_MakerLab
             try
             {
                 cmd.ExecuteNonQuery();
-                foreach (Resources resource in toBeRequested)
-                    ActiveRequisitionsData.Add(resource);
-                foreach (ListItem li in toBeRemoved)
-                {
-                    ResourcesListData.Remove(li);
-                    if (typeof(ResourceItem).IsInstanceOfType(li))
-                    {
-                        ResourceItem ri = li as ResourceItem;
-                        ResourceItems.Remove(ri);
-                    }
-                    else if (typeof(KitItem).IsInstanceOfType(li))
-                    {
-                        KitItem ki = li as KitItem;
-                        KitItems.Remove(ki);
-                    }
-                }
-                    
+                ActiveRequisitionsData.Clear();
+                ResourcesListData.Clear();
+                LoadAvailableResources();
+                LoadProjectActiveRequisitons();
             }
             catch (Exception ex)
             {
@@ -462,7 +445,6 @@ namespace DETI_MakerLab
                             KitItem ki = new KitItem(unit.Description);
                             ki.addUnit(unit);
                             KitItems.Add(ki);
-                            Console.WriteLine(ki);
                             ResourcesListData.Add(ki);
                         }
                     }

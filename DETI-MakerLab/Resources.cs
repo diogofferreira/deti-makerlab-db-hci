@@ -221,6 +221,11 @@ namespace DETI_MakerLab
             get { return Units.Count.ToString() + " available"; }
         }
 
+        public String Inserted
+        {
+            get { return Units.Count.ToString() + " inserted"; }
+        }
+
         public void addUnit(ElectronicUnit newUnit)
         {
             if (!Units.Contains(newUnit))

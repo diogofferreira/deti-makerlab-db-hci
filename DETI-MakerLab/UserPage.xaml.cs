@@ -52,11 +52,13 @@ namespace DETI_MakerLab
             InitializeComponent();
             this.User = User;
             RequisitionsData = new ObservableCollection<Requisition>();
+            // Set user's infos
             user_name.Text = _user.FirstName + ' ' + _user.LastName;
             user_email.Text = _user.Email;
             user_nmec.Text = _user.NumMec.ToString();
             if (!String.IsNullOrEmpty(_user.PathToImage))
                 user_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
+            // Change label text based on user type (student or professor)
             if (typeof(Professor).IsInstanceOfType(this.User))
             {
                 course_area.Content = "Scientific Area";
@@ -69,6 +71,7 @@ namespace DETI_MakerLab
             }
             try
             {
+                // Load user's requisitions
                 loadRequisitions();
             }
             catch (SqlException exc)
@@ -125,6 +128,7 @@ namespace DETI_MakerLab
 
         private void go_back_Click(object sender, RoutedEventArgs e)
         {
+            // Go back to last page based on current window
             try
             {
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);
@@ -139,6 +143,7 @@ namespace DETI_MakerLab
 
         private void user_last_requisitions_list_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            // Go to selected requisition page, based on current window
             if (user_last_requisitions_list.SelectedItem != null)
             {
                 Requisition requisition = user_last_requisitions_list.SelectedItem as Requisition;
@@ -151,7 +156,6 @@ namespace DETI_MakerLab
                     StaffWindow window = (StaffWindow)Window.GetWindow(this);
                     window.goToRequisitionPage(requisition);
                 }
-                
             }
         }
 

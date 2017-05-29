@@ -10,8 +10,8 @@
 
     <Grid>
         <Image Source="images/question.png" HorizontalAlignment="Left" Height="210" Margin="512,10,0,0" VerticalAlignment="Top" Width="263"/>
-        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource mainWindowDmlButtonStyle}" HorizontalAlignment="Left" Margin="1203,629,0,0" VerticalAlignment="Top" Width="145" Height="65" Click="go_back_Click"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource mainWindowDmlButtonStyle}" HorizontalAlignment="Left" Margin="1189,627,0,0" VerticalAlignment="Top" Width="145" Height="65" Click="go_back_Click"/>
         <TextBox x:Name="faq_text" Foreground="White" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource TextBlockStyle}" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="200,255,0,49" Height="400" Width="960"/>
-        <Button x:Name="change_button" Content="Staff FAQ" Style="{StaticResource mainWindowDmlButtonStyle}" HorizontalAlignment="Left" Margin="55,438,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name="change_button" Content="Staff FAQ" Style="{StaticResource mainWindowDmlButtonStyle}" HorizontalAlignment="Left" Margin="1189,423,0,0" VerticalAlignment="Top" Click="Button_Click" Width="145"/>
     </Grid>
 </Page>

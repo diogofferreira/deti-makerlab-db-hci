@@ -20,9 +20,6 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for Home.xaml
-    /// </summary>
     public partial class Home : Page, DMLPages
     {
         private SqlConnection cn;
@@ -46,6 +43,7 @@ namespace DETI_MakerLab
             RequisitionsListData = new ObservableCollection<Requisition>();
             try
             {
+                // Load last projects (and it's members) and last requisitions
                 LastProjects();
                 LoadUsers();
                 LastRequisitions();
@@ -180,11 +178,11 @@ namespace DETI_MakerLab
             cn.Close();
         }
 
-
-        // REVER A QUESTÂO DO QUE MOSTRAR NAS REQUISIÇÕES
-
         private void project_info_Click(object sender, RoutedEventArgs e)
         {
+            // Go to project page based on current window and user: 
+            // If it's a user's project, he can manage it
+            // Else he just will see it's information
             Project project = (Project)(sender as Button).DataContext;
             try
             {
@@ -209,6 +207,7 @@ namespace DETI_MakerLab
 
         private void requisition_info_Click(object sender, RoutedEventArgs e)
         {
+            // Go to selected requisition's page, based on current window
             Requisition requisition = (Requisition)(sender as Button).DataContext;
             try
             {

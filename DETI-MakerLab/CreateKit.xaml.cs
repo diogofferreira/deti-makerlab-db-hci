@@ -20,9 +20,6 @@ using Xceed.Wpf.Toolkit;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for CreateKit.xaml
-    /// </summary>
     public partial class CreateKit : Page, DMLPages
     {
         private SqlConnection cn;
@@ -39,6 +36,7 @@ namespace DETI_MakerLab
 
         private bool addResourceItemUnit(ElectronicUnit unit)
         {
+            // Add new resource unit
             foreach (ResourceItem item in ResourceItems)
             {
                 if (item.Resource.Equals(unit.Model))
@@ -59,6 +57,7 @@ namespace DETI_MakerLab
             ResourceItems = new List<ResourceItem>();
             try
             {
+                // Load kits and resources to it's lists
                 LoadKits();
                 LoadResources();
             }
@@ -84,7 +83,8 @@ namespace DETI_MakerLab
             SqlCommand cmd = new SqlCommand("SELECT * FROM Kit", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
-            KitsListData.Add(new Kit(-1, "None")); // Dummy kit
+            // Dummy kit
+            KitsListData.Add(new Kit(-1, "None")); 
 
             while (reader.Read())
             {
@@ -98,6 +98,7 @@ namespace DETI_MakerLab
 
             cn.Close();
 
+            // Load kit's units
             LoadUnits();
         }
 
@@ -189,6 +190,7 @@ namespace DETI_MakerLab
 
         private void SelectKit(Kit kit)
         {
+            // Replace item's name by empty string if it hasn't units
             kit_name.Text = kit.ResourceID == -1 ? "" : kit.Description;
 
             foreach (ListItem resource in units_list.Items)
@@ -196,11 +198,13 @@ namespace DETI_MakerLab
                 ResourceItem ri = resource as ResourceItem;
                 int toAdd = 0;
                 
+                // Get kit's units number
                 if (kit.ResourceID != -1)
                     foreach (ElectronicUnit unit in kit.Units)
                         if (ri.Resource.Equals(unit.Model))
                             toAdd++;
 
+                // Find the listbox template fields
                 var container = units_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
@@ -216,12 +220,14 @@ namespace DETI_MakerLab
 
         private void checkMandatoryFields()
         {
+            // Check if all mandatory fields are fill
             if (String.IsNullOrEmpty(kit_name.Text))
                 throw new Exception("Please fill in the mandatory fields!");
         }
 
         public bool isEmpty()
         {
+            // Check if any fields are filled in
             if (!String.IsNullOrEmpty(kit_name.Text))
                 return false;
             return true;
@@ -247,6 +253,8 @@ namespace DETI_MakerLab
                 int units = int.Parse(((DecimalUpDown)units_list.ItemTemplate.FindName("equipment_units", listBoxItemCP)).Text);
                 if (units > ri.Units.Count)
                     throw new Exception("You cannot request more units than the available!");
+
+                // Save each unit on DB
                 while (units > 0)
                 {
                     ElectronicUnit unit = ri.requestUnit();
@@ -325,6 +333,7 @@ namespace DETI_MakerLab
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)
         {
+            // Go to selected equipment's page
             ResourceItem equipment = (ResourceItem)(sender as Button).DataContext;
             StaffWindow window = (StaffWindow) Window.GetWindow(this);
             window.goToEquipmentPage(equipment.Resource);
@@ -377,6 +386,7 @@ namespace DETI_MakerLab
 
         private void available_kits_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Fill the form's with the selected kit template
             Kit k = available_kits.SelectedItem as Kit;
             SelectKit(k);
         }

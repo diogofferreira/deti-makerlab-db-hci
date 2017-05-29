@@ -169,6 +169,7 @@ namespace DETI_MakerLab
 
         private void logout_button_Click(object sender, RoutedEventArgs e)
         {
+            // Go to login page on main window
             MainWindow login = new MainWindow();
             login.Show();
             login.goToLogin();
@@ -187,6 +188,7 @@ namespace DETI_MakerLab
 
         private bool unsavedInfos()
         {
+            // Check if any fields are filled in
             DMLPages page = (DMLPages)frame.Content;
             if (!page.isEmpty())
             {
@@ -202,7 +204,7 @@ namespace DETI_MakerLab
             // Open main window with FAQ section
             MainWindow window = new MainWindow();
             window.Show();
-            window.goToFAQ();
+            window.goToFAQSection();
         }
     }
 }

@@ -13,6 +13,8 @@ namespace DETI_MakerLab
 {
     class Helpers
     {
+
+        // Get child visual item in order to find the wanted field
         public static childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
@@ -30,11 +32,13 @@ namespace DETI_MakerLab
             return null;
         }
 
+        // Get the DB conntection
         public static SqlConnection getSGBDConnection()
         {
-            return new SqlConnection("data source= DESKTOP-H41EV9L\\SQLEXPRESS;integrated security=true;initial catalog=DML");
+            return new SqlConnection("data source= DESKTOP-GU6KNJA\\SQLSERVER;integrated security=true;initial catalog=DML");
         }
 
+        // Check if the connection is valid and running
         public static bool verifySGBDConnection(SqlConnection cn)
         {
             if (cn == null)
@@ -46,6 +50,7 @@ namespace DETI_MakerLab
             return cn.State == ConnectionState.Open;
         }
 
+        // Show a custom dialog for two level message's (user level and technician level)
         public static void ShowCustomDialogBox(Exception ex)
         {
             // Create custom message box dialog

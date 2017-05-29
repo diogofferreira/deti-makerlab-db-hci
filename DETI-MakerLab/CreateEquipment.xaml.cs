@@ -19,20 +19,12 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for CreateEquipment.xaml
-    /// </summary>
     public partial class CreateEquipment : Page, DMLPages
     {
         private SqlConnection cn;
         private String fileName;
         private Staff _staff;
         private ElectronicResources _equipment;
-
-        public CreateEquipment()
-        {
-            InitializeComponent();
-        }
 
         public CreateEquipment(Staff staff)
         {
@@ -82,6 +74,7 @@ namespace DETI_MakerLab
 
         private void checkMandatoryFields()
         {
+            // Check if all mandatory fields are filled in
             if (String.IsNullOrEmpty(equipment_name.Text) || String.IsNullOrEmpty(equipment_model.Text)
                 || String.IsNullOrEmpty(equipment_manufacturer.Text) || String.IsNullOrEmpty(equipment_image.Text))
                 throw new Exception("Please fill the mandatory fields!");
@@ -89,6 +82,7 @@ namespace DETI_MakerLab
 
         public bool isEmpty()
         {
+            // Check if any fields are filled in
             if (!String.IsNullOrEmpty(equipment_name.Text) || !String.IsNullOrEmpty(equipment_model.Text)
                 || !String.IsNullOrEmpty(equipment_description.Text)
                 || !String.IsNullOrEmpty(equipment_manufacturer.Text) || !String.IsNullOrEmpty(equipment_image.Text))
@@ -98,8 +92,11 @@ namespace DETI_MakerLab
 
         private void upload_image_button_Click(object sender, RoutedEventArgs e)
         {
+            // Open a file dialog for images
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.Filter = "All Image Files | *.*";
+
+            // Get chosen image's filename
             if (dlg.ShowDialog() == true)
             {
                 fileName = dlg.FileName;
@@ -112,7 +109,7 @@ namespace DETI_MakerLab
             try
             {
                 checkMandatoryFields();
-                // Copy image to project file and produce its path
+                // Change filename and produce it's new complete path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String name = equipment_name.Text + "_" + equipment_manufacturer.Text + "_" + equipment_model.Text;
                 name.Replace(" ", "");
@@ -127,8 +124,12 @@ namespace DETI_MakerLab
                 if (confirm == MessageBoxResult.Yes)
                 {
                     SubmitEquipment(imagePath);
+                    // Copy image file to project path
                     System.IO.File.Copy(fileName, imagePath, true);
+
                     MessageBox.Show("Equipment has been successfully added!");
+
+                    // Go to created equipment's page
                     StaffWindow window = (StaffWindow)Window.GetWindow(this);
                     window.goToEquipmentPage(_equipment, true);
                 }

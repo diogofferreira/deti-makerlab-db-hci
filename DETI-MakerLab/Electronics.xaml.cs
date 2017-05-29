@@ -20,9 +20,6 @@ using Xceed.Wpf.Toolkit;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for Electronics.xaml
-    /// </summary>
     public partial class Electronics : Page, DMLPages
     {
         SqlConnection cn;
@@ -84,6 +81,7 @@ namespace DETI_MakerLab
             KitItems = new List<KitItem>();
             try
             {
+                // Load projects, resources and requisitions to the lists
                 LoadProjects();
                 LoadAvailableResources();
                 LoadProjectActiveRequisitons();
@@ -103,6 +101,7 @@ namespace DETI_MakerLab
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)
         {
+            // Go to equipment page, based on current Window
             HomeWindow window = (HomeWindow)Window.GetWindow(this);
             try
             {
@@ -259,6 +258,7 @@ namespace DETI_MakerLab
             if (SelectedProject == null)
                 throw new Exception("You have to select a project first!");
 
+            // List's to manage equipments for requisition
             List<Resources> toBeRequested = new List<Resources>();
             List < ListItem > toBeRemoved = new List<ListItem>();
 
@@ -282,6 +282,7 @@ namespace DETI_MakerLab
                 
                 unitsTextBox.Value = 0;
 
+                // Add chosen unit's number
                 while(units > 0) { 
                     Resources unit = null;
                     if (resource is ResourceItem)
@@ -358,7 +359,6 @@ namespace DETI_MakerLab
             {
                 cn.Close();
             }
-            
         }
 
         private int SubmitRequisition()
@@ -573,6 +573,7 @@ namespace DETI_MakerLab
 
         private void checkProject()
         {
+            // Get chosen project object
             foreach (Project resource in projects_list.Items)
             {
                 var container = projects_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
@@ -599,7 +600,6 @@ namespace DETI_MakerLab
                 // Enable buttons
                 request_button.IsEnabled = true;
                 deliver_button.IsEnabled = true;
-
                 equipment_list.IsEnabled = true;
                 
                 // Clear active requisitions data and load the active requisitions for selected project

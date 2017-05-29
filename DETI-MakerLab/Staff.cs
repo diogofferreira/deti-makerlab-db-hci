@@ -41,6 +41,7 @@ namespace DETI_MakerLab
             {
                 try
                 {
+                    // Check for valid email
                     var addr = new System.Net.Mail.MailAddress(value);
                     if (addr.Address != value)
                         throw new Exception("Invalid email");

@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for ResourcesList.xaml
-    /// </summary>
     public partial class ResourcesList : Page, DMLPages
     {
         private ObservableCollection<ElectronicResources> EquipmentsListData;
@@ -34,6 +31,7 @@ namespace DETI_MakerLab
             KitsListData = new ObservableCollection<Kit>();
             try
             {
+                // Load all resources and kits to lists
                 LoadResources();
                 LoadKits();
             }
@@ -143,6 +141,7 @@ namespace DETI_MakerLab
 
         private void equipment_info_Click(object sender, RoutedEventArgs e)
         {
+            // Go to selected equipment's page
             ElectronicResources equipment = (ElectronicResources)(sender as Button).DataContext;
             StaffWindow window = (StaffWindow)Window.GetWindow(this);
             window.goToEquipmentPage(equipment);
@@ -150,6 +149,7 @@ namespace DETI_MakerLab
 
         private void kit_info_Click(object sender, RoutedEventArgs e)
         {
+            // Go to selected kit's page
             Kit kit = (Kit)(sender as Button).DataContext;
             StaffWindow window = (StaffWindow)Window.GetWindow(this);
             window.goToKitPage(kit);

@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for AllProjects.xaml
-    /// </summary>
     public partial class AllProjects : Page, DMLPages
     {
         SqlConnection cn;
@@ -32,6 +29,7 @@ namespace DETI_MakerLab
             InitializeComponent();
             ProjectsListData = new ObservableCollection<Project>();
             try { 
+                // Load projects and users
                 LoadProjects();
                 LoadUsers();
             }
@@ -54,6 +52,7 @@ namespace DETI_MakerLab
 
         private void all_projects_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
+            // Go to selected project's page
             if (all_projects_listbox.SelectedItem != null)
             {
                 Project selectedProject = all_projects_listbox.SelectedItem as Project;

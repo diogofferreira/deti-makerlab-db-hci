@@ -44,6 +44,7 @@ namespace DETI_MakerLab
             OSList = new ObservableCollection<OS>();
             try
             {
+                // Load OS's, projects and sockets
                 LoadOS();
                 LoadProjects(UserID);
                 LoadAvailableSockets();
@@ -147,7 +148,7 @@ namespace DETI_MakerLab
         {
             if (selectedProject == null)
                 throw new Exception("Select a project first!");
-
+            // Load all possible network's resources requisition's for the selected project
             loadVMs();
             loadSockets();
             loadWLANs();
@@ -243,6 +244,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
+            // Create new virtual machine
             VirtualMachine vm = new VirtualMachine(
                 resID,
                 selectedProject,
@@ -286,6 +288,7 @@ namespace DETI_MakerLab
 
         private void saveNetworkChanges()
         {
+            // Save possible changes made on WLAN's fields or sockets requisitions
             saveWLAN();
             saveSockets();
         }
@@ -315,6 +318,7 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
+                // Check if the socket is checed for requisition or not
                 if (!(((CheckBox)socket_list.ItemTemplate.FindName("active_checkbox", listBoxItemCP)).IsChecked ?? false))
                     continue;
 
@@ -417,6 +421,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Error connecting to database");
 
+            // Update WLAN password
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
@@ -515,6 +520,8 @@ namespace DETI_MakerLab
             try
             {
                 cmd.ExecuteNonQuery();
+
+                // Clear and reload all lists
                 ActiveRequisitionsData.Clear();
                 SocketsListData.Clear();
                 LoadProjectActiveRequisitions();
@@ -534,6 +541,7 @@ namespace DETI_MakerLab
         {
             try
             {
+                // Check selected project
                 checkProject();
                 OS selectedOS = os_list.SelectedItem as OS;
                 if (selectedOS.OSID == -1)
@@ -571,6 +579,7 @@ namespace DETI_MakerLab
         {
             try
             {
+                // Check selected project
                 checkProject();
                 MessageBoxResult confirm = MessageBox.Show(
                     "Do you confirm these changes?",
@@ -599,6 +608,7 @@ namespace DETI_MakerLab
         {
             try
             {
+                // Check selected project
                 checkProject();
                 MessageBoxResult confirm = MessageBox.Show(
                     "Do you to deliver the selected resources?",
@@ -611,7 +621,6 @@ namespace DETI_MakerLab
                     deliverResources();
                     MessageBox.Show("Delivery done with success!");
                 }
-                
             }
             catch (SqlException exc)
             {
@@ -625,6 +634,7 @@ namespace DETI_MakerLab
 
         private void checkProject()
         {
+            // Check selected project from the project's list
             foreach (Project resource in projects_list.Items)
             {
                 var container = projects_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
@@ -645,9 +655,10 @@ namespace DETI_MakerLab
         {
             try
             {
-                // Find selected project
+                // Check selected project
                 checkProject();
 
+                // Clear all fields and disable buttons
                 currentWLAN = null;
 
                 request_vm_button.IsEnabled = true;
@@ -722,11 +733,13 @@ namespace DETI_MakerLab
 
         private void wifi_checkbox_Click(object sender, RoutedEventArgs e)
         {
+            // Change wifi password status
             wifi_password.IsEnabled = wifi_checkbox.IsChecked ?? false;
         }
 
         private void os_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Change vm password status
             vm_password.IsEnabled = os_list.SelectedIndex != 0;
         }
 
@@ -738,6 +751,7 @@ namespace DETI_MakerLab
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // See, while clicking, the password in plain text
             wifi_password_clear.Text = wifi_password.Password;
             wifi_password.Visibility = System.Windows.Visibility.Hidden;
             wifi_password_clear.Visibility = System.Windows.Visibility.Visible;
@@ -745,6 +759,7 @@ namespace DETI_MakerLab
 
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            // Change the password to password's view
             wifi_password.Visibility = System.Windows.Visibility.Visible;
             wifi_password_clear.Visibility = System.Windows.Visibility.Hidden;
         }

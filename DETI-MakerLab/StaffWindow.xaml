@@ -65,7 +65,7 @@
             <Image x:Name="profile_image" HorizontalAlignment="Left" Height="90" Margin="815,10,0,0" VerticalAlignment="Top" Width="60" Source="images/default-profile.png" Grid.RowSpan="2"/>
             <Label x:Name="user_name" HorizontalAlignment="Center" Margin="875,26,173,0" VerticalAlignment="Top" Width="148" Foreground="White" FontSize="15" Height="44"/>
             <Button x:Name="logout_button" Content="Logout" HorizontalAlignment="Left" Margin="1033,21,0,0" VerticalAlignment="Top" Width="75" Height="44" Background="#FF4DB6AC" BorderBrush="#FF004D40" RenderTransformOrigin="0.018,0.474" FontSize="20" Foreground="White" Click="logout_button_Click"/>
-            <Image HorizontalAlignment="Left" Height="39" Margin="1130,21,0,0" VerticalAlignment="Top" Width="56" Source="images/question_window.png" MouseLeftButtonDown="Image_MouseLeftButtonDown" ToolTip="Show FAQ section"/>
+            <Image HorizontalAlignment="Left" Height="39" Margin="1130,21,0,0" VerticalAlignment="Top" Width="56" Source="images/question_window_vivid.png" MouseLeftButtonDown="Image_MouseLeftButtonDown" ToolTip="Show FAQ section"/>
         </Grid>
     </Grid>
 </Window>

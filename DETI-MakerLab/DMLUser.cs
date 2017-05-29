@@ -31,8 +31,9 @@ namespace DETI_MakerLab
             get { return _numMec;  }
             set
             {
+                // Check for valid mec. num.
                 if (value > 100000) 
-                    throw new Exception("Invalid NumMec");
+                    throw new Exception("Invalid MecNum");
                 _numMec = value;
             }
         }
@@ -54,11 +55,12 @@ namespace DETI_MakerLab
             get { return _email; }
             set
             {
+                // Check if the email is valid
                 var addr = new System.Net.Mail.MailAddress(value);
                 if (addr.Address != value)
                     throw new Exception("Invalid email");
-                //if (!EmailValidator.IsMatch(value))
-                    //throw new Exception("You must use an UA email account!");
+                if (!EmailValidator.IsMatch(value))
+                    throw new Exception("You must use an UA email account!");
                 _email = value;
             }
         }
@@ -94,20 +96,6 @@ namespace DETI_MakerLab
         public override String ToString()
         {
             return FullName + "(" + NumMec.ToString() + ")";
-        }
-
-        public static String hashPassword(String password)
-        {
-            if (password == null | String.IsNullOrEmpty(password))
-                throw new Exception("Invalid password");
-            byte[] salt;
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-            byte[] hash = pbkdf2.GetBytes(20);
-            byte[] hashBytes = new byte[36];
-            Array.Copy(salt, 0, hashBytes, 0, 16);
-            Array.Copy(hash, 0, hashBytes, 16, 20);
-            return Convert.ToBase64String(hashBytes);
         }
 
         public DMLUser() { }

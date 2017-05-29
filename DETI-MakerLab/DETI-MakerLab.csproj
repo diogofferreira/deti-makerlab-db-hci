@@ -316,5 +316,8 @@
   <ItemGroup>
     <Resource Include="images\question_window.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\question_window_vivid.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

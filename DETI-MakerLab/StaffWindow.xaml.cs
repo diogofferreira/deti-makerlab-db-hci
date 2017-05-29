@@ -188,7 +188,7 @@ namespace DETI_MakerLab
             // Open main window with FAQ section
             MainWindow window = new MainWindow();
             window.Show();
-            window.goToFAQ();
+            window.goToFAQSection();
         }
     }
 }

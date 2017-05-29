@@ -57,8 +57,8 @@ namespace DETI_MakerLab
                 var addr = new System.Net.Mail.MailAddress(value);
                 if (addr.Address != value)
                     throw new Exception("Invalid email");
-                if (!EmailValidator.IsMatch(value))
-                    throw new Exception("You must use an UA email account!");
+                //if (!EmailValidator.IsMatch(value))
+                    //throw new Exception("You must use an UA email account!");
                 _email = value;
             }
         }

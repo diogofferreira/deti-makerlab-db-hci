@@ -222,6 +222,7 @@ namespace DETI_MakerLab
                     reader["PasswordHash"].ToString()
                     );
                 wifi_checkbox.IsChecked = true;
+                wifi_ssid.Content = "SSID : " + currentWLAN.SSID;
                 wifi_password.Password = currentWLAN.PasswordHash;
             }
 
@@ -441,13 +442,14 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Error connecting to database");
 
-            SqlCommand cmd = new SqlCommand("DELETE FROM WirelessLAN WHERE NetResID=@resID)", cn);
+            SqlCommand cmd = new SqlCommand("DELETE FROM WirelessLAN WHERE NetResID=@resID", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@resID", currentWLAN.ResourceID);
 
             try
             {
                 cmd.ExecuteNonQuery();
+                wifi_password.Clear();
             }
             catch (Exception ex)
             {
@@ -723,6 +725,19 @@ namespace DETI_MakerLab
         {
             // There are no fields to check
             return true;
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            wifi_password_clear.Text = wifi_password.Password;
+            wifi_password.Visibility = System.Windows.Visibility.Hidden;
+            wifi_password_clear.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            wifi_password.Visibility = System.Windows.Visibility.Visible;
+            wifi_password_clear.Visibility = System.Windows.Visibility.Hidden;
         }
     }
 }

@@ -304,5 +304,8 @@
   <ItemGroup>
     <Resource Include="dml_icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\see_more.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

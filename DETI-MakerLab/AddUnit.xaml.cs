@@ -73,7 +73,7 @@ namespace DETI_MakerLab
             Units = new List<UnitsHelper>();
             try
             {
-                LoadEquipments();
+                LoadResources();
             }
             catch (SqlException exc)
             {
@@ -99,42 +99,43 @@ namespace DETI_MakerLab
             return false;
         }
 
-        private void LoadEquipments()
+        private void LoadResources()
         {
             cn = Helpers.getSGBDConnection();
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = cn;
-            cmd.CommandText = "dbo.RESOURCES_TO_REQUEST";
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(ds);
-            cn.Close();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM ALL_ELECTRONIC_UNITS", cn);
+            SqlDataReader reader = cmd.ExecuteReader();
 
-            foreach (DataRow row in ds.Tables[0].Rows)
+            while (reader.Read())
             {
                 ElectronicResources resource = new ElectronicResources(
-                    row["ProductName"].ToString(),
-                    row["Manufacturer"].ToString(),
-                    row["Model"].ToString(),
-                    row["ResDescription"].ToString(),
+                    reader["ProductName"].ToString(),
+                    reader["Manufacturer"].ToString(),
+                    reader["Model"].ToString(),
+                    reader["ResDescription"].ToString(),
                     null,
-                    row["PathToImage"].ToString()
+                    reader["PathToImage"].ToString()
                     );
 
-                ElectronicUnit unit = new ElectronicUnit(
-                    int.Parse(row["ResourceID"].ToString()),
-                    resource,
-                    row["Supplier"].ToString()
-                    );
+                if (reader["ResourceID"] != DBNull.Value)
+                {
+                    ElectronicUnit unit = new ElectronicUnit(
+                        int.Parse(reader["ResourceID"].ToString()),
+                        resource,
+                        reader["Supplier"].ToString()
+                        );
 
-                if (!addResourceItemUnit(unit))
+                    if (!addResourceItemUnit(unit))
+                    {
+                        ResourceItem ri = new ResourceItem(resource);
+                        ri.addUnit(unit);
+                        ResourceItems.Add(ri);
+                    }
+                } else
                 {
                     ResourceItem ri = new ResourceItem(resource);
-                    ri.addUnit(unit);
                     ResourceItems.Add(ri);
                 }
             }

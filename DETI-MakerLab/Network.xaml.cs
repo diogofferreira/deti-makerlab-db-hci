@@ -221,6 +221,7 @@ namespace DETI_MakerLab
                     reader["SSID"].ToString(),
                     reader["PasswordHash"].ToString()
                     );
+                see_more.Visibility = Visibility.Visible;
                 wifi_checkbox.IsChecked = true;
                 wifi_ssid.Content = "SSID : " + currentWLAN.SSID;
                 wifi_password.Password = currentWLAN.PasswordHash;
@@ -656,8 +657,10 @@ namespace DETI_MakerLab
                 // Clear active requisitions data and load the active requisitions for selected project
                 ActiveRequisitionsData.Clear();
                 wifi_checkbox.IsChecked = false;
+                see_more.Visibility = Visibility.Hidden;
                 wifi_password.Password = "";
                 LoadProjectActiveRequisitions();
+                loadWLANs();
             }
             catch (SqlException exc)
             {

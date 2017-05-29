@@ -226,6 +226,7 @@ namespace DETI_MakerLab
                 wifi_checkbox.IsChecked = true;
                 wifi_ssid.Content = "SSID : " + currentWLAN.SSID;
                 wifi_password.Password = currentWLAN.PasswordHash;
+                wifi_password.IsEnabled = true;
             }
 
             cn.Close();

@@ -26,9 +26,11 @@ namespace DETI_MakerLab
             staff = null;
             try
             {
+                // Check for valid credentials
                 bool logged = checkLogin();
                 if (logged)
                 {
+                    // Go to user's window, based on it's class (user or staff)
                     if (user != null)
                     {
                         HomeWindow home = new HomeWindow(user);

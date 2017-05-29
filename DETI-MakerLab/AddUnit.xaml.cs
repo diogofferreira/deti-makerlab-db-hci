@@ -20,6 +20,8 @@ using Xceed.Wpf.Toolkit;
 
 namespace DETI_MakerLab
 {
+
+    // Helper class to wrap units
     public class UnitsHelper
     {
         private ResourceItem _resource;
@@ -52,9 +54,6 @@ namespace DETI_MakerLab
         }
     }
 
-    /// <summary>
-    /// Interaction logic for AddUnit.xaml
-    /// </summary>
     public partial class AddUnit : Page, DMLPages
     {
         private SqlConnection cn;
@@ -72,6 +71,7 @@ namespace DETI_MakerLab
             Units = new List<UnitsHelper>();
             try
             {
+                // Load resource items to show on units list
                 LoadResources();
             }
             catch (SqlException exc)
@@ -87,6 +87,7 @@ namespace DETI_MakerLab
 
         private bool addResourceItemUnit(ElectronicUnit unit)
         {
+            // Get unit's equipment and add it another
             foreach (ResourceItem item in ResourceItems)
             {
                 if (item.Resource.Equals(unit.Model))
@@ -118,6 +119,7 @@ namespace DETI_MakerLab
                     reader["PathToImage"].ToString()
                     );
 
+                // Check if the resource has units
                 if (reader["ResourceID"] != DBNull.Value)
                 {
                     ElectronicUnit unit = new ElectronicUnit(
@@ -126,6 +128,7 @@ namespace DETI_MakerLab
                         reader["Supplier"].ToString()
                         );
 
+                    // Add new resource item (and it's unit) to list, if it isn't there already
                     if (!addResourceItemUnit(unit))
                     {
                         ResourceItem ri = new ResourceItem(resource);
@@ -148,8 +151,10 @@ namespace DETI_MakerLab
         private void ReadUnitsList()
         {
             Boolean added = false;
+
             foreach (ResourceItem resource in units_list.Items)
             {
+                // Find each field of the listbox's template
                 var container = units_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
@@ -173,6 +178,7 @@ namespace DETI_MakerLab
 
         private void AddUnits()
         {
+            // Add units of each equipment
             foreach (UnitsHelper helper in Units)
                 UpdateSingleEquipment(helper.Resource, helper.Units, helper.Supplier);
         }

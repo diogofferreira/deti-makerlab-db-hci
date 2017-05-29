@@ -20,9 +20,6 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for EquipmentPage.xaml
-    /// </summary>
     public partial class EquipmentPage : Page, DMLPages
     {
         private SqlConnection cn;
@@ -32,10 +29,12 @@ namespace DETI_MakerLab
         public EquipmentPage(ElectronicResources equipment, bool created = false)
         {
             InitializeComponent();
+            // Hide go back button if it's a created equipment
             if (created)
                 go_back.Visibility = Visibility.Hidden;
             RequisitionsData = new ObservableCollection<Requisition>();
             this._equipment = equipment;
+            // Set equipment infos
             equipment_name.Text = _equipment.ProductName;
             equipment_model.Text = _equipment.Model;
             equipment_manufacturer.Text = _equipment.Manufactor;
@@ -43,8 +42,8 @@ namespace DETI_MakerLab
             equipment_image.Source = new BitmapImage(new Uri(_equipment.PathToImage, UriKind.Absolute));
             try
             {
+                // Load equipment requisitions
                 loadRequisitions();
-
             }
             catch (SqlException exc)
             {
@@ -123,6 +122,7 @@ namespace DETI_MakerLab
 
         private void go_back_Click(object sender, RoutedEventArgs e)
         {
+            // Go back to the last page, based on current window
             try
             {
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);

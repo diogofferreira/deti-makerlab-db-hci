@@ -21,9 +21,6 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for CreateProject.xaml
-    /// </summary>
     public partial class CreateProject : Page, DMLPages
     {
         SqlConnection cn;
@@ -42,6 +39,7 @@ namespace DETI_MakerLab
             ClassListData = new ObservableCollection<Class>();
             try
             {
+                // Load roles, classes and members to the lists
                 LoadRoles();
                 LoadClasses();
                 LoadMembers();
@@ -54,6 +52,7 @@ namespace DETI_MakerLab
             }
             project_members.ItemsSource = MembersListData;
             project_class.ItemsSource = ClassListData;
+            // Associate a container generator listener
             project_members.ItemContainerGenerator.StatusChanged += new EventHandler(ItemContainerGenerator_StatusChanged);
         }
 
@@ -64,6 +63,7 @@ namespace DETI_MakerLab
 
         private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
         {
+            // Force user to be associated to the project by selecting a role to him
             if (project_members.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
                 SetMyRole();
         }
@@ -87,7 +87,7 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
-                // Set me as Project Manager by default
+                // Set user as Project Manager by default
                 ((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedIndex = 5;
             }
         }
@@ -194,6 +194,7 @@ namespace DETI_MakerLab
             {
                 cmd.ExecuteNonQuery();
                 projectID = Convert.ToInt32(cmd.Parameters["@ProjectID"].Value);
+                // Create the created project object
                 _project = new Project(
                     projectID,
                     project_name.Text,
@@ -234,9 +235,11 @@ namespace DETI_MakerLab
                 if (checkedMember.NumMec == _userID && r.RoleID == -1)
                     throw new Exception("You must belong to a project you create!");
 
+                // If the member is not a member, continue
                 if (r == null || r.RoleID == -1)
                     continue;
 
+                // Add new project's member
                 DataRow row = members.NewRow();
                 row["UserID"] = checkedMember.NumMec;
                 row["RoleID"] = r.RoleID;
@@ -272,6 +275,7 @@ namespace DETI_MakerLab
 
         private void checkMandatoryFields()
         {
+            // Check if all mandatory fields are filled in
             if (String.IsNullOrEmpty(project_name.Text) || String.IsNullOrEmpty(project_description.Text)
                 || project_class.SelectedIndex < 0)
                 throw new Exception("Please fill the mandatory fields!");
@@ -292,6 +296,7 @@ namespace DETI_MakerLab
 
         public bool isEmpty()
         {
+            // Check if any fields are filled in
             if (!String.IsNullOrEmpty(project_name.Text) || !String.IsNullOrEmpty(project_description.Text)
                 || !(project_class.SelectedIndex < 0))
                 return false;

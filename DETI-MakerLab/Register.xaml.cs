@@ -93,6 +93,7 @@ namespace DETI_MakerLab
 
         private bool checkMandatoryFields()
         {
+            // Check if all mandatory fields are filled in
             if (String.IsNullOrEmpty(email.Text) || String.IsNullOrEmpty(password.Password)
                 || String.IsNullOrEmpty(first_name.Text) || String.IsNullOrEmpty(last_name.Text)
                 || String.IsNullOrEmpty(nmec.Text) || user_type.SelectedIndex < 0
@@ -103,6 +104,7 @@ namespace DETI_MakerLab
 
         private bool isEmpty()
         {
+            // Check if any fields are filled in
             if (!String.IsNullOrEmpty(email.Text) || !String.IsNullOrEmpty(password.Password)
                 || !String.IsNullOrEmpty(first_name.Text) || !String.IsNullOrEmpty(last_name.Text)
                 || !String.IsNullOrEmpty(nmec.Text)
@@ -113,8 +115,11 @@ namespace DETI_MakerLab
 
         private void upload_image_button_Click(object sender, RoutedEventArgs e)
         {
+            // Open a file dialog for images
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.Filter = "All Image Files | *.*";
+
+            // Get chosen image's filename
             if (dlg.ShowDialog() == true)
             {
                 fileName = dlg.FileName;
@@ -128,12 +133,16 @@ namespace DETI_MakerLab
             {
                 if (checkMandatoryFields())
                     throw new Exception("Please fill in the mandatory fields!");
-                // Copy image to project file and produce its path
+                // Change filename and produce it's new complete path
                 String RunningPath = AppDomain.CurrentDomain.BaseDirectory;
                 String imagePath = string.Format("{0}images\\", System.IO.Path.GetFullPath(System.IO.Path.Combine(RunningPath, @"..\..\"))) + nmec.Text + System.IO.Path.GetExtension(fileName);
                 registerUser(imagePath);
+
+                // Copy image file to project path
                 System.IO.File.Copy(fileName, imagePath, true);
                 MessageBox.Show("User successfuly registred!");
+
+                // Go to login page
                 MainWindow window = (MainWindow)Window.GetWindow(this);
                 window.goToLogin();
             }
@@ -149,6 +158,7 @@ namespace DETI_MakerLab
 
         private void go_back_button_Click(object sender, RoutedEventArgs e)
         {
+            // Go to login page checking unsaved changes
             if (!isEmpty()) {
                 var result = MessageBox.Show("Really want to go back? All changes will be lost", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes) { 
@@ -164,6 +174,7 @@ namespace DETI_MakerLab
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Change label text based on user type (professor or user)
             if (!user_type.Text.Equals("Student"))
                 area_or_course.Content = "Course";
             else

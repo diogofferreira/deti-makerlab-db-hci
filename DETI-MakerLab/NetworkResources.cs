@@ -87,6 +87,7 @@ namespace DETI_MakerLab
             get { return _ip; }
             set
             {
+                // Check for valid IP's
                 System.Net.IPAddress ipAddress = null;
                 if (!System.Net.IPAddress.TryParse(value, out ipAddress))
                     throw new Exception("Invalid IP Address");
@@ -129,6 +130,7 @@ namespace DETI_MakerLab
 
         public static String getIP()
         {
+            // Get a new random IP
             Random random = new Random();
             return String.Format("{0}.{1}.{2}.{3}", random.Next(0, 255), random.Next(0, 255), 
                 random.Next(0, 255), random.Next(0, 255));
@@ -136,6 +138,7 @@ namespace DETI_MakerLab
 
         public static String getDockerID()
         {
+            // Get a new random dockerID
             Random random = new Random();
             String input = "abcdefghijklmnopqrstuvwxyz0123456789";
             var chars = Enumerable.Range(0, 15).Select(x => input[random.Next(0, input.Length)]);

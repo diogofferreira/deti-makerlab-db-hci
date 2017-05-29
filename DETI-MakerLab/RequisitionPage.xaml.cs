@@ -32,6 +32,7 @@ namespace DETI_MakerLab
             this._requisition = requisition;
             try
             {
+                // Get requisition's resources
                 LoadRequisitionResources();
             }
             catch (SqlException exc)
@@ -42,6 +43,7 @@ namespace DETI_MakerLab
             {
                 MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            // Set requisition infos
             requisition_id.Text = _requisition.RequisitionID.ToString();
             content_list.ItemsSource = _requisition.Resources;
             requisition_user.Text = _requisition.User.FullName;
@@ -94,6 +96,7 @@ namespace DETI_MakerLab
 
         private void go_back_Click(object sender, RoutedEventArgs e)
         {
+            // Go back to last page based on current window
             try
             {
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);

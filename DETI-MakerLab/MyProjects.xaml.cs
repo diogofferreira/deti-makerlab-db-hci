@@ -32,6 +32,7 @@ namespace DETI_MakerLab
             ProjectsListData = new ObservableCollection<Project>();
             try
             {
+                // Load my projects and it's members
                 LoadProjects(userID);
                 LoadUsers();
             }
@@ -44,11 +45,13 @@ namespace DETI_MakerLab
                 MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             my_projects_listbox.ItemsSource = ProjectsListData;
+            // Set a listbox's click listener
             my_projects_listbox.MouseDoubleClick += new MouseButtonEventHandler(my_projects_listbox_MouseDoubleClick);
         }
 
         private void my_projects_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
+            // Go to selected project page
             if (my_projects_listbox.SelectedItem != null)
             {
                 Project selectedProject = my_projects_listbox.SelectedItem as Project;

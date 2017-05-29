@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for FAQ.xaml
-    /// </summary>
     public partial class FAQ : Page
     {
         private bool user;
@@ -25,9 +22,11 @@ namespace DETI_MakerLab
         public FAQ(bool loginWindow = true)
         {
             InitializeComponent();
+            // Hide go back button if the user comes from HomeWindow
             if (!loginWindow)
                 go_back.Visibility = Visibility.Hidden;
 
+            // Create FAQ text
             attentionText = "ATENTION : If you are lost or have questions about some action, drag the mouse by the elements and a help message will show up.\n" +
                 "For questions please contact general@dml.ua.pt\n\n";
 
@@ -80,6 +79,7 @@ namespace DETI_MakerLab
 
         private void go_back_Click(object sender, RoutedEventArgs e)
         {
+            // Go back to the login page
             MainWindow window = (MainWindow)Window.GetWindow(this);
             window.goToLogin();
         }

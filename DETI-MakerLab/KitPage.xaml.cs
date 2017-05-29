@@ -20,9 +20,6 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for KitPage.xaml
-    /// </summary>
     public partial class KitPage : Page, DMLPages
     {
         private Kit _kit;
@@ -32,15 +29,18 @@ namespace DETI_MakerLab
         public KitPage(Kit kit, bool created = false)
         {
             InitializeComponent();
+            // Hide go back button if it's a recently created kit
             if (created)
                 go_back.Visibility = Visibility.Hidden;
             RequisitionsData = new ObservableCollection<Requisition>();
+            // Set kit's infos
             _kit = kit;
             kit_name.Text = _kit.Description;
             kit_id.Text = _kit.ResourceID.ToString();
             content_list.ItemsSource = kit.Units;
             try
             {
+                // Load kit's requisitions
                 loadRequisitions();
             }
             catch (SqlException exc)
@@ -119,6 +119,7 @@ namespace DETI_MakerLab
 
         private void go_back_Click(object sender, RoutedEventArgs e)
         {
+            // Go back based on current window
             try
             {
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);
@@ -128,7 +129,6 @@ namespace DETI_MakerLab
                 StaffWindow window = (StaffWindow)Window.GetWindow(this);
                 window.goBack();
             }
-            
         }
 
         public bool isEmpty()

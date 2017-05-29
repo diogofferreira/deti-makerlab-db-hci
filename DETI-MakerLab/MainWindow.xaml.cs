@@ -9,11 +9,13 @@ namespace DETI_MakerLab
         public MainWindow()
         {
             InitializeComponent();
+            // Go to login page by default
             goToLogin();
         }
 
         public void goToLogin()
         {
+            // Go to login page
             frame.Source = new Uri("Login.xaml", UriKind.RelativeOrAbsolute);
         }
 
@@ -33,6 +35,7 @@ namespace DETI_MakerLab
 
         public void goToRegister()
         {
+            // Go to register page
             frame.Source = new Uri("Register.xaml", UriKind.RelativeOrAbsolute);
         }
     }

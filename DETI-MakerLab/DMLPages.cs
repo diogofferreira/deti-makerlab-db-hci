@@ -9,7 +9,7 @@ namespace DETI_MakerLab
     public interface DMLPages
     {
         // Method that checks if the page fields are empty or not
-        // and force user to check fields loss
+        // Ãnd force user to check fields loss
         bool isEmpty();
     }
 }

@@ -40,6 +40,7 @@ namespace DETI_MakerLab
             Roles = new List<Role>();
             try
             {
+                // Load project members (and it's roles), last requisitions and active requisitions
                 LoadRoles();
                 loadUsers();
                 LoadProjectActiveRequisitons();
@@ -53,12 +54,14 @@ namespace DETI_MakerLab
             {
                 MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            // Set project infos
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
-            project_class.Text = _project.ProjectClass.ClassName;
+            project_class.Text = _project.ProjectClass == null ? "Standalone Project" : _project.ProjectClass.ClassName;
             project_members.ItemsSource = MembersListData;
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
             project_last_requisitions_list.ItemsSource = RequisitionsData;
+            // Set member's listbox listener
             project_members.MouseDoubleClick += new MouseButtonEventHandler(project_members_listbox_MouseDoubleClick);
         }
 
@@ -86,6 +89,7 @@ namespace DETI_MakerLab
 
         private String getRoleDescription(int roleID)
         {
+            // Get role nome by it's id
             foreach (Role r in Roles)
                 if (r.RoleID == roleID)
                     return r.RoleDescription;
@@ -196,6 +200,7 @@ namespace DETI_MakerLab
 
         private void project_members_listbox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
+            // Go to selected member's page
             if (project_members.SelectedItem != null)
             {
                 DMLUser user = project_members.SelectedItem as DMLUser;
@@ -206,6 +211,7 @@ namespace DETI_MakerLab
 
         private void go_back_button_Click(object sender, RoutedEventArgs e)
         {
+            // Go back to last page, based on current window
             try
             {
                 HomeWindow window = (HomeWindow)Window.GetWindow(this);
@@ -219,6 +225,7 @@ namespace DETI_MakerLab
 
         private void project_last_requisitions_list_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            // Go to selected requisition page
             if (project_last_requisitions_list.SelectedItem != null)
             {
                 Requisition requisition = project_last_requisitions_list.SelectedItem as Requisition;

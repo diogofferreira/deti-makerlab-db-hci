@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace DETI_MakerLab
 {
-    /// <summary>
-    /// Interaction logic for ProjectPage.xaml
-    /// </summary>
     public partial class ProjectChanges : Page, DMLPages
     {
         private SqlConnection cn;
@@ -37,6 +34,7 @@ namespace DETI_MakerLab
             RolesListData = new ObservableCollection<Role>();
             try
             {
+                // Load project members and their roles
                 LoadRoles();
                 LoadMembers();
             }
@@ -53,6 +51,7 @@ namespace DETI_MakerLab
             project_description.Text = _project.ProjectDescription;
             project_class.Text = _project.ProjectClass.ClassName;
             project_members.ItemsSource = MembersListData;
+            // Set an item container listener
             project_members.ItemContainerGenerator.StatusChanged += new EventHandler(ItemContainerGenerator_StatusChanged);
         }
 
@@ -111,6 +110,7 @@ namespace DETI_MakerLab
         {
             if (project_members.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
             {
+                // Load all project's members roles
                 SetRoles();
             }
         }
@@ -132,12 +132,14 @@ namespace DETI_MakerLab
 
                 DataTemplate dataTemplate = listBoxItemCP.ContentTemplate;
 
+                // Set user role
                 ((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedIndex = findIndexRole(member.RoleID);
             }
         }
 
         private int findIndexRole(int id)
         {
+            // Find role index in the combobox list
             for (int i = 0; i < RolesListData.Count; i++)
             {
                 if (RolesListData[i].RoleID == id)
@@ -153,7 +155,6 @@ namespace DETI_MakerLab
             List<DMLUser> newWorker = new List<DMLUser>();
             List<DMLUser> updateWorker = new List<DMLUser>();
             List<DMLUser> removeWorker = new List<DMLUser>();
-
 
             foreach (DMLUser member in project_members.Items)
             {
@@ -172,11 +173,8 @@ namespace DETI_MakerLab
 
                 // Set me as Project Manager by default
                 Role r = ((ComboBox)project_members.ItemTemplate.FindName("member_role", listBoxItemCP)).SelectedItem as Role;
-                //member.RoleID = r.RoleID;
 
-                Console.WriteLine(member);
-                Console.WriteLine(_project.workerChanges(member.NumMec, r.RoleID));
-
+                // Save new users or users who's role has been changed
                 if (r.RoleID != -1)
                 {
                     switch (_project.workerChanges(member.NumMec, r.RoleID))
@@ -196,10 +194,10 @@ namespace DETI_MakerLab
                 else if (_project.workerChanges(member.NumMec, r.RoleID) == 1)
                     removeWorker.Add(member);
                     
-
                 member.RoleID = r.RoleID;
             }
 
+            // Getting changes on members done
             addWorkers(newWorker);
             updateWorkers(updateWorker);
             removeWorkers(removeWorker);
@@ -304,13 +302,14 @@ namespace DETI_MakerLab
 
         private void checkMandatoryFields()
         {
+            // Check if all mandatory fields are filled in
             if (String.IsNullOrEmpty(project_name.Text) || String.IsNullOrEmpty(project_description.Text))
                 throw new Exception("Please fill the mandatory fields!");
         }
 
         public bool isEmpty()
         {
-            // Check if there are unsaved fields
+            // Check if any fields are filled in
             if (!String.IsNullOrEmpty(project_name.Text) || !String.IsNullOrEmpty(project_description.Text))
                 return false;
             return true;
@@ -332,6 +331,7 @@ namespace DETI_MakerLab
                     saveChanges();
                     MessageBox.Show("The project has been changed!");
                     HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                    // Go to changed project page
                     window.goToProjectPage(_project);
                 }
             }

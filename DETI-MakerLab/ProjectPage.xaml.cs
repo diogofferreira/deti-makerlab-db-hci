@@ -58,7 +58,7 @@ namespace DETI_MakerLab
             }
             project_name.Text = _project.ProjectName;
             project_description.Text = _project.ProjectDescription;
-            project_class.Text = _project.ProjectClass.ClassName;
+            project_class.Text = _project.ProjectClass == null ? "Standalone Project" : _project.ProjectClass.ClassName;
             project_members.ItemsSource = MembersListData;
             active_requisitions_list.ItemsSource = ActiveRequisitionsData;
             project_last_requisitions_list.ItemsSource = RequisitionsData;

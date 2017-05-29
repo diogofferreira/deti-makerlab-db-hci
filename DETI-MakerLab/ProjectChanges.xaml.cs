@@ -84,27 +84,48 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM DMLUser", cn);
-            SqlDataReader reader = cmd.ExecuteReader();
+
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("USERS_INFO", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            cn.Close();
             
             foreach (DMLUser worker in _project.Workers)
                 MembersListData.Add(worker);
 
-            while (reader.Read())
+            foreach (DataRow row in ds.Tables[0].Rows)
             {
-                DMLUser User = new DMLUser();
-                User.NumMec = int.Parse(reader["NumMec"].ToString());
-                User.FirstName = reader["FirstName"].ToString();
-                User.LastName = reader["LastName"].ToString();
-                User.Email = reader["Email"].ToString();
-                User.PathToImage = reader["PathToImage"].ToString();
+                Student User = new Student(
+                    int.Parse(row["NumMec"].ToString()),
+                    row["FirstName"].ToString(),
+                    row["LastName"].ToString(),
+                    row["Email"].ToString(),
+                    row["PathToImage"].ToString(),
+                    row["Course"].ToString()
+                );
                 User.RoleID = -1;
 
                 if (!_project.hasWorker(User))
                     MembersListData.Add(User);
             }
 
-            cn.Close();
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                Professor User = new Professor(
+                    int.Parse(row["NumMec"].ToString()),
+                    row["FirstName"].ToString(),
+                    row["LastName"].ToString(),
+                    row["Email"].ToString(),
+                    row["PathToImage"].ToString(),
+                    row["ScientificArea"].ToString()
+                );
+                User.RoleID = -1;
+
+                if (!_project.hasWorker(User))
+                    MembersListData.Add(User);
+            }
         }
 
         private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
@@ -207,35 +228,44 @@ namespace DETI_MakerLab
 
         private void addWorkers(List<DMLUser> newWorker)
         {
-            SqlCommand cmd;
+            DataTable members = new DataTable();
+            members.Clear();
+            members.Columns.Add("UserID", typeof(decimal));
+            members.Columns.Add("RoleID", typeof(int));
 
             foreach (DMLUser user in newWorker)
             {
-                cn = Helpers.getSGBDConnection();
-                if (!Helpers.verifySGBDConnection(cn))
-                    throw new Exception("Cannot connect to database");
-
-                cmd = new SqlCommand("INSERT INTO WorksOn (UserNMec, ProjectID, UserRole) " +
-                    "VALUES (@UserNMec, @ProjectID, @UserRole)", cn);
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@UserNmec", user.NumMec);
-                cmd.Parameters.AddWithValue("@ProjectID", _project.ProjectID);
-                cmd.Parameters.AddWithValue("@UserRole", user.RoleID);
-
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                    _project.addWorker(user);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    cn.Close();
-                }
+                DataRow row = members.NewRow();
+                row["UserID"] = user.NumMec;
+                row["RoleID"] = user.RoleID;
+                members.Rows.Add(row);
+                _project.addWorker(user);
             }
+
+            cn = Helpers.getSGBDConnection();
+            if (!Helpers.verifySGBDConnection(cn))
+                throw new Exception("Cannot connect to database");
+
+            SqlCommand cmd = new SqlCommand("ADD_PROJECT_USERS", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@projectID", _project.ProjectID);
+            SqlParameter listParam = cmd.Parameters.AddWithValue("@WorkersList", members);
+            listParam.SqlDbType = SqlDbType.Structured;
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                cn.Close();
+            }
+           
         }
 
         private void updateWorkers(List<DMLUser> updateWorker)

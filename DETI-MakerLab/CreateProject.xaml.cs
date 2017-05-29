@@ -145,22 +145,41 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM DMLUser", cn);
-            SqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
+            DataSet ds = new DataSet();
+            SqlCommand cmd = new SqlCommand("USERS_INFO", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            cn.Close();
+
+            foreach (DataRow row in ds.Tables[0].Rows)
             {
-                DMLUser User = new DMLUser();
-                User.NumMec = int.Parse(reader["NumMec"].ToString());
-                User.FirstName = reader["FirstName"].ToString();
-                User.LastName = reader["LastName"].ToString();
-                User.Email = reader["Email"].ToString();
-                User.PathToImage = reader["PathToImage"].ToString();
-
+                DMLUser User = new Student(
+                    int.Parse(row["NumMec"].ToString()),
+                    row["FirstName"].ToString(),
+                    row["LastName"].ToString(),
+                    row["Email"].ToString(),
+                    row["PathToImage"].ToString(),
+                    row["Course"].ToString()
+                );
+                User.RoleID = -1;
                 MembersListData.Add(User);
             }
 
-            cn.Close();
+            foreach (DataRow row in ds.Tables[1].Rows)
+            {
+                DMLUser User = new Professor(
+                    int.Parse(row["NumMec"].ToString()),
+                    row["FirstName"].ToString(),
+                    row["LastName"].ToString(),
+                    row["Email"].ToString(),
+                    row["PathToImage"].ToString(),
+                    row["ScientificArea"].ToString()
+                );
+                User.RoleID = -1;
+                MembersListData.Add(User);
+            }
         }
 
         private int SubmitProject()

@@ -153,16 +153,6 @@ namespace DETI_MakerLab.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rasp {
-            get {
-                object obj = ResourceManager.GetObject("rasp", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap resources {
             get {
                 object obj = ResourceManager.GetObject("resources", resourceCulture);

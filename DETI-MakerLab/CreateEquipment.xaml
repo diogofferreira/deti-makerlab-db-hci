@@ -22,7 +22,7 @@
         <TextBox x:Name="equipment_description" HorizontalAlignment="Left" Height="157" Margin="451,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" FontSize="20"/>
         <TextBlock x:Name="equipment_image" HorizontalAlignment="Left" Height="27" Margin="540,493,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="453"/>
         <Button x:Name="upload_image_button" Content="Choose File" HorizontalAlignment="Left" Margin="460,493,0,0" VerticalAlignment="Top" Width="75" Height="27" Click="upload_image_button_Click"/>
-        <Button x:Name="create_equipment_button" Content="Add Equipment" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="104,558,0,0" VerticalAlignment="Top" Width="977" Height="60" HorizontalContentAlignment="Center" Click="create_equipment_button_Click"/>
+        <Button x:Name="create_equipment_button" IsDefault="True" Content="Add Equipment" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="104,558,0,0" VerticalAlignment="Top" Width="977" Height="60" HorizontalContentAlignment="Center" Click="create_equipment_button_Click"/>
         <GroupBox Header="" HorizontalAlignment="Left" Height="51" Margin="451,475,0,0" VerticalAlignment="Top" Width="552" BorderBrush="Gray" IsEnabled="False"/>
         <Label Content="* Mandatory field" Foreground="#00796B" HorizontalAlignment="Left" Margin="979,529,0,0" VerticalAlignment="Top"/>
     </Grid>

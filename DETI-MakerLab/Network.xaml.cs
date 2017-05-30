@@ -763,5 +763,21 @@ namespace DETI_MakerLab
             wifi_password.Visibility = System.Windows.Visibility.Visible;
             wifi_password_clear.Visibility = System.Windows.Visibility.Hidden;
         }
+
+        private void vm_password_key_down(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                request_vm_button_Click(this, new RoutedEventArgs());
+            }
+        }
+
+        private void wifi_password_key_down(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                request_network_button_Click(this, new RoutedEventArgs());
+            }
+        }
     }
 }

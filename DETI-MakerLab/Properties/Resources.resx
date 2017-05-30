@@ -145,9 +145,6 @@
   <data name="projects" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\projects.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="rasp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\rasp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="resources" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\resources.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

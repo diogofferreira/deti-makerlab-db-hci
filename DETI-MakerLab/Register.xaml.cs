@@ -176,9 +176,9 @@ namespace DETI_MakerLab
         {
             // Change label text based on user type (professor or user)
             if (!user_type.Text.Equals("Student"))
-                area_or_course.Content = "Course";
+                area_or_course.Content = "Course (*)";
             else
-                area_or_course.Content = "Scientific Area";
+                area_or_course.Content = "Scientific Area (*)";
         }
     }
 }

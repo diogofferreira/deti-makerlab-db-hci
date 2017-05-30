@@ -46,14 +46,14 @@
         <Label Content="Launch Virtual Machine" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,213,0,0" VerticalAlignment="Top" Height="37" Width="250" ToolTip="Access the VM by SSH : $ ssh dockerid@IP"/>
         <ComboBox x:Name="os_list" IsEnabled="False" HorizontalAlignment="Left" SelectedIndex="0" Margin="54,249,0,0" VerticalAlignment="Top" Width="455" Height="26" SelectionChanged="os_list_SelectionChanged" />
         <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,279,0,0" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="vm_password" IsEnabled="False" HorizontalAlignment="Left" Height="22" Margin="196,279,0,0" VerticalAlignment="Top" Width="313" VerticalContentAlignment="Center"/>
+        <PasswordBox x:Name="vm_password" KeyDown="vm_password_key_down" IsEnabled="False" HorizontalAlignment="Left" Height="22" Margin="196,279,0,0" VerticalAlignment="Top" Width="313" VerticalContentAlignment="Center"/>
         <StackPanel Orientation="Vertical" Margin="-32,86,619,260">
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="2" Margin="71,274,10,200" Background="#FF4DB6AC"/>
         </StackPanel>
         <Label Content="Wifi Network" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="54,358,0,0" VerticalAlignment="Top" Height="37" Width="250" ToolTip="Create a Wireless network with a unique SSID to access projects' private network and its VMs"/>
         <CheckBox x:Name="wifi_checkbox" IsEnabled="False" Content="Active" HorizontalAlignment="Left" Margin="64,397,0,0" VerticalAlignment="Top" Foreground="#00796B" FontFamily="HP Simplified Light" FontSize="18" Click="wifi_checkbox_Click"/>
         <Label Content="Password" Style="{StaticResource smallDescriptionStyle}" HorizontalAlignment="Left" Margin="110,421,0,0" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="wifi_password" IsEnabled="False" HorizontalAlignment="Left" Height="24" Margin="196,427,0,0" VerticalAlignment="Top" Width="313" VerticalContentAlignment="Center"/>
+        <PasswordBox x:Name="wifi_password" KeyDown="wifi_password_key_down" IsEnabled="False" HorizontalAlignment="Left" Height="24" Margin="196,427,0,0" VerticalAlignment="Top" Width="313" VerticalContentAlignment="Center"/>
         <Button x:Name="request_vm_button" IsEnabled="False" Content="Launch VM" FontSize="20" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="196,317,0,0" VerticalAlignment="Top" Width="166" Height="34" Click="request_vm_button_Click"/>
         <Grid Margin="54,485,687,120">
             <Grid.ColumnDefinitions>

@@ -287,9 +287,6 @@
     <Resource Include="images\ard.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\rasp.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\default-profile.png" />
   </ItemGroup>
   <ItemGroup>

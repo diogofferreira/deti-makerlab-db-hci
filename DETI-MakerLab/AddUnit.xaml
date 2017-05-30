@@ -25,7 +25,7 @@
     <Grid>
         <Label Content="Add Units" Style="{StaticResource bigTitleStyle}" Margin="466,45,488,0"/>
         <ListBox x:Name="units_list" Margin="148,219,160,112" ItemTemplate="{DynamicResource UnitsItem}"/>
-        <Button x:Name="add_units_button" Content="Add units" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="148,552,0,0" VerticalAlignment="Top" Width="888" Height="66" Click="add_units_button_Click"/>
+        <Button x:Name="add_units_button" IsDefault="True" Content="Add units" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="148,552,0,0" VerticalAlignment="Top" Width="888" Height="66" Click="add_units_button_Click"/>
         <Grid Margin="148,191,160,414">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

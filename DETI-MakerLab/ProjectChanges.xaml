@@ -31,7 +31,7 @@
         <TextBlock x:Name="project_name" HorizontalAlignment="Left" Height="39" Margin="417,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="598" FontSize="20"/>
         <TextBox x:Name="project_description" HorizontalAlignment="Left" Height="138" Margin="417,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="598" FontSize="20"/>
         <ListView x:Name="project_members" HorizontalAlignment="Left" Height="229" Margin="417,234,0,0" VerticalAlignment="Top" Width="598" FontSize="18" ItemTemplate="{DynamicResource MembersItem}"/>
-        <Button x:Name="save_project_changes_button" Content="Save Changes" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="104,539,0,0" VerticalAlignment="Top" Width="977" Height="64" Click="save_project_changes_button_Click"/>
+        <Button x:Name="save_project_changes_button" IsDefault="True" Content="Save Changes" Style="{StaticResource dmlButtonStyle}" HorizontalAlignment="Left" Margin="104,539,0,0" VerticalAlignment="Top" Width="977" Height="64" Click="save_project_changes_button_Click"/>
         <Label Content="Class" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="159,470,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.541,1.026" Width="109" HorizontalContentAlignment="Right"/>
         <TextBlock x:Name="project_class" HorizontalAlignment="Left" Height="39" Margin="417,472,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="598" FontSize="20"/>
     </Grid>

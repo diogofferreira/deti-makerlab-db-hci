@@ -66,7 +66,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Could not connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_PROJECTS", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.LAST_PROJECTS", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -98,7 +98,7 @@ namespace DETI_MakerLab
                     return;
 
                 DataSet ds = new DataSet();
-                SqlCommand cmd = new SqlCommand("PROJECT_USERS", cn);
+                SqlCommand cmd = new SqlCommand("DML.PROJECT_USERS", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@pID", proj.ProjectID);
@@ -145,7 +145,7 @@ namespace DETI_MakerLab
             DataSet ds = new DataSet();
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
-            cmd.CommandText = "SELECT * FROM LAST_REQUISITIONS";
+            cmd.CommandText = "SELECT * FROM DML.LAST_REQUISITIONS";
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())

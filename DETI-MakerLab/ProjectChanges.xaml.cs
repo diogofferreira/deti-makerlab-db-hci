@@ -63,7 +63,7 @@ namespace DETI_MakerLab
 
             RolesListData.Add(new Role(-1, "Not a Member"));
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Roles", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.Roles", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -85,7 +85,7 @@ namespace DETI_MakerLab
 
 
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("USERS_INFO", cn);
+            SqlCommand cmd = new SqlCommand("DML.USERS_INFO", cn);
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
@@ -244,7 +244,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("ADD_PROJECT_USERS", cn);
+            SqlCommand cmd = new SqlCommand("DML.ADD_PROJECT_USERS", cn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@projectID", _project.ProjectID);
@@ -276,12 +276,14 @@ namespace DETI_MakerLab
                 if (!Helpers.verifySGBDConnection(cn))
                     throw new Exception("Cannot connect to database");
 
-                cmd = new SqlCommand("UPDATE WorksOn SET UserRole=@UserRole " +
-                    "WHERE UserNMec=@UserNMec AND ProjectID=@ProjectID", cn);
+                cmd = new SqlCommand();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@UserNmec", user.NumMec);
                 cmd.Parameters.AddWithValue("@ProjectID", _project.ProjectID);
                 cmd.Parameters.AddWithValue("@UserRole", user.RoleID);
+                cmd.CommandText = "DML.UPDATE_USER_ROLE";
 
                 try
                 {
@@ -308,11 +310,13 @@ namespace DETI_MakerLab
                 if (!Helpers.verifySGBDConnection(cn))
                     throw new Exception("Cannot connect to database");
 
-                cmd = new SqlCommand("DELETE FROM WorksOn " +
-                    "WHERE UserNMec=@UserNMec AND ProjectID=@ProjectID", cn);
+                cmd = new SqlCommand();
+                cmd.Connection = cn;
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@UserNmec", user.NumMec);
                 cmd.Parameters.AddWithValue("@ProjectID", _project.ProjectID);
+                cmd.CommandText = "DML.DELETE_PROJECT_USER";
 
                 try
                 {

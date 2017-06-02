@@ -94,7 +94,7 @@ namespace DETI_MakerLab
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
             cmd.Parameters.AddWithValue("@userID", User.NumMec);
-            cmd.CommandText = "SELECT * FROM USER_REQS (@userID)";
+            cmd.CommandText = "SELECT * FROM DML.USER_REQS (@userID)";
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())

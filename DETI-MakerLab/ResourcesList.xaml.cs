@@ -53,7 +53,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM ALL_ELECTRONIC_RESOURCES", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.ALL_ELECTRONIC_RESOURCES", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -85,7 +85,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Kit", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.Kit", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -113,7 +113,7 @@ namespace DETI_MakerLab
                 cmd.Connection = cn;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@KitID", kit.ResourceID);
-                cmd.CommandText = "dbo.KIT_UNITS";
+                cmd.CommandText = "DML.KIT_UNITS";
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
 

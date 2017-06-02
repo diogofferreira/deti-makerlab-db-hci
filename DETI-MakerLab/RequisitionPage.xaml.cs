@@ -61,7 +61,7 @@ namespace DETI_MakerLab
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
-            cmd.CommandText = "dbo.REQUISITION_UNITS";
+            cmd.CommandText = "DML.REQUISITION_UNITS";
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@reqID", _requisition.RequisitionID);
             SqlDataAdapter da = new SqlDataAdapter(cmd);

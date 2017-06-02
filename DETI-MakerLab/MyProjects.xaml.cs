@@ -66,7 +66,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM USER_PROJECTS (@nmec)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.USER_PROJECTS (@nmec)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@nmec", userID);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -101,7 +101,7 @@ namespace DETI_MakerLab
                     return;
 
                 DataSet ds = new DataSet();
-                SqlCommand cmd = new SqlCommand("PROJECT_USERS", cn);
+                SqlCommand cmd = new SqlCommand("DML.PROJECT_USERS", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@pID", proj.ProjectID);

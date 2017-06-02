@@ -105,7 +105,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM ALL_ELECTRONIC_UNITS", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.ALL_ELECTRONIC_UNITS", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -201,7 +201,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@Supplier", supplier);
             cmd.Parameters.AddWithValue("@Units", units);
             cmd.Parameters.AddWithValue("@EmployeeID", User.EmployeeNum);
-            cmd.CommandText = "dbo.ADD_UNITS";
+            cmd.CommandText = "DML.ADD_UNITS";
 
             try
             {

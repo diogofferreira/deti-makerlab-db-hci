@@ -100,7 +100,7 @@ namespace DETI_MakerLab
 
             RolesListData.Add(new Role(-1, "Not a Member"));
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Roles", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.Roles", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             project_members.Items.Clear();
 
@@ -123,7 +123,7 @@ namespace DETI_MakerLab
 
             ClassListData.Add(new Class(-1, "No Class", "Standalone Project"));
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Class", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.Class", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             project_members.Items.Clear();
 
@@ -147,7 +147,7 @@ namespace DETI_MakerLab
 
 
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand("USERS_INFO", cn);
+            SqlCommand cmd = new SqlCommand("DML.USERS_INFO", cn);
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
@@ -198,7 +198,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@PrjName", project_name.Text);
             cmd.Parameters.AddWithValue("@PrjDescription", project_description.Text);
             cmd.Parameters.Add("@ProjectID", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.CommandText = "dbo.CREATE_PROJECT";
+            cmd.CommandText = "DML.CREATE_PROJECT";
 
             if (((Class)project_class.SelectedValue).ClassID != -1)
             {
@@ -254,7 +254,7 @@ namespace DETI_MakerLab
                 if (checkedMember.NumMec == _userID && r.RoleID == -1)
                     throw new Exception("You must belong to a project you create!");
 
-                // If the member is not a member, continue
+                // If user is not a member, continue
                 if (r == null || r.RoleID == -1)
                     continue;
 
@@ -271,7 +271,8 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("ADD_PROJECT_USERS", cn);
+
+            SqlCommand cmd = new SqlCommand("DML.ADD_PROJECT_USERS", cn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@projectID", projectID);
@@ -301,6 +302,12 @@ namespace DETI_MakerLab
             foreach (DMLUser checkedMember in project_members.Items)
             {
                 var container = project_members.ItemContainerGenerator.ContainerFromItem(checkedMember) as FrameworkElement;
+                if (container == null)
+                {
+                    project_members.UpdateLayout();
+                    project_members.ScrollIntoView(checkedMember);
+                    container = project_members.ItemContainerGenerator.ContainerFromItem(checkedMember) as FrameworkElement;
+                }
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
                     return;

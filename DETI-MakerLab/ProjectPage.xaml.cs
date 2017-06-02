@@ -77,7 +77,7 @@ namespace DETI_MakerLab
 
             Roles.Add(new Role(-1, "Not a Member"));
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Roles", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.Roles", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -126,7 +126,7 @@ namespace DETI_MakerLab
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
             cmd.Parameters.AddWithValue("@pID", _project.ProjectID);
-            cmd.CommandText = "SELECT * FROM PROJECT_REQS (@pID)";
+            cmd.CommandText = "SELECT * FROM DML.PROJECT_REQS (@pID)";
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -172,7 +172,7 @@ namespace DETI_MakerLab
             cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@pID", _project.ProjectID);
-            cmd.CommandText = "dbo.PROJECT_ACTIVE_REQS";
+            cmd.CommandText = "DML.PROJECT_ACTIVE_REQS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();

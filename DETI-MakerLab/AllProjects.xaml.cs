@@ -67,7 +67,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM PROJECT_INFO", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.PROJECT_INFO", cn);
             SqlDataReader reader = cmd.ExecuteReader();
             all_projects_listbox.Items.Clear();
 
@@ -101,7 +101,7 @@ namespace DETI_MakerLab
                     return;
 
                 DataSet ds = new DataSet();
-                SqlCommand cmd = new SqlCommand("PROJECT_USERS", cn);
+                SqlCommand cmd = new SqlCommand("DML.PROJECT_USERS", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@pID", proj.ProjectID);

@@ -62,7 +62,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 return;
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM LAST_EQUIP_REQUISITIONS (@ProductName, @Model, @Manufacturer)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.LAST_EQUIP_REQUISITIONS (@ProductName, @Model, @Manufacturer)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProductName", _equipment.ProductName);
             cmd.Parameters.AddWithValue("@Model", _equipment.Model);

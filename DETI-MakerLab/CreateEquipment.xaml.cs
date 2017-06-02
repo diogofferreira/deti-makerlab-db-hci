@@ -39,8 +39,9 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 return;
 
-            cmd = new SqlCommand("INSERT INTO ElectronicResource (ProductName, Manufacturer, Model, ResDescription, EmployeeNum, PathToImage) " +
-                "VALUES (@ProductName, @Manufacturer, @Model, @ResDescription, @EmployeeNum, @PathToImage)", cn);
+            cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = cn;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProductName", equipment_name.Text);
             cmd.Parameters.AddWithValue("@Manufacturer", equipment_manufacturer.Text);
@@ -48,6 +49,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@ResDescription", equipment_description.Text);
             cmd.Parameters.AddWithValue("@EmployeeNum", _staff.EmployeeNum);
             cmd.Parameters.AddWithValue("@PathToImage", imagePath);
+            cmd.CommandText = "DML.CREATE_EQUIPMENT";
 
             try
             {

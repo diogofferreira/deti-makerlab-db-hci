@@ -60,7 +60,7 @@ namespace DETI_MakerLab
                     area_or_course_response.Text
                     );
                 cmd.Parameters.AddWithValue("@Course", area_or_course_response.Text);
-                cmd.CommandText = "dbo.REGISTER_STUDENT";
+                cmd.CommandText = "DML.REGISTER_STUDENT";
             }
             else
             {
@@ -73,7 +73,7 @@ namespace DETI_MakerLab
                     area_or_course_response.Text
                     );
                 cmd.Parameters.AddWithValue("@ScientificArea", area_or_course_response.Text);
-                cmd.CommandText = "dbo.REGISTER_PROFESSOR";
+                cmd.CommandText = "DML.REGISTER_PROFESSOR";
             }
 
             try

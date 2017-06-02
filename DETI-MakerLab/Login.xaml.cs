@@ -69,7 +69,7 @@ namespace DETI_MakerLab
                 cn = Helpers.getSGBDConnection();
                 if (!Helpers.verifySGBDConnection(cn))
                     throw new Exception("Cannot connect to database");
-                cmd = new SqlCommand("SELECT * FROM CHECK_LOGIN (@email, @password)", cn);
+                cmd = new SqlCommand("SELECT * FROM DML.CHECK_LOGIN (@email, @password)", cn);
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@email", email_box.Text);
                 cmd.Parameters.AddWithValue("@password", password_box.Password);
@@ -109,7 +109,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database.");
             bool result = false;
-            SqlCommand cmdType = new SqlCommand("SELECT * FROM Professor WHERE NumMec=@nummec");
+            SqlCommand cmdType = new SqlCommand("SELECT * FROM DML.Professor WHERE NumMec=@nummec");
             cmdType.Parameters.Clear();
             cmdType.Parameters.AddWithValue("@nummec", user.NumMec);
             cmdType.Connection = cn;
@@ -136,7 +136,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database.");
             bool result = false;
-            SqlCommand cmdType = new SqlCommand("SELECT * FROM Student WHERE NumMec=@nummec");
+            SqlCommand cmdType = new SqlCommand("SELECT * FROM DML.Student WHERE NumMec=@nummec");
             cmdType.Parameters.Clear();
             cmdType.Parameters.AddWithValue("@nummec", tmpUser.NumMec);
             cmdType.Connection = cn;
@@ -165,7 +165,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
             bool result = false;
-            SqlCommand cmd = new SqlCommand("SELECT * FROM CHECK_STAFF_LOGIN (@email, @password)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.CHECK_STAFF_LOGIN (@email, @password)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@email", email_box.Text);
             cmd.Parameters.AddWithValue("@password", password_box.Password);

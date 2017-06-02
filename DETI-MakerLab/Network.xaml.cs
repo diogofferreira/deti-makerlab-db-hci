@@ -69,7 +69,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM USER_PROJECTS (@nmec)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.USER_PROJECTS (@nmec)", cn);
             cmd.Parameters.AddWithValue("@nmec", UserID);
             SqlDataReader reader = cmd.ExecuteReader();
             projects_list.Items.Clear();
@@ -101,7 +101,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM OS", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.OS", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             OSList.Add(new OS(-1, "None"));
@@ -131,7 +131,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
             
-            SqlCommand cmd = new SqlCommand("SELECT * FROM AVAILABLE_SOCKETS ()", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.AVAILABLE_SOCKETS ()", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -160,7 +160,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM VM_INFO (@ProjectID)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.VM_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -186,7 +186,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM SOCKETS_INFO (@ProjectID)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.SOCKETS_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -209,7 +209,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM WLAN_INFO (@ProjectID)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.WLAN_INFO (@ProjectID)", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
             SqlDataReader reader = cmd.ExecuteReader();
@@ -264,7 +264,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@DockerID", vm.DockerID);
             cmd.Parameters.AddWithValue("@OSID", vm.UsedOS.OSID);
             cmd.Parameters.Add("@resID", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.CommandText = "dbo.REQUEST_VM";
+            cmd.CommandText = "DML.REQUEST_VM";
 
             try
             {
@@ -343,7 +343,7 @@ namespace DETI_MakerLab
             SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toRequest);
             listParam.SqlDbType = SqlDbType.Structured;
             cmd.Parameters.AddWithValue("@ProjectID", selectedProject.ProjectID);
-            cmd.CommandText = "dbo.REQUEST_SOCKETS";
+            cmd.CommandText = "DML.REQUEST_SOCKETS";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();
@@ -397,7 +397,7 @@ namespace DETI_MakerLab
             cmd.Parameters.AddWithValue("@SSID", currentWLAN.SSID);
             cmd.Parameters.AddWithValue("@PasswordHash", currentWLAN.PasswordHash);
             cmd.Parameters.Add("@resID", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cmd.CommandText = "dbo.REQUEST_WLAN";
+            cmd.CommandText = "DML.REQUEST_WLAN";
 
             try
             {
@@ -428,7 +428,7 @@ namespace DETI_MakerLab
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@resID", currentWLAN.ResourceID);
             cmd.Parameters.AddWithValue("@PasswordHash", currentWLAN.PasswordHash);
-            cmd.CommandText = "dbo.UPDATE_WLAN";
+            cmd.CommandText = "DML.UPDATE_WLAN";
 
             try
             {
@@ -450,7 +450,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Error connecting to database");
 
-            SqlCommand cmd = new SqlCommand("DELETE FROM WirelessLAN WHERE NetResID=@resID", cn);
+            SqlCommand cmd = new SqlCommand("DELETE FROM DML.WirelessLAN WHERE NetResID=@resID", cn);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@resID", currentWLAN.ResourceID);
 
@@ -513,7 +513,7 @@ namespace DETI_MakerLab
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
-            cmd.CommandText = "dbo.DELIVER_NET_RESOURCES";
+            cmd.CommandText = "DML.DELIVER_NET_RESOURCES";
             SqlParameter listParam = cmd.Parameters.AddWithValue("@UnitsList", toDeliver);
             listParam.SqlDbType = SqlDbType.Structured;
 

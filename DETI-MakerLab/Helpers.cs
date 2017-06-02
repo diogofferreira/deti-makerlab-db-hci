@@ -35,7 +35,7 @@ namespace DETI_MakerLab
         // Get the DB conntection
         public static SqlConnection getSGBDConnection()
         {
-            return new SqlConnection("data source= DESKTOP-GU6KNJA\\SQLSERVER;integrated security=true;initial catalog=DML");
+            return new SqlConnection("data source= tcp: 193.136.175.33\\SQLSERVER2012,8293; initial catalog=p1g3; uid=p1g3; Password=PUT_IT_HERE");
         }
 
         // Check if the connection is valid and running

@@ -80,7 +80,7 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Kit", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.Kit", cn);
             SqlDataReader reader = cmd.ExecuteReader();
 
             // Dummy kit
@@ -115,7 +115,7 @@ namespace DETI_MakerLab
                 cmd.Connection = cn;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@KitID", kit.ResourceID);
-                cmd.CommandText = "dbo.KIT_UNITS";
+                cmd.CommandText = "DML.KIT_UNITS";
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(ds);
 
@@ -152,7 +152,7 @@ namespace DETI_MakerLab
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = cn;
-            cmd.CommandText = "dbo.RESOURCES_TO_REQUEST";
+            cmd.CommandText = "DML.RESOURCES_TO_REQUEST";
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(ds);
             cn.Close();
@@ -289,7 +289,7 @@ namespace DETI_MakerLab
             cmd.Parameters.Add("@KitID", SqlDbType.Int).Direction = ParameterDirection.Output;
             cmd.Parameters.AddWithValue("@StaffID", StaffID);
             cmd.Parameters.AddWithValue("@KitDescription", kit_name.Text);
-            cmd.CommandText = "dbo.CREATE_KIT";
+            cmd.CommandText = "DML.CREATE_KIT";
             int kitID = -1;
 
             try

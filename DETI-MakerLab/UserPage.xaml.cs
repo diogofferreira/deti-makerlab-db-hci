@@ -57,7 +57,13 @@ namespace DETI_MakerLab
             user_email.Text = _user.Email;
             user_nmec.Text = _user.NumMec.ToString();
             if (!String.IsNullOrEmpty(_user.PathToImage))
-                user_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
+                // Try to load image
+                try {
+                    user_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
+                } catch (Exception e)
+                {
+                }
+
             // Change label text based on user type (student or professor)
             if (typeof(Professor).IsInstanceOfType(this.User))
             {

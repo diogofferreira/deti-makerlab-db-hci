@@ -42,7 +42,16 @@ namespace DETI_MakerLab
             // Set user name label and image
             user_name.Content = _user.FirstName + " " + _user.LastName;
             if (!String.IsNullOrEmpty(_user.PathToImage))
-                profile_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
+            {
+                // Try to load image
+                try
+                {
+                    profile_image.Source = new BitmapImage(new Uri(_user.PathToImage, UriKind.Absolute));
+                }
+                catch (Exception exc)
+                {
+                }
+            }
 
             // Show home page
             Home page = new Home(StaffUser.EmployeeNum);

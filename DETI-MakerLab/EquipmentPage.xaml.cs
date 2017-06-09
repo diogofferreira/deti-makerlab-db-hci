@@ -39,7 +39,13 @@ namespace DETI_MakerLab
             equipment_model.Text = _equipment.Model;
             equipment_manufacturer.Text = _equipment.Manufactor;
             equipment_description.Text = _equipment.Description;
-            equipment_image.Source = new BitmapImage(new Uri(_equipment.PathToImage, UriKind.Absolute));
+            // Try to load image
+            try { 
+                equipment_image.Source = new BitmapImage(new Uri(_equipment.PathToImage, UriKind.Absolute));
+            } catch (Exception ex)
+            {
+            }
+
             try
             {
                 // Load equipment requisitions

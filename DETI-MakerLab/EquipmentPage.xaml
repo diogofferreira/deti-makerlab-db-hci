@@ -25,7 +25,7 @@
         <TextBlock x:Name="equipment_model" HorizontalAlignment="Left" Height="29" Margin="273,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
         <TextBlock x:Name="equipment_manufacturer" HorizontalAlignment="Left" Height="30" Margin="273,182,0,0" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
         <TextBlock x:Name="equipment_description" HorizontalAlignment="Left" Height="30" Margin="273,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="518" FontSize="20" RenderTransformOrigin="0.5,0.5"/>
-        <Image x:Name="equipment_image" HorizontalAlignment="Left" Height="235" Margin="796,30,0,0" VerticalAlignment="Top" Width="271" RenderTransformOrigin="0.5,0.5"/>
+        <Image x:Name="equipment_image" HorizontalAlignment="Left" Height="235" Margin="796,30,0,0" VerticalAlignment="Top" Width="271" RenderTransformOrigin="0.5,0.5" Source="images/dml_logo.png"/>
         <StackPanel Orientation="Vertical" Margin="0,32,0,-32">
             <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
         </StackPanel>

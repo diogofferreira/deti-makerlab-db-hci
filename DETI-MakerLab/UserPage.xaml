@@ -29,7 +29,7 @@
         <TextBlock x:Name="user_email" HorizontalAlignment="Left" Height="34" Margin="335,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424" FontSize="20"/>
         <TextBlock x:Name="user_nmec" HorizontalAlignment="Left" Height="34" Margin="335,178,0,0" VerticalAlignment="Top" Width="424" FontSize="20"/>
         <TextBlock x:Name="user_course_area" HorizontalAlignment="Left" Height="34" Margin="335,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424" FontSize="20"/>
-        <Image x:Name="user_image" HorizontalAlignment="Left" Height="263" Margin="825,22,0,0" VerticalAlignment="Top" Width="255"/>
+        <Image x:Name="user_image" HorizontalAlignment="Left" Height="263" Margin="825,22,0,0" VerticalAlignment="Top" Width="255" Source="images/default-profile.png"/>
         <StackPanel Orientation="Vertical" Margin="-10,30,10,182" Grid.RowSpan="2">
             <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
         </StackPanel>

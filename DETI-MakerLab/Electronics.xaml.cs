@@ -269,6 +269,12 @@ namespace DETI_MakerLab
             foreach (ListItem resource in equipment_list.Items)
             {
                 var container = equipment_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                if (container == null)
+                {
+                    equipment_list.UpdateLayout();
+                    equipment_list.ScrollIntoView(resource);
+                    container = equipment_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                }
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
                     return;
@@ -408,6 +414,12 @@ namespace DETI_MakerLab
             foreach (Resources resource in active_requisitions_list.Items)
             {
                 var container = active_requisitions_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                if (container == null)
+                {
+                    active_requisitions_list.UpdateLayout();
+                    active_requisitions_list.ScrollIntoView(resource);
+                    container = active_requisitions_list.ItemContainerGenerator.ContainerFromItem(resource) as FrameworkElement;
+                }
                 ContentPresenter listBoxItemCP = Helpers.FindVisualChild<ContentPresenter>(container);
                 if (listBoxItemCP == null)
                     return;

@@ -78,7 +78,8 @@ namespace DETI_MakerLab
         {
             // Check if all mandatory fields are filled in
             if (String.IsNullOrEmpty(equipment_name.Text) || String.IsNullOrEmpty(equipment_model.Text)
-                || String.IsNullOrEmpty(equipment_manufacturer.Text) || String.IsNullOrEmpty(equipment_image.Text))
+                || String.IsNullOrEmpty(equipment_manufacturer.Text) || !String.IsNullOrEmpty(equipment_description.Text) 
+                || String.IsNullOrEmpty(equipment_image.Text))
                 throw new Exception("Please fill the mandatory fields!");
         }
 

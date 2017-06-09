@@ -130,6 +130,12 @@ namespace DETI_MakerLab
             frame.Navigate(page);
         }
 
+        public void goToClassPage(Class _class)
+        {
+            ClassPage page = new ClassPage(_class);
+            frame.Navigate(page);
+        }
+
         public void goToProjectStaticPage(Project proj)
         {
             ProjectPageStatic page = new ProjectPageStatic(proj);

@@ -1,0 +1,37 @@
+﻿<Page x:Class="DETI_MakerLab.ClassPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DETI_MakerLab"
+      mc:Ignorable="d" 
+      d:DesignHeight="628" d:DesignWidth="1196"
+      Background="White"
+      Title="UserPage">
+    <Page.Resources>
+        <DataTemplate x:Key="ReqsFrontItem">
+            <Grid Height="50" Width="730" ToolTip="Click to see requisition">
+                <Label Content="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Foreground="Black" VerticalContentAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="104*"/>
+            <RowDefinition Height="53*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Name"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="156,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="34"/>
+        <Label Content="Description"  Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="102,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="34"/>
+        <Label Content="Manager" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="111,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="34"/>
+        <TextBlock x:Name="class_name" HorizontalAlignment="Left" Height="34" Margin="335,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424" FontSize="20"/>
+        <TextBlock x:Name="class_description" HorizontalAlignment="Left" Height="34" Margin="335,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424" FontSize="20"/>
+        <TextBlock x:Name="class_manager" HorizontalAlignment="Left" Height="34" Margin="335,178,0,0" VerticalAlignment="Top" Width="424" FontSize="20"/>
+        <StackPanel Orientation="Vertical" Margin="-10,30,10,182" Grid.RowSpan="2">
+            <Separator Foreground="Black" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="5" Margin="75,274,51,200" />
+        </StackPanel>
+        <Label Content="Last Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="370,316,402,0" Width="424" Height="84" />
+        <ListBox x:Name="class_last_requisitions_list" HorizontalAlignment="Left" Height="207" Margin="180,405,0,0" VerticalAlignment="Top" Width="774" Grid.RowSpan="2" MouseDoubleClick="user_last_requisitions_list_MouseDoubleClick" HorizontalContentAlignment="Center" ItemTemplate="{DynamicResource ReqsFrontItem}"/>
+        <Button x:Name="go_back" Content="Go Back" Style="{StaticResource goBackStyle}" Margin="985,147,31,16" Grid.Row="1" Click="go_back_Click"/>
+    </Grid>
+</Page>

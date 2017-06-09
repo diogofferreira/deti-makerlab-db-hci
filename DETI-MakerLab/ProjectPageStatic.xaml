@@ -47,6 +47,6 @@
         <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="137" Margin="104,419,0,0" VerticalAlignment="Top" Width="505" ItemTemplate="{DynamicResource ActiveReqsFrontItem}"/>
         <Button x:Name="go_back_button" Content="Go Back" Style="{StaticResource goBackStyle}" Margin="990,564,26,15" Click="go_back_button_Click"/>
         <Label Content="Class&#xD;&#xA;" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="158,302,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Height="46"/>
-        <TextBlock x:Name="project_class" HorizontalAlignment="Left" Height="30" Margin="326,304,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20"/>
+        <TextBlock x:Name="project_class" HorizontalAlignment="Left" Height="30" Margin="326,304,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="20" MouseDown="project_class_MouseDown"/>
     </Grid>
 </Page>

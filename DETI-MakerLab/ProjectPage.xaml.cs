@@ -243,5 +243,15 @@ namespace DETI_MakerLab
             // There are no fields to check
             return true;
         }
+
+        private void project_class_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_project.ProjectClass != null)
+            {
+                HomeWindow window = (HomeWindow)Window.GetWindow(this);
+                window.goToClassPage(_project.ProjectClass);
+            }
+            
+        }
     }
 }

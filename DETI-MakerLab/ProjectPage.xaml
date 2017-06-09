@@ -48,6 +48,6 @@
         <Label Content="Active Requisitions" Style="{StaticResource bigTitleStyle}" VerticalContentAlignment="Bottom" Margin="187,355,673,0" Width="336" Height="59" FontSize="36" />
         <ListBox x:Name="active_requisitions_list" HorizontalAlignment="Left" Height="137" Margin="104,419,0,0" VerticalAlignment="Top" Width="505" ItemTemplate="{DynamicResource ActiveReqsFrontItem}"/>
         <Label Content="Class" Style="{StaticResource descriptionStyle}" HorizontalAlignment="Left" Margin="104,304,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.573,0.678" Width="120" Height="46" HorizontalContentAlignment="Right"/>
-        <TextBlock x:Name="project_class" HorizontalAlignment="Left" Height="30" Margin="326,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="16"/>
+        <TextBlock x:Name="project_class" HorizontalAlignment="Left" Height="30" Margin="326,310,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" FontSize="16" MouseDown="project_class_MouseDown"/>
     </Grid>
 </Page>

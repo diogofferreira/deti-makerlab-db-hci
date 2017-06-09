@@ -60,9 +60,9 @@ namespace DETI_MakerLab
             if (!Helpers.verifySGBDConnection(cn))
                 throw new Exception("Cannot connect to database");
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.LAST_KIT_REQUISITIONS (@KitDescription)", cn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM DML.LAST_KIT_REQUISITIONS (@KitID)", cn);
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@KitDescription", _kit.Description);
+            cmd.Parameters.AddWithValue("@KitID", _kit.ResourceID);
             SqlDataReader reader = cmd.ExecuteReader();
             CultureInfo provider = CultureInfo.InvariantCulture;
 

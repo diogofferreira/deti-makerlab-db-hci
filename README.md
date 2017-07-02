@@ -1,6 +1,6 @@
 # DETI-MakerLab
 
-![DETI-MakerLab](https://firebasestorage.googleapis.com/v0/b/makerlab-b9b8c.appspot.com/o/app%2FScreenshot_1.jpg?alt=media&token=e3a065c2-4e45-49fb-abe4-77aa8808f411){:center}
+<img src="https://firebasestorage.googleapis.com/v0/b/makerlab-b9b8c.appspot.com/o/app%2FScreenshot_1.jpg?alt=   media&token=e3a065c2-4e45-49fb-abe4-77aa8808f411" align="center" height="400" width="600"/>
 
 DETI MakerLab app is composed by a specific database structure and a Windows C#
 application and it's responsible for managing a modern and innovative room.
@@ -20,6 +20,3 @@ DB (Database) classes.
 --------------------------------------------------------------------------
 
 @ Diogo Ferreira and Pedro Martins (University of Aveiro)
-
-<!-- Styles -->
-{:center: style="margin: 0 auto; display: block; width: 600px"}

@@ -13,9 +13,17 @@ DB (Database) classes.
 
 ## Requeriments
 
+In order to run it, first you need to use SQL Server (minimum 2012 version) to
+create the database (or use an existing one since we just provide a `SCHEMA`).
+
+Secondly, make sure you have the following toolkits added to your Visual Studio:
+
 * [Ookii Dialogs](http://www.ookii.org/software/dialogs/)
 
 * [Extended WPF Toolkit](http://wpftoolkit.codeplex.com/)
+
+Finally, edit `DETI-MakerLab-DB_HCI/application/DETI-MakerLab/Helpers.cs` 
+accordingly to your database settings.
 
 --------------------------------------------------------------------------
 
